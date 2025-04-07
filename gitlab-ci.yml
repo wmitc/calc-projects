@@ -1,0 +1,143 @@
+stages:
+  - lint
+  - build
+  - test
+  - export
+
+.container:
+  image: registry.levelup.cce.af.mil/cdso/containers/base-registry/ubuntu:20.04
+  stage: build
+  interruptible: true
+  allow_failure: false
+  timeout: 10m
+
+.linter: &lint
+  extends:
+    - .container
+  stage: lint
+  before_script:
+    - apt update
+    - apt-get install -y clang-format python3 pylint pycodestyle
+    # - pip install pylint pycodestyle
+  script:
+    - find ./$CUR_PROJ -type f -name "*.c" | xargs clang-format --dry-run -Werror --style=file
+    - find ./$CUR_PROJ -type f -name "*.h" | xargs clang-format --dry-run -Werror --style=file
+    - pylint ./$CUR_PROJ
+    - pycodestyle ./$CUR_PROJ
+
+.builder: &build
+  extends:
+    - .container
+  stage: build
+  before_script:
+    - apt-get update
+    - apt-get install -y cmake libcunit1 libcunit1-doc libcunit1-dev clang-tidy
+  script:
+    - bash build.sh debug
+
+.tester: &test
+  extends:
+    - .container
+  stage: test
+  before_script:
+    - apt-get update
+    - apt-get install -y cmake python3 libcunit1 libcunit1-doc libcunit1-dev clang-tidy valgrind
+  script:
+    - mkdir -p build
+    - cd build
+    - cmake .. -DCMAKE_BUILD_TYPE=test
+    - make -j$(nproc)
+    - make test "ARGS= -R $CUR_TEST --output-on-failure"
+
+JQRCalc-Build:
+  needs: []
+  <<: *build
+
+Common-Lint:
+  variables:
+    CUR_PROJ: 0_Common
+  <<: *lint
+
+SimpleCalc-Lint:
+  variables:
+    CUR_PROJ: 1_SimpleCalc
+    CUR_TEST: TestSimpleCalc
+  <<: *lint
+
+FileCalc-Lint:
+  variables:
+    CUR_PROJ: 2_FileCalc
+    CUR_TEST: TestFileCalc
+  <<: *lint
+
+DataStructures1-Lint:
+  variables:
+    CUR_PROJ: 3_DataStructures1
+    CUR_TEST: TestDataStructures1
+  <<: *lint
+
+ThreadCalc-Lint:
+  variables:
+    CUR_PROJ: 4_ThreadCalc
+    CUR_TEST: TestThreadCalc
+  <<: *lint
+
+NetCalc-Lint:
+  variables:
+    CUR_PROJ: 5_NetCalc
+    CUR_TEST: TestNetCalc
+  <<: *lint
+
+SimpleCalc-Test:
+  needs: [ "JQRCalc-Build" ]
+  variables:
+    CUR_PROJ: 1_SimpleCalc
+    CUR_TEST: TestSimpleCalc
+  <<: *test
+
+FileCalc-Test:
+  needs: [ "JQRCalc-Build" ]
+  variables:
+    CUR_PROJ: 2_FileCalc
+    CUR_TEST: TestFileCalc
+  <<: *test
+
+DataStructures1-Test:
+  needs: [ "JQRCalc-Build" ]
+  variables:
+    CUR_PROJ: 3_DataStructures1
+    CUR_TEST: TestDataStructures1
+  <<: *test
+
+# Pthon threadcalc test
+ThreadCalc-Test:
+  needs: [ "JQRCalc-Build" ]
+  variables:
+    CUR_PROJ: 4_ThreadCalc
+    CUR_TEST: TestThreadCalc
+  <<: *test
+
+# Test threadpool with valgrind
+ThreadCalcTests-Valgrind:
+  needs: [ "JQRCalc-Build" ]
+  variables:
+    CUR_PROJ: 4_ThreadCalc
+    CUR_TEST: TestThreadLib_valgrind
+  <<: *test
+
+# Test threadpool with helgrind
+ThreadCalcTests-Helgrind:
+  needs: [ "JQRCalc-Build" ]
+  variables:
+    CUR_PROJ: 4_ThreadCalc
+    CUR_TEST: TestThreadLib_helgrind
+  <<: *test
+
+NetCalc-Test:
+  needs: [ "JQRCalc-Build" ]
+  variables:
+    CUR_PROJ: 5_NetCalc
+    CUR_TEST: TestNetCalc
+  <<: *test
+
+# EOF
