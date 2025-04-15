@@ -1,6 +1,7 @@
-# Simple Calc
+# Simple Calc #
 
 Simple Calculator in C
+
 ---
 ## How to
 How to Use:
