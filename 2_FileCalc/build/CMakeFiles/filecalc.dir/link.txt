@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/filecalc.dir/src/file_io.c.o CMakeFiles/filecalc.dir/src/filecalc.c.o CMakeFiles/filecalc.dir/src/math_utils.c.o  -o filecalc 
