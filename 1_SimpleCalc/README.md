@@ -2,7 +2,6 @@
 
 Simple Calculator in C
 
----
 ## How to
 How to Use:
 ./simplecalc (operand1) (operator) (operand2)
