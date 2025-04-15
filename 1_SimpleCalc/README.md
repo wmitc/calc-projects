@@ -29,6 +29,8 @@ Negative numbers not accepted for bit related equations (<<, >>, &, |, ^, <<<, >
 Use of certain operands will be interpreted by the Unix command line as non-mathematical operations.
 
 *  (\*) must be preceded by a "\\" or be encased in single quotes '\*' or it will be interpreted as a wildcard
+*  (\&) must be preceded by a "\\" or be encased in single quotes '\*'
+*  (\|) must be preceded by a "\\" or be encased in single quotes '\*'
 *  (<<) must be encased in single quotes '<<'
 *  (>>) must be encased in single quotes '>>'
 *  (<<<) must be encased in single quotes '<<<'
