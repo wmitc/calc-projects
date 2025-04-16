@@ -4,9 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/user/Documents/jqr-calcprojects/2_FileCalc/src/execute.c" "/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles/filecalc.dir/src/execute.c.o"
   "/home/user/Documents/jqr-calcprojects/2_FileCalc/src/file_io.c" "/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles/filecalc.dir/src/file_io.c.o"
   "/home/user/Documents/jqr-calcprojects/2_FileCalc/src/filecalc.c" "/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles/filecalc.dir/src/filecalc.c.o"
   "/home/user/Documents/jqr-calcprojects/2_FileCalc/src/math_utils.c" "/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles/filecalc.dir/src/math_utils.c.o"
+  "/home/user/Documents/jqr-calcprojects/2_FileCalc/src/process_file.c" "/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles/filecalc.dir/src/process_file.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

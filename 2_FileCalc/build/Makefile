@@ -123,6 +123,33 @@ filecalc/fast:
 	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/build
 .PHONY : filecalc/fast
 
+src/execute.o: src/execute.c.o
+
+.PHONY : src/execute.o
+
+# target to build an object file
+src/execute.c.o:
+	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/execute.c.o
+.PHONY : src/execute.c.o
+
+src/execute.i: src/execute.c.i
+
+.PHONY : src/execute.i
+
+# target to preprocess a source file
+src/execute.c.i:
+	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/execute.c.i
+.PHONY : src/execute.c.i
+
+src/execute.s: src/execute.c.s
+
+.PHONY : src/execute.s
+
+# target to generate assembly for a file
+src/execute.c.s:
+	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/execute.c.s
+.PHONY : src/execute.c.s
+
 src/file_io.o: src/file_io.c.o
 
 .PHONY : src/file_io.o
@@ -204,6 +231,33 @@ src/math_utils.c.s:
 	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/math_utils.c.s
 .PHONY : src/math_utils.c.s
 
+src/process_file.o: src/process_file.c.o
+
+.PHONY : src/process_file.o
+
+# target to build an object file
+src/process_file.c.o:
+	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/process_file.c.o
+.PHONY : src/process_file.c.o
+
+src/process_file.i: src/process_file.c.i
+
+.PHONY : src/process_file.i
+
+# target to preprocess a source file
+src/process_file.c.i:
+	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/process_file.c.i
+.PHONY : src/process_file.c.i
+
+src/process_file.s: src/process_file.c.s
+
+.PHONY : src/process_file.s
+
+# target to generate assembly for a file
+src/process_file.c.s:
+	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/process_file.c.s
+.PHONY : src/process_file.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -213,6 +267,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... filecalc"
+	@echo "... src/execute.o"
+	@echo "... src/execute.i"
+	@echo "... src/execute.s"
 	@echo "... src/file_io.o"
 	@echo "... src/file_io.i"
 	@echo "... src/file_io.s"
@@ -222,6 +279,9 @@ help:
 	@echo "... src/math_utils.o"
 	@echo "... src/math_utils.i"
 	@echo "... src/math_utils.s"
+	@echo "... src/process_file.o"
+	@echo "... src/process_file.i"
+	@echo "... src/process_file.s"
 .PHONY : help
 
 

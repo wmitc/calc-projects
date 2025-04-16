@@ -1,7 +1,9 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/filecalc.dir/src/execute.c.o"
   "CMakeFiles/filecalc.dir/src/file_io.c.o"
   "CMakeFiles/filecalc.dir/src/filecalc.c.o"
   "CMakeFiles/filecalc.dir/src/math_utils.c.o"
+  "CMakeFiles/filecalc.dir/src/process_file.c.o"
   "filecalc"
   "filecalc.pdb"
 )
