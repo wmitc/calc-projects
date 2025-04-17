@@ -13,7 +13,7 @@ typedef struct {
     int8_t flag;
     int32_t offset;
     int16_t num_of_opt_headers;
-} file_header;
+} __attribute__((packed)) file_header;
 
 // Unsolved equation
 typedef struct {
@@ -21,14 +21,14 @@ typedef struct {
     int8_t flag;
     int8_t equation[17]; // int64_t (8) + int8_t (1) + int64_t (8)
     int8_t padding[10]; // padding to 32 bytes
-} unsolved_equation;
+} __attribute__((packed)) unsolved_equation;
 
 // Serialized equation
 typedef struct {
     int64_t operand1;
     int8_t operation;
     int64_t operand2;
-} equation;
+} __attribute__((packed)) equation;
 
 // Solved equation
 typedef struct { 
@@ -36,6 +36,6 @@ typedef struct {
     int8_t flag;
     int8_t type;
     int64_t solution;
-} solved_equation;
+} __attribute__((packed)) solved_equation;
 
 #endif

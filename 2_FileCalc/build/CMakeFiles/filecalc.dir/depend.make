@@ -6,6 +6,7 @@ CMakeFiles/filecalc.dir/src/execute.c.o: ../includes/math_utils.h
 CMakeFiles/filecalc.dir/src/execute.c.o: ../src/execute.c
 
 CMakeFiles/filecalc.dir/src/file_io.c.o: ../includes/file_io.h
+CMakeFiles/filecalc.dir/src/file_io.c.o: ../includes/process_file.h
 CMakeFiles/filecalc.dir/src/file_io.c.o: ../src/file_io.c
 
 CMakeFiles/filecalc.dir/src/filecalc.c.o: ../includes/file_io.h

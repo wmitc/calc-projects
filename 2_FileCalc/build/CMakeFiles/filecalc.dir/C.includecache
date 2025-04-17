@@ -17,6 +17,14 @@ stdint.h
 -
 stdlib.h
 -
+string.h
+-
+fcntl.h
+-
+unistd.h
+-
+errno.h
+-
 types.h
 /home/user/Documents/jqr-calcprojects/2_FileCalc/src/types.h
 
