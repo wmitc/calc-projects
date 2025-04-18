@@ -10,6 +10,14 @@
 stdint.h
 -
 
+/home/user/Documents/jqr-calcprojects/1_SimpleCalc/src/math_utils.c
+stdio.h
+-
+stdint.h
+-
+math_utils.h
+/home/user/Documents/jqr-calcprojects/1_SimpleCalc/src/math_utils.h
+
 /home/user/Documents/jqr-calcprojects/1_SimpleCalc/src/simplecalc.c
 stdio.h
 -

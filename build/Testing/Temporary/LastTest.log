@@ -1,10 +1,10 @@
-Start testing: Apr 18 11:56 EDT
+Start testing: Apr 18 13:29 EDT
 ----------------------------------------------------------
 1/5 Testing: TestSimpleCalc
 1/5 Test: TestSimpleCalc
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "1_SimpleCalc"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestSimpleCalc" start time: Apr 18 11:56 EDT
+"TestSimpleCalc" start time: Apr 18 13:29 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -25,38 +25,18 @@ Found compiler error(s).
 End clang-tidy Check
 /home/user/Documents/jqr-calcprojects
 Failing Output
-b'1\n+\n0\n[+] Result: 1\n'
-b''
-Failed: 1 + a FAIL
-
-Failing Output
-b'0\n+\n1\n[+] Result: 1\n'
-b''
-Failed: a + 1 FAIL
-
-Failing Output
-b'1\na\n1\n[+] Result: 0\n'
-b''
-Failed: 1 a 1 FAIL
-
-Failing Output
-b'2147483647\n+\n1\n[+] Result: -2147483648\n'
-b''
-Failed: 2147483647 + 1 FAIL
-
-Failing Output
-b'2147483647\n-\n-1\n[+] Result: -2147483648\n'
-b''
-Failed: 2147483647 - -1 FAIL
+b'[-] Error processing.'
+b'[-] Bad input!'
+Failed: 2147483648 <<< 1 1
 
 
-Passed 26 out of 31 
+Passed 30 out of 31 
 Removing Build Artifacts
 <end of output>
-Test time =   0.19 sec
+Test time =   0.15 sec
 ----------------------------------------------------------
 Test Failed.
-"TestSimpleCalc" end time: Apr 18 11:56 EDT
+"TestSimpleCalc" end time: Apr 18 13:29 EDT
 "TestSimpleCalc" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -64,7 +44,7 @@ Test Failed.
 2/5 Test: TestFileCalc
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "2_FileCalc"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestFileCalc" start time: Apr 18 11:56 EDT
+"TestFileCalc" start time: Apr 18 13:29 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -106,10 +86,10 @@ End clang-tidy Check
 Test Results: Passed 0 out of 16 tests.
 Removing Build Artifacts
 <end of output>
-Test time =   0.29 sec
+Test time =   0.33 sec
 ----------------------------------------------------------
 Test Passed.
-"TestFileCalc" end time: Apr 18 11:56 EDT
+"TestFileCalc" end time: Apr 18 13:29 EDT
 "TestFileCalc" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -117,7 +97,7 @@ Test Passed.
 3/5 Test: TestDataStructures1
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "3_DataStructures1"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestDataStructures1" start time: Apr 18 11:56 EDT
+"TestDataStructures1" start time: Apr 18 13:29 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -145,10 +125,10 @@ Traceback (most recent call last):
 FileNotFoundError: [Errno 2] No such file or directory: '3_DataStructures1/build/'
 Removing Build Artifacts
 <end of output>
-Test time =   0.50 sec
+Test time =   0.51 sec
 ----------------------------------------------------------
 Test Failed.
-"TestDataStructures1" end time: Apr 18 11:56 EDT
+"TestDataStructures1" end time: Apr 18 13:29 EDT
 "TestDataStructures1" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -156,7 +136,7 @@ Test Failed.
 4/5 Test: TestThreadCalc
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "4_ThreadCalc"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestThreadCalc" start time: Apr 18 11:56 EDT
+"TestThreadCalc" start time: Apr 18 13:29 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -193,10 +173,10 @@ Generating 16 files with 64 equations
 Test Results: Passed 0 out of 16 tests.
 Removing Build Artifacts
 <end of output>
-Test time =   0.27 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"TestThreadCalc" end time: Apr 18 11:56 EDT
+"TestThreadCalc" end time: Apr 18 13:29 EDT
 "TestThreadCalc" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -204,7 +184,7 @@ Test Failed.
 5/5 Test: TestNetCalc
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "5_NetCalc"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestNetCalc" start time: Apr 18 11:56 EDT
+"TestNetCalc" start time: Apr 18 13:29 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -222,8 +202,8 @@ Removing Build Artifacts
 Test time =   1.03 sec
 ----------------------------------------------------------
 Test Failed.
-"TestNetCalc" end time: Apr 18 11:56 EDT
+"TestNetCalc" end time: Apr 18 13:29 EDT
 "TestNetCalc" time elapsed: 00:00:01
 ----------------------------------------------------------
 
-End testing: Apr 18 11:56 EDT
+End testing: Apr 18 13:29 EDT

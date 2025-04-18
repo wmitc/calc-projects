@@ -6,7 +6,6 @@
 #include <string.h>
 #include "math_utils.h"
 
-
 int main(int argc, char *argv[]){
     if(argc <= 1){
         printf("No arguments provided\n");
@@ -25,9 +24,9 @@ int main(int argc, char *argv[]){
     char *op = argv[2];
     int32_t num2 = atoi(argv[3]);  
     //printf("Hello world!\n");        
-    printf("%d",num1); printf("\n");
-    printf("%s",op); printf("\n");
-    printf("%d",num2); printf("\n");
+    //printf("%d",num1); printf("\n");
+    //printf("%s",op); printf("\n");
+    //printf("%d",num2); printf("\n");
 
     // Variable to hold result
     int32_t result = 0;
@@ -49,25 +48,26 @@ int main(int argc, char *argv[]){
         result = modulo(num1,num2);
     }
     if(strcmp(op, "<<") == 0){
-        result = shift_left((uint64_t)num1, (uint64_t)num2);
+        printf("got here\n");
+        result = shift_left(num1, num2);
     }
     if(strcmp(op, ">>") == 0){
-        result = shift_right((uint64_t)num1, (uint64_t)num2);
+        result = shift_right(num1, num2);
     }
     if(strcmp(op, "&") == 0){
-        result = bitwise_and((uint64_t)num1, (uint64_t)num2);
+        result = bitwise_and(num1, num2);
     }
     if(strcmp(op, "|") == 0){
-        result = bitwise_or((uint64_t)num1, (uint64_t)num2);
+        result = bitwise_or(num1, num2);
     }
     if(strcmp(op, "^") == 0){
-        result = bitwise_xor((uint64_t)num1, (uint64_t)num2);
+        result = bitwise_xor(num1, num2);
     }
     if(strcmp(op, "<<<") == 0){
-        result = rotate_left((uint64_t)num1, (uint64_t)num2);
+        result = rotate_left(num1, num2);
     }
     if(strcmp(op, ">>>") == 0){
-        result = rotate_right((uint64_t)num1, (uint64_t)num2);
+        result = rotate_right(num1, num2);
     }
 
     if(result == -1){

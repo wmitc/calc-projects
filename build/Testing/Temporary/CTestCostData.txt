@@ -1,5 +1,5 @@
 TestSimpleCalc 6 0
-TestFileCalc 19 0.0153955
+TestFileCalc 24 0.01392
 TestDataStructures1 0 0
 TestThreadCalc 0 0
 TestNetCalc 0 0
