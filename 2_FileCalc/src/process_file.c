@@ -31,7 +31,7 @@ int process_file(const char *file, const char *input_dir, const char *output_dir
         return 1;
     }
 
-    // FILE PERMISSIONS CHECK??
+    // ADD sFILE PERMISSIONS CHECK??
 
     file_header header;
     if(read(fd, &header, sizeof(header)) != sizeof(header)){
