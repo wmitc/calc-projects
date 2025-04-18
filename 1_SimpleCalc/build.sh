@@ -8,4 +8,4 @@ cd build
 
 # Compile and link the project
 cmake ..
-cmake --build .
+make

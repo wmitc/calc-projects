@@ -123,32 +123,32 @@ filecalc/fast:
 	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/build
 .PHONY : filecalc/fast
 
-src/execute.o: src/execute.c.o
+src/evaluate.o: src/evaluate.c.o
 
-.PHONY : src/execute.o
+.PHONY : src/evaluate.o
 
 # target to build an object file
-src/execute.c.o:
-	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/execute.c.o
-.PHONY : src/execute.c.o
+src/evaluate.c.o:
+	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/evaluate.c.o
+.PHONY : src/evaluate.c.o
 
-src/execute.i: src/execute.c.i
+src/evaluate.i: src/evaluate.c.i
 
-.PHONY : src/execute.i
+.PHONY : src/evaluate.i
 
 # target to preprocess a source file
-src/execute.c.i:
-	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/execute.c.i
-.PHONY : src/execute.c.i
+src/evaluate.c.i:
+	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/evaluate.c.i
+.PHONY : src/evaluate.c.i
 
-src/execute.s: src/execute.c.s
+src/evaluate.s: src/evaluate.c.s
 
-.PHONY : src/execute.s
+.PHONY : src/evaluate.s
 
 # target to generate assembly for a file
-src/execute.c.s:
-	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/execute.c.s
-.PHONY : src/execute.c.s
+src/evaluate.c.s:
+	$(MAKE) -f CMakeFiles/filecalc.dir/build.make CMakeFiles/filecalc.dir/src/evaluate.c.s
+.PHONY : src/evaluate.c.s
 
 src/file_io.o: src/file_io.c.o
 
@@ -267,9 +267,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... filecalc"
-	@echo "... src/execute.o"
-	@echo "... src/execute.i"
-	@echo "... src/execute.s"
+	@echo "... src/evaluate.o"
+	@echo "... src/evaluate.i"
+	@echo "... src/evaluate.s"
 	@echo "... src/file_io.o"
 	@echo "... src/file_io.i"
 	@echo "... src/file_io.s"

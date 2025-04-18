@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "../1_SimpleCalc/CMakeLists.txt"
+  "../2_FileCalc/CMakeLists.txt"
   "../CMakeLists.txt"
   "CMakeFiles/3.16.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeCXXCompiler.cmake"
@@ -44,9 +45,11 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "1_SimpleCalc/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "2_FileCalc/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "1_SimpleCalc/CMakeFiles/simplecalc.dir/DependInfo.cmake"
+  "2_FileCalc/CMakeFiles/filecalc.dir/DependInfo.cmake"
   )

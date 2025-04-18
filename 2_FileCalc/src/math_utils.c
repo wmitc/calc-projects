@@ -55,7 +55,6 @@ int64_t modulo(int64_t a, int64_t b){
 
 // Performs left shift operation
 uint64_t shift_left(uint64_t a, uint64_t b){
-    printf("%d\n", a);
     if(b < 0 || b >= 32){
         fprintf(stderr, "[-] Bad input!");
         return -1;       

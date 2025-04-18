@@ -243,6 +243,12 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
+FileCalc_BINARY_DIR:STATIC=/home/user/Documents/jqr-calcprojects/build/2_FileCalc
+
+//Value Computed by CMake
+FileCalc_SOURCE_DIR:STATIC=/home/user/Documents/jqr-calcprojects/2_FileCalc
+
+//Value Computed by CMake
 JQRCalcProjects_BINARY_DIR:STATIC=/home/user/Documents/jqr-calcprojects/build
 
 //Value Computed by CMake
@@ -365,7 +371,7 @@ CMAKE_MODULE_LINKER_FLAGS_TEST-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

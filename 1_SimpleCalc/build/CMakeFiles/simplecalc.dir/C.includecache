@@ -7,11 +7,17 @@
 #IncludeRegexTransform: 
 
 ../includes/math_utils.h
+stdint.h
+-
 
-/home/user/Documents/jqr-calcprojects/1_SimpleCalc/src/math_utils.c
+/home/user/Documents/jqr-calcprojects/1_SimpleCalc/src/simplecalc.c
 stdio.h
 -
 stdint.h
+-
+stdlib.h
+-
+string.h
 -
 math_utils.h
 /home/user/Documents/jqr-calcprojects/1_SimpleCalc/src/math_utils.h

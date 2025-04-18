@@ -47,7 +47,7 @@ int process_dir(const char *input_dir, const char *output_dir){
             //printf("%s\n", entry->d_name);
             process_file(entry->d_name, input_dir, output_dir);
 
-            break; // TEMPORARY MEASURE TO TEST PROCESSING OF SINGLE FILE
+            //break; // TEMPORARY MEASURE TO TEST PROCESSING OF SINGLE FILE
         }
     }
 

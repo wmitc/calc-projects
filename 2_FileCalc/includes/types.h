@@ -19,16 +19,11 @@ typedef struct {
 typedef struct {
     int32_t equationID;
     int8_t flag;
-    int8_t equation[17]; // int64_t (8) + int8_t (1) + int64_t (8)
-    int8_t padding[10]; // padding to 32 bytes
-} __attribute__((packed)) unsolved_equation;
-
-// Serialized equation
-typedef struct {
     int64_t operand1;
     int8_t operation;
     int64_t operand2;
-} __attribute__((packed)) equation;
+    int8_t padding[10]; // padding to 32 bytes
+} __attribute__((packed)) unsolved_equation;
 
 // Solved equation
 typedef struct { 

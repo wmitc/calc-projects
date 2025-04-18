@@ -6,25 +6,31 @@
 
 #IncludeRegexTransform: 
 
-../includes/types.h
+../includes/evaluate.h
 stdint.h
 -
 
-/home/user/Documents/jqr-calcprojects/2_FileCalc/src/process_file.c
+../includes/math_utils.h
+stdint.h
+-
+
+/home/user/Documents/jqr-calcprojects/2_FileCalc/src/evaluate.c
 stdio.h
 -
 stdint.h
 -
 stdlib.h
 -
-string.h
+math_utils.h
+/home/user/Documents/jqr-calcprojects/2_FileCalc/src/math_utils.h
+evaluate.h
+/home/user/Documents/jqr-calcprojects/2_FileCalc/src/evaluate.h
+
+/home/user/Documents/jqr-calcprojects/2_FileCalc/src/math_utils.c
+stdio.h
 -
-fcntl.h
+stdint.h
 -
-unistd.h
--
-errno.h
--
-types.h
-/home/user/Documents/jqr-calcprojects/2_FileCalc/src/types.h
+math_utils.h
+/home/user/Documents/jqr-calcprojects/2_FileCalc/src/math_utils.h
 

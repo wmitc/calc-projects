@@ -5,3 +5,7 @@
 /home/user/Documents/jqr-calcprojects/build/1_SimpleCalc/CMakeFiles/edit_cache.dir
 /home/user/Documents/jqr-calcprojects/build/1_SimpleCalc/CMakeFiles/test.dir
 /home/user/Documents/jqr-calcprojects/build/1_SimpleCalc/CMakeFiles/simplecalc.dir
+/home/user/Documents/jqr-calcprojects/build/2_FileCalc/CMakeFiles/edit_cache.dir
+/home/user/Documents/jqr-calcprojects/build/2_FileCalc/CMakeFiles/test.dir
+/home/user/Documents/jqr-calcprojects/build/2_FileCalc/CMakeFiles/rebuild_cache.dir
+/home/user/Documents/jqr-calcprojects/build/2_FileCalc/CMakeFiles/filecalc.dir

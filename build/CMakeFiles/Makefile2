@@ -54,16 +54,19 @@ CMAKE_BINARY_DIR = /home/user/Documents/jqr-calcprojects/build
 
 # The main recursive "all" target.
 all: 1_SimpleCalc/all
+all: 2_FileCalc/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
 preinstall: 1_SimpleCalc/preinstall
+preinstall: 2_FileCalc/preinstall
 
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: 1_SimpleCalc/clean
+clean: 2_FileCalc/clean
 
 .PHONY : clean
 
@@ -86,13 +89,31 @@ clean: 1_SimpleCalc/clean
 .PHONY : 1_SimpleCalc/clean
 
 #=============================================================================
+# Directory level rules for directory 2_FileCalc
+
+# Recursive "all" directory target.
+2_FileCalc/all: 2_FileCalc/CMakeFiles/filecalc.dir/all
+
+.PHONY : 2_FileCalc/all
+
+# Recursive "preinstall" directory target.
+2_FileCalc/preinstall:
+
+.PHONY : 2_FileCalc/preinstall
+
+# Recursive "clean" directory target.
+2_FileCalc/clean: 2_FileCalc/CMakeFiles/filecalc.dir/clean
+
+.PHONY : 2_FileCalc/clean
+
+#=============================================================================
 # Target rules for target 1_SimpleCalc/CMakeFiles/simplecalc.dir
 
 # All Build rule for target.
 1_SimpleCalc/CMakeFiles/simplecalc.dir/all:
 	$(MAKE) -f 1_SimpleCalc/CMakeFiles/simplecalc.dir/build.make 1_SimpleCalc/CMakeFiles/simplecalc.dir/depend
 	$(MAKE) -f 1_SimpleCalc/CMakeFiles/simplecalc.dir/build.make 1_SimpleCalc/CMakeFiles/simplecalc.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/jqr-calcprojects/build/CMakeFiles --progress-num=1,2,3 "Built target simplecalc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/jqr-calcprojects/build/CMakeFiles --progress-num=7,8,9 "Built target simplecalc"
 .PHONY : 1_SimpleCalc/CMakeFiles/simplecalc.dir/all
 
 # Build rule for subdir invocation for target.
@@ -111,6 +132,33 @@ simplecalc: 1_SimpleCalc/CMakeFiles/simplecalc.dir/rule
 1_SimpleCalc/CMakeFiles/simplecalc.dir/clean:
 	$(MAKE) -f 1_SimpleCalc/CMakeFiles/simplecalc.dir/build.make 1_SimpleCalc/CMakeFiles/simplecalc.dir/clean
 .PHONY : 1_SimpleCalc/CMakeFiles/simplecalc.dir/clean
+
+#=============================================================================
+# Target rules for target 2_FileCalc/CMakeFiles/filecalc.dir
+
+# All Build rule for target.
+2_FileCalc/CMakeFiles/filecalc.dir/all:
+	$(MAKE) -f 2_FileCalc/CMakeFiles/filecalc.dir/build.make 2_FileCalc/CMakeFiles/filecalc.dir/depend
+	$(MAKE) -f 2_FileCalc/CMakeFiles/filecalc.dir/build.make 2_FileCalc/CMakeFiles/filecalc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/jqr-calcprojects/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target filecalc"
+.PHONY : 2_FileCalc/CMakeFiles/filecalc.dir/all
+
+# Build rule for subdir invocation for target.
+2_FileCalc/CMakeFiles/filecalc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/jqr-calcprojects/build/CMakeFiles 6
+	$(MAKE) -f CMakeFiles/Makefile2 2_FileCalc/CMakeFiles/filecalc.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/jqr-calcprojects/build/CMakeFiles 0
+.PHONY : 2_FileCalc/CMakeFiles/filecalc.dir/rule
+
+# Convenience name for target.
+filecalc: 2_FileCalc/CMakeFiles/filecalc.dir/rule
+
+.PHONY : filecalc
+
+# clean rule for target.
+2_FileCalc/CMakeFiles/filecalc.dir/clean:
+	$(MAKE) -f 2_FileCalc/CMakeFiles/filecalc.dir/build.make 2_FileCalc/CMakeFiles/filecalc.dir/clean
+.PHONY : 2_FileCalc/CMakeFiles/filecalc.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

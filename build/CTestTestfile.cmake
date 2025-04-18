@@ -15,3 +15,4 @@ set_tests_properties(TestThreadCalc PROPERTIES  WORKING_DIRECTORY "/home/user/Do
 add_test(TestNetCalc "bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "5_NetCalc")
 set_tests_properties(TestNetCalc PROPERTIES  WORKING_DIRECTORY "/home/user/Documents/jqr-calcprojects" _BACKTRACE_TRIPLES "/home/user/Documents/jqr-calcprojects/CMakeLists.txt;58;add_test;/home/user/Documents/jqr-calcprojects/CMakeLists.txt;0;")
 subdirs("1_SimpleCalc")
+subdirs("2_FileCalc")

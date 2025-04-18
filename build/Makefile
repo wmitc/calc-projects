@@ -134,6 +134,19 @@ simplecalc/fast:
 	$(MAKE) -f 1_SimpleCalc/CMakeFiles/simplecalc.dir/build.make 1_SimpleCalc/CMakeFiles/simplecalc.dir/build
 .PHONY : simplecalc/fast
 
+#=============================================================================
+# Target rules for targets named filecalc
+
+# Build rule for target.
+filecalc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 filecalc
+.PHONY : filecalc
+
+# fast build rule for target.
+filecalc/fast:
+	$(MAKE) -f 2_FileCalc/CMakeFiles/filecalc.dir/build.make 2_FileCalc/CMakeFiles/filecalc.dir/build
+.PHONY : filecalc/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -144,6 +157,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... test"
 	@echo "... simplecalc"
+	@echo "... filecalc"
 .PHONY : help
 
 

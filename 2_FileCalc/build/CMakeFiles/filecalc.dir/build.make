@@ -57,18 +57,18 @@ include CMakeFiles/filecalc.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/filecalc.dir/flags.make
 
-CMakeFiles/filecalc.dir/src/execute.c.o: CMakeFiles/filecalc.dir/flags.make
-CMakeFiles/filecalc.dir/src/execute.c.o: ../src/execute.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/filecalc.dir/src/execute.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/filecalc.dir/src/execute.c.o   -c /home/user/Documents/jqr-calcprojects/2_FileCalc/src/execute.c
+CMakeFiles/filecalc.dir/src/evaluate.c.o: CMakeFiles/filecalc.dir/flags.make
+CMakeFiles/filecalc.dir/src/evaluate.c.o: ../src/evaluate.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/filecalc.dir/src/evaluate.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/filecalc.dir/src/evaluate.c.o   -c /home/user/Documents/jqr-calcprojects/2_FileCalc/src/evaluate.c
 
-CMakeFiles/filecalc.dir/src/execute.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/filecalc.dir/src/execute.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/user/Documents/jqr-calcprojects/2_FileCalc/src/execute.c > CMakeFiles/filecalc.dir/src/execute.c.i
+CMakeFiles/filecalc.dir/src/evaluate.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/filecalc.dir/src/evaluate.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/user/Documents/jqr-calcprojects/2_FileCalc/src/evaluate.c > CMakeFiles/filecalc.dir/src/evaluate.c.i
 
-CMakeFiles/filecalc.dir/src/execute.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/filecalc.dir/src/execute.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/user/Documents/jqr-calcprojects/2_FileCalc/src/execute.c -o CMakeFiles/filecalc.dir/src/execute.c.s
+CMakeFiles/filecalc.dir/src/evaluate.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/filecalc.dir/src/evaluate.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/user/Documents/jqr-calcprojects/2_FileCalc/src/evaluate.c -o CMakeFiles/filecalc.dir/src/evaluate.c.s
 
 CMakeFiles/filecalc.dir/src/file_io.c.o: CMakeFiles/filecalc.dir/flags.make
 CMakeFiles/filecalc.dir/src/file_io.c.o: ../src/file_io.c
@@ -124,7 +124,7 @@ CMakeFiles/filecalc.dir/src/process_file.c.s: cmake_force
 
 # Object files for target filecalc
 filecalc_OBJECTS = \
-"CMakeFiles/filecalc.dir/src/execute.c.o" \
+"CMakeFiles/filecalc.dir/src/evaluate.c.o" \
 "CMakeFiles/filecalc.dir/src/file_io.c.o" \
 "CMakeFiles/filecalc.dir/src/filecalc.c.o" \
 "CMakeFiles/filecalc.dir/src/math_utils.c.o" \
@@ -133,7 +133,7 @@ filecalc_OBJECTS = \
 # External object files for target filecalc
 filecalc_EXTERNAL_OBJECTS =
 
-filecalc: CMakeFiles/filecalc.dir/src/execute.c.o
+filecalc: CMakeFiles/filecalc.dir/src/evaluate.c.o
 filecalc: CMakeFiles/filecalc.dir/src/file_io.c.o
 filecalc: CMakeFiles/filecalc.dir/src/filecalc.c.o
 filecalc: CMakeFiles/filecalc.dir/src/math_utils.c.o
