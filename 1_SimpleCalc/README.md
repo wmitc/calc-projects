@@ -2,7 +2,10 @@
 
 Simple Calculator in C.
 
-## How to
+## Overview
+
+This is a  calculator application that will compute simple equations and produce the result.
+
 How to Use:
 ./simplecalc (operand1) (operator) (operand2)
 
@@ -23,8 +26,24 @@ Supported Operators:
 Operands:
 Negative numbers not accepted for bit related equations (<<, >>, &, |, ^, <<<, >>>)
 
+## Dependencies and prerequisites
 
-## Known issues
+Prerequisites:
+  - GCC (or Clang)
+  - CMake
+  - Make (optional)
+  - Git (optional)
+
+Dependencies:
+  - Standard C library
+  - Math library ("math_utils.h")
+  - [Optional] CTest for testing
+
+## Versions
+
+* Requires CMake >= 3.10
+
+## Limitations/Known issues
 
 Use of certain operands will be interpreted by the Unix command line as non-mathematical operations.
 
@@ -35,3 +54,4 @@ Use of certain operands will be interpreted by the Unix command line as non-math
 *  (>>) must be encased in single quotes '>>'
 *  (<<<) must be encased in single quotes '<<<'
 *  (>>>) must be encased in single quotes '>>>'
+
