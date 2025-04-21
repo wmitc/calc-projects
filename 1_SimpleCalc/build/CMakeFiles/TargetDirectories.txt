@@ -1,3 +1,0 @@
-/home/user/Documents/jqr-calcprojects/1_SimpleCalc/build/CMakeFiles/rebuild_cache.dir
-/home/user/Documents/jqr-calcprojects/1_SimpleCalc/build/CMakeFiles/edit_cache.dir
-/home/user/Documents/jqr-calcprojects/1_SimpleCalc/build/CMakeFiles/simplecalc.dir
