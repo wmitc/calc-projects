@@ -103,11 +103,16 @@ int main(int argc, char* argv[])
         }
         if (result == 1 && error)
         {
-            printf("[-] Error processing. %d\n", error);
+            printf("[-] Error processing.\n");
             exit(EXIT_FAILURE);
         }
 
         printf("[+] Result: %d\n", result);
+    }
+    else
+    {
+        printf("[-] Error processing.\n");
+        exit(EXIT_FAILURE);
     }
 
     return 0;
