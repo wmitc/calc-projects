@@ -6,7 +6,7 @@ Simple Calculator in C.
 
 This is a  calculator application that will compute simple equations and produce the result.
 
-How to Use:
+How to use:
 
 From inside `1_SimpleCalc` directory:
 ```console
