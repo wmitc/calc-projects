@@ -93,6 +93,8 @@ class EquFile():
 
             for e in self.equations:
                 eqf.write(e)
+        # Update file permissions
+        os.chmod(filename, 0o777)
             
 def main():
 
@@ -134,7 +136,6 @@ def main():
         equ_file = EquFile()
         equ_file.gen_equations(num_equ)
         equ_file.write_file(f"{output_dir}/{equ_file.file_id.hex()}.equ")
-
 
 if __name__ == "__main__":
     main()

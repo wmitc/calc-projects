@@ -6,7 +6,8 @@
 #include <stdint.h>
 
 // File header
-typedef struct {
+typedef struct
+{
     int32_t magic_number;
     int64_t fileID;
     int64_t num_of_equations;
@@ -16,7 +17,8 @@ typedef struct {
 } __attribute__((packed)) file_header;
 
 // Unsolved equation
-typedef struct {
+typedef struct
+{
     int32_t equationID;
     int8_t flag;
     int64_t operand1;
@@ -26,7 +28,8 @@ typedef struct {
 } __attribute__((packed)) unsolved_equation;
 
 // Solved equation
-typedef struct { 
+typedef struct
+{
     int32_t equationID;
     int8_t flag;
     int8_t type;

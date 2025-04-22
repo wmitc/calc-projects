@@ -1,3 +1,0 @@
-/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles/edit_cache.dir
-/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles/rebuild_cache.dir
-/home/user/Documents/jqr-calcprojects/2_FileCalc/build/CMakeFiles/filecalc.dir

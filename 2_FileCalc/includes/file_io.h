@@ -3,7 +3,7 @@
 #ifndef FILE_IO_H
 #define FILE_IO_H
 
-int is_directory(const char *dir);
-int process_dir(const char *input_dir, const char *output_dir);
+int is_directory(const char* dir);
+int process_dir(const char* input_dir, const char* output_dir);
 
 #endif

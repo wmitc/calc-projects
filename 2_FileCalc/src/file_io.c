@@ -8,13 +8,15 @@
 
 /**
  * @brief Validate whether input string is a directory
- * 
+ *
  * @param dir User provided directory parameter
  * @return True/False if/if not *dir is a directory
  */
-int is_directory(const char *dir){
+int is_directory(const char* dir)
+{
     struct stat statbuf;
-    if(stat(dir, &statbuf) != 0){
+    if (stat(dir, &statbuf) != 0)
+    {
         fprintf(stderr, "[-] Error: path does not exist or is inaccessible.\n");
         exit(EXIT_FAILURE);
     }
@@ -24,30 +26,30 @@ int is_directory(const char *dir){
 
 /**
  * @brief Process input_dir and out_dir per FileCalc specification
- * 
+ *
  * @param input_dir User supplied input directory
  * @param output_dir User supplied output directory
  * @return True/False on success/failure
  */
-int process_dir(const char *input_dir, const char *output_dir){
-    const char *dir_path = "./input_dir";
-    DIR *dir = opendir(dir_path);
+int process_dir(const char* input_dir, const char* output_dir)
+{
+    const char* dir_path = input_dir;
+    DIR* dir = opendir(dir_path);
 
-    if(dir == NULL){
+    if (dir == NULL)
+    {
         fprintf(stderr, "[-] Open input directory failed.");
         exit(EXIT_FAILURE);
     }
 
-    struct dirent *entry;
-    while((entry = readdir(dir)) != NULL){
-        // Skip . and ..
-        if(strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0){
-            
+    struct dirent* entry;
+    while ((entry = readdir(dir)) != NULL)
+    {
+        // Skip . and .. entries
+        if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
+        {
             // Call function to process file
-            //printf("%s\n", entry->d_name);
             process_file(entry->d_name, input_dir, output_dir);
-
-            //break; // TEMPORARY MEASURE TO TEST PROCESSING OF SINGLE FILE
         }
     }
 
