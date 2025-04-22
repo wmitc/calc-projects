@@ -6,7 +6,7 @@ File parser in C. Expands on SimpleCalc project.
 
 This project consists of building a file parser. The format for input and output data follows a specific format as found in `FileSpec.pdf`. Given a directory containing `M` files, each with `N` equations, solve all equations. Write solutions per the specification to files in the output folder with the same name as their corresponding files from the input folder.
 
-How to Use:
+How to use:
 
 From inside `2_FileCalc` directory:
 ```console
