@@ -7,7 +7,14 @@ Simple Calculator in C.
 This is a  calculator application that will compute simple equations and produce the result.
 
 How to Use:
+
+```console
+build bash.sh 
+
+cd build
+
 ./simplecalc (operand1) (operator) (operand2)
+```
 
 Supported Operators:
 *  (+) addition
