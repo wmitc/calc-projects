@@ -8,12 +8,27 @@ This is a  calculator application that will compute simple equations and produce
 
 How to Use:
 
+From inside `1_SimpleCalc` directory:
 ```console
-build bash.sh 
+bash build.sh 
 
 cd build
 
 ./simplecalc (operand1) (operator) (operand2)
+```
+
+To validate from base folder:
+```console
+bash build.sh 
+
+bash run_tests.sh
+```
+
+To clean up:
+```console
+rm -rf build 
+
+rm -rf 1_SimpleCalc/build
 ```
 
 Supported Operators:
