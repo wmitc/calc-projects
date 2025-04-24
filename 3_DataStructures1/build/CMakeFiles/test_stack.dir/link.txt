@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/test_stack.dir/tests/stack_tests.c.o  -o test_stack  -Wl,-rpath,/home/user/Documents/jqr-calcprojects/3_DataStructures1/build libstack.so -lcunit 

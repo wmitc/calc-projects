@@ -50,6 +50,18 @@ file_io.h
 process_file.h
 /home/user/Documents/jqr-calcprojects/2_FileCalc/src/process_file.h
 
+/home/user/Documents/jqr-calcprojects/2_FileCalc/src/filecalc.c
+stdio.h
+-
+stdint.h
+-
+stdlib.h
+-
+string.h
+-
+file_io.h
+/home/user/Documents/jqr-calcprojects/2_FileCalc/src/file_io.h
+
 /home/user/Documents/jqr-calcprojects/2_FileCalc/src/math_utils.c
 stdio.h
 -

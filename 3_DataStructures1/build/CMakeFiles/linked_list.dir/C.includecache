@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/linked_list.h
+errno.h
+-
+stdarg.h
+-
+stdint.h
+-
+stdio.h
+-
+stdlib.h
+-
+
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c
+stdint.h
+-
+stdio.h
+-
+stdlib.h
+-
+linked_list.h
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.h
+

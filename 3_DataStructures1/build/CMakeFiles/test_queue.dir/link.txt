@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/test_queue.dir/tests/queue_tests.c.o  -o test_queue  -Wl,-rpath,/home/user/Documents/jqr-calcprojects/3_DataStructures1/build libqueue.so -lcunit 

@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/test_table.dir/tests/hash_table_tests.c.o  -o test_table  -Wl,-rpath,/home/user/Documents/jqr-calcprojects/3_DataStructures1/build libhash_table.so -lcunit 

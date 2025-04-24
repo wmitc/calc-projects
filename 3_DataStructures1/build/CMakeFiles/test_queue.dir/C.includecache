@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/queue.h
+stdint.h
+-
+stdio.h
+-
+stdlib.h
+-
+
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/tests/queue_tests.c
+queue.h
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/tests/queue.h
+CUnit/Basic.h
+-
+CUnit/CUnit.h
+-
+stdlib.h
+-
+

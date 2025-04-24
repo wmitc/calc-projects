@@ -46,7 +46,9 @@ void test_stack_push()
     CU_ASSERT(0 != exit_code);
     exit_code = stack_push(stack, NULL);
     CU_ASSERT(0 != exit_code);
-
+    
+    stack = stack_init(capacity, custom_free);
+    
     // push CAPACITY number of nodes
     while (i < CAPACITY)
     {

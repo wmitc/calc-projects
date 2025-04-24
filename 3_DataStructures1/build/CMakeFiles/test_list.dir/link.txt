@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/test_list.dir/tests/linked_list_tests.c.o  -o test_list  -Wl,-rpath,/home/user/Documents/jqr-calcprojects/3_DataStructures1/build liblinked_list.so -lcunit 
