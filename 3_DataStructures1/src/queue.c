@@ -54,6 +54,8 @@ queue_t * queue_init(uint32_t capacity, FREE_F customfree)
     queue->capacity = capacity;
     queue->currentsz = 0;
     queue->customfree = customfree;
+
+    return queue;
 }
 
 /**
@@ -103,7 +105,7 @@ int queue_emptycheck(queue_t * queue)
 int queue_enqueue(queue_t * queue, void * data)
 {
     // Validate queue, data, and space for data
-    if(!queue || !data || queue_fullcheck(queue))
+    if(!queue || !queue->arr ||!data || queue_fullcheck(queue))
     {
         fprintf(stderr, "[-] queue_enqueue queue invalid fail.\n");
         return 1;        
@@ -117,6 +119,7 @@ int queue_enqueue(queue_t * queue, void * data)
     }
     // Assign data to the node
     new_node->data = data;
+    //memcpy(new_node->data,data,sizeof(data));
     queue->arr[queue->currentsz] = new_node;
     
     queue->currentsz++;
@@ -194,15 +197,15 @@ int queue_clear(queue_t * queue)
     //fprintf(stdout, "Size of currensz is: %d\n", queue->currentsz);
     for(uint32_t i = 0; i < queue->currentsz; i++)
     {
-        // Use customfree on node data
-        queue->arr[i]->data = 0;
-        // Decrement the size of the queue for each node freed
-        queue->currentsz--;
-        //fprintf(stdout, "Size of currensz is: %d\n", queue->currentsz);
+        // Use customfree on node data if it exists
+        if(queue->arr[i])
+        {
+            // Free the node with customfree
+            queue->customfree(queue->arr[i]);
+            // Set queue->arr[i] to NULL to prevent dangling pointer
+            queue->arr[i] = NULL;
+        }
     }
-    // Use free on queue itself
-    //free(queue);
-    //fprintf(stdout, "Size of currensz is: %d\n", queue->currentsz);
 
     // Zero out queue currentsz
     queue->currentsz = 0;
@@ -226,7 +229,7 @@ int queue_destroy(queue_t ** queue_addr)
     queue_t *queue = *queue_addr;
 
     // Clear the queue
-    clear_queue(queue_addr);
+    queue_clear(queue);
 
     // Free
     free(queue->arr);
