@@ -63,6 +63,7 @@ stack_t * stack_init(uint32_t capacity, FREE_F customfree)
  */
 int stack_fullcheck(stack_t * stack)
 {
+    // Validate stack existence
     if(!stack)
     {
         fprintf(stderr, "[-] stack_fullcheck fail.\n");
@@ -82,6 +83,7 @@ int stack_fullcheck(stack_t * stack)
  */
 int stack_emptycheck(stack_t * stack)
 {
+    // Validate stack existence
     if(!stack)
     {
         fprintf(stderr, "[-] stack_emptycheck fail.\n");
@@ -101,6 +103,7 @@ int stack_emptycheck(stack_t * stack)
  */
 int stack_push(stack_t * stack, void * data)
 {
+    // Validate stack, data, and space for data
     if (!stack || !data || stack_fullcheck(stack)) 
     {
         fprintf(stderr, "[-] stack_push fail.\n");
@@ -108,12 +111,13 @@ int stack_push(stack_t * stack, void * data)
     }
 
     stack_node_t *node = (stack_node_t *)malloc(sizeof(stack_node_t));
+    // Validate node
     if (!node)
     {
         fprintf(stderr, "[-] stack_push node instantiation fail.\n");
         return -1;        
     }
- 
+    // Validate stack->arr
     if(!stack->arr)
     {
         fprintf(stderr, "[-] stack_push array allocation fail.\n");
@@ -131,6 +135,7 @@ int stack_push(stack_t * stack, void * data)
  */
 stack_node_t * stack_pop(stack_t * stack)
 {
+    // Validate stack existence; confirm stack is non-empty
     if(!stack || stack_emptycheck(stack))
     {
         fprintf(stderr, "[-] stack_pop fail.\n");
@@ -149,6 +154,7 @@ stack_node_t * stack_pop(stack_t * stack)
  */
 stack_node_t * stack_peek(stack_t * stack)
 {
+    // Validate stack existence; confirm stack is non-empty
     if(!stack || stack_emptycheck(stack))
     {
         fprintf(stderr, "[-] stack_peek fail.\n");
@@ -164,6 +170,7 @@ stack_node_t * stack_peek(stack_t * stack)
  */
 int stack_clear(stack_t * stack)
 {
+    // Validate stack existence
     if(!stack)
     {
         fprintf(stderr, "[-] stack_clear fail.\n");
@@ -188,6 +195,7 @@ int stack_clear(stack_t * stack)
  */
 int stack_destroy(stack_t ** stack)
 {
+    // Validate stack existence
     if(!stack || !*stack)
     {
         fprintf(stderr, "[-] stack_clear fail.\n");
@@ -208,7 +216,10 @@ int stack_destroy(stack_t ** stack)
  */
 void custom_free(void * mem_addr)
 {
-    free(mem_addr);
+    if(mem_addr)
+    {
+        free(mem_addr);
+    }
 }
 
 int main()
