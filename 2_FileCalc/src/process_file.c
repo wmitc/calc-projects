@@ -180,6 +180,8 @@ int process_file(const char* file, const char* input_dir,
     close(fd);
     free(solves);
 
+    printf("[+] Operation complete. See %s for results.\n", output_path);
+
     return 0;
 }
 /*** end of file ***/

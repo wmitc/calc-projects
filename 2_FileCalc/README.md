@@ -38,6 +38,22 @@ cd ..
 You should see output like this:
 
 ```console
+[+] Operation complete. See output_dir/f01709749f1a1f3a.equ for results.
+[+] Operation complete. See output_dir/cd2b3f5b03796807.equ for results.
+[+] Operation complete. See output_dir/2feb07cfd1bae2c8.equ for results.
+[+] Operation complete. See output_dir/9189ecb10121e47a.equ for results.
+[+] Operation complete. See output_dir/beca8284bf9b7d0d.equ for results.
+[+] Operation complete. See output_dir/08ccedf7c43a0636.equ for results.
+[+] Operation complete. See output_dir/e35beb95e4f18e54.equ for results.
+[+] Operation complete. See output_dir/04531d9f9cdf15c3.equ for results.
+[+] Operation complete. See output_dir/8540a7248b4d6b81.equ for results.
+[+] Operation complete. See output_dir/d634287cb0ec6db5.equ for results.
+[+] Operation complete. See output_dir/4aca3b6cd24c3eb5.equ for results.
+[+] Operation complete. See output_dir/6503956feaed909e.equ for results.
+[+] Operation complete. See output_dir/fb18e029d01e2e87.equ for results.
+[+] Operation complete. See output_dir/a72a3301d97563f7.equ for results.
+[+] Operation complete. See output_dir/db7e7977505666df.equ for results.
+[+] Operation complete. See output_dir/275961cd50cb3c44.equ for results.
 ```
 
 To aid debugging:
