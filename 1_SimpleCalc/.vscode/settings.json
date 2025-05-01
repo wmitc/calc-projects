@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "math_utils.h": "c",
-        "random": "c",
-        "stdlib.h": "c",
-        "stdio.h": "c"
-    }
-}

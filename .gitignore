@@ -1,4 +1,9 @@
 ### VisualStudioCode ###
 .vscode/*
+**/.vscode/*
+
+### Builds and build folder ###
 build/*
 build/
+**/build/*
+**/build
