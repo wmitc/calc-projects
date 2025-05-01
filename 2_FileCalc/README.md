@@ -6,31 +6,48 @@ File parser in C. Expands on SimpleCalc project.
 
 This project consists of building a file parser. The format for input and output data follows a specific format as found in `FileSpec.pdf`. Given a directory containing `M` files, each with `N` equations, solve all equations. Write solutions per the specification to files in the output folder with the same name as their corresponding files from the input folder.
 
-How to use:
+### How to use:
 
 From inside `2_FileCalc` directory:
+
+```console
+make
+```
+OR
 ```console
 bash build.sh 
+```
 
+Then:
+
+
+```console
 cd build
 
 mkdir input_dir output_dir
 
+cd input_dir
+
+python ../../EquFileGen.py
+
+cd ..
+
 ./filecalc <input_dir> <output_dir>
 ```
 
-To validate from base folder:
-```console
-bash build.sh 
+You should see output like this:
 
-bash run_tests.sh
+```console
+```
+
+To aid debugging:
+```console
+make debug
 ```
 
 To clean up:
 ```console
-rm -rf build 
-
-rm -rf 1_FileCalc/build
+make clean
 ```
 
 Supported Operators:
