@@ -10,7 +10,7 @@
 #include "evaluate.h"
 
 #define MAX_PATH_LENGTH 256
-#define MAGIC_NUMBER 0xdd77bb55
+#define MAGIC_NUMBER 0xdd77bb55 // Hard-coded file header "magic number" value used for testing
 #define MEM_PERMISSIONS 0644
 #define FULL_PERMISSIONS 0777
 
@@ -64,7 +64,7 @@ int process_file(const char* file, const char* input_dir,
     }
 
     // Validate the magic number
-    if (header.magic_number != MAGIC_NUMBER)
+    if ((unsigned) header.magic_number != (unsigned) MAGIC_NUMBER)
     {
         fprintf(stderr, "[-] Unexpected magic number.\n");
         close(fd);
@@ -114,8 +114,6 @@ int process_file(const char* file, const char* input_dir,
                 unsolved_equ.operand1, unsolved_equ.operation,
                 unsolved_equ.operand2, &signed_solution, &type);
 
-            int64_t result;
-
             // Put data into solves array
             solves[i].equationID = unsolved_equ.equationID;
             solves[i].flag = solved;
@@ -129,8 +127,6 @@ int process_file(const char* file, const char* input_dir,
             solved = evaluate_unsigned_equation(
                 unsolved_equ.operand1, unsolved_equ.operation,
                 unsolved_equ.operand2, &unsigned_solution, &type);
-
-            int64_t result;
 
             // Put data into solves array
             solves[i].equationID = unsolved_equ.equationID;
@@ -186,3 +182,4 @@ int process_file(const char* file, const char* input_dir,
 
     return 0;
 }
+/*** end of file ***/

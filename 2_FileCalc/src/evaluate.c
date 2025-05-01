@@ -4,6 +4,29 @@
 #include "math_utils.h"
 #include "evaluate.h"
 
+// Enum to specify equation types, per FileSpec.pdf
+typedef enum type_t_tag {
+    INT64_T = 0x1,
+    UINT64_T = 0x2
+} type_t;
+
+// Enum to specify operator codes, per FileSpec.pdf
+typedef enum simplecalc_ops_tag {
+    ADDITION = 0x1,
+    SUBTRACTION = 0x2,
+    MULTIPLICATION = 0x3,
+    DIVISION = 0x4,
+    MODULO = 0x5,
+    SHIFTLEFT = 0x6,
+    SHIFTRIGHT = 0x7,
+    AND = 0x8,
+    OR = 0x9,
+    XOR = 0xa,
+    ROTATELEFT = 0xb,
+    ROTATERIGHT = 0xc
+} simplecalc_ops;
+
+
 /**
  * @brief Execute the specified operation on the user-supplied operands
  *
@@ -19,27 +42,31 @@ int64_t evaluate_signed_equation(int64_t num1, int8_t operation, int64_t num2,
 {
     // Use switch to determine and perform operation
     int64_t error = 0;
-    switch (operation)
+    // Set answer type
+    type_t ans_type = INT64_T;
+    // Set operation type
+    simplecalc_ops op = operation;
+    switch (op)
     {
-        case 0x1:
+        case ADDITION:
             *result = add(num1, num2, &error);
-            *type = 0x1;
+            *type = ans_type;
             break;
-        case 0x2:
+        case SUBTRACTION:
             *result = subtract(num1, num2, &error);
-            *type = 0x1;
+            *type = ans_type;
             break;
-        case 0x3:
+        case MULTIPLICATION:
             *result = multiply(num1, num2, &error);
-            *type = 0x1;
+            *type = ans_type;
             break;
-        case 0x4:
+        case DIVISION:
             *result = divide(num1, num2, &error);
-            *type = 0x1;
+            *type = ans_type;
             break;
-        case 0x5:
+        case MODULO:
             *result = modulo(num1, num2, &error);
-            *type = 0x1;
+            *type = ans_type;
             break;
         default:
             fprintf(stderr, "[-] Invalid operation.");
@@ -67,35 +94,39 @@ uint64_t evaluate_unsigned_equation(uint64_t num1, int8_t operation,
 {
     // Use switch to determine and perform operation
     int64_t error = 0;
-    switch (operation)
+    // Set answer type
+    type_t ans_type = UINT64_T;
+    // Set operation type
+    simplecalc_ops op = operation;
+    switch (op)
     {
-        case 0x6:
+        case SHIFTLEFT:
             *result = shift_left(num1, num2, &error);
-            *type = 0x2;
+            *type = ans_type;
             break;
-        case 0x7:
+        case SHIFTRIGHT:
             *result = shift_right(num1, num2, &error);
-            *type = 0x2;
+            *type = ans_type;
             break;
-        case 0x8:
+        case AND:
             *result = bitwise_and(num1, num2, &error);
-            *type = 0x2;
+            *type = ans_type;
             break;
-        case 0x9:
+        case OR:
             *result = bitwise_or(num1, num2, &error);
-            *type = 0x2;
+            *type = ans_type;
             break;
-        case 0xa:
+        case XOR:
             *result = bitwise_xor(num1, num2, &error);
-            *type = 0x2;
+            *type = ans_type;
             break;
-        case 0xb:
+        case ROTATELEFT:
             *result = rotate_left(num1, num2, &error);
-            *type = 0x2;
+            *type = ans_type;
             break;
-        case 0xc:
+        case ROTATERIGHT:
             *result = rotate_right(num1, num2, &error);
-            *type = 0x2;
+            *type = ans_type;
             break;
         default:
             fprintf(stderr, "[-] Invalid operation.");
@@ -106,3 +137,4 @@ uint64_t evaluate_unsigned_equation(uint64_t num1, int8_t operation,
     // Return 1 to indicate equation was solved
     return 1;
 }
+/*** end of file ***/
