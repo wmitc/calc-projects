@@ -122,7 +122,7 @@ int process_file(const char* file, const char* input_dir,
         }
         else if (unsolved_equ.operation >= 0x6 && unsolved_equ.operation <= 0xc)
         {
-            // Attemt to solve equation
+            // Attempt to solve equation
             uint64_t solution;
             int8_t type;
             // Initiate "solved" variable to 0 to indicate unsolved
