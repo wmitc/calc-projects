@@ -19,7 +19,7 @@
 queue_t * queue_init(uint32_t capacity, FREE_F customfree)
 {
     // Check capacity
-    if(capacity <= 0)
+    if(capacity == 0)
     {
         fprintf(stderr, "[-] queue_init fail; capacity >= 1 required.\n");
         return NULL;
@@ -66,7 +66,7 @@ int queue_fullcheck(queue_t * queue)
     // Validate queue existence
     if(!queue){
         fprintf(stderr, "[-] queue_fullcheck queue invalid fail.\n");
-        return -1;        
+        return 1;        
     }
     // Check whether queue is at capacity
     if(queue->currentsz == queue->capacity)
@@ -105,23 +105,24 @@ int queue_emptycheck(queue_t * queue)
 int queue_enqueue(queue_t * queue, void * data)
 {
     // Validate queue, data, and space for data
-    if(!queue || !queue->arr ||!data || queue_fullcheck(queue))
+    if(!queue || !data || queue_fullcheck(queue))
     {
         fprintf(stderr, "[-] queue_enqueue queue invalid fail.\n");
         return 1;        
     }    
     // Instantiate a new node
     queue_node_t *new_node = (queue_node_t *) malloc(sizeof(queue_node_t));
+    // Validate node
     if(!new_node)
     {
         fprintf(stderr, "[-] queue_enqueue node instantiation fail.\n");
         return 1;          
     }
-    // Assign data to the node
+    // Set new_node->data and add to queue
     new_node->data = data;
     //memcpy(new_node->data,data,sizeof(data));
     queue->arr[queue->currentsz] = new_node;
-    
+    // Increment currentsz
     queue->currentsz++;
 
     return 0;
@@ -194,7 +195,7 @@ int queue_clear(queue_t * queue)
         fprintf(stderr, "[-] queue_clear queue invalid fail.\n");
         return 1;        
     }
-    //fprintf(stdout, "Size of currensz is: %d\n", queue->currentsz);
+    
     for(uint32_t i = 0; i < queue->currentsz; i++)
     {
         // Use customfree on node data if it exists
@@ -250,10 +251,4 @@ void custom_free(void * mem_addr)
     {
         free(mem_addr);
     }
-}
-
-int main()
-{
-    printf("hello world\n");
-    return 0;
 }

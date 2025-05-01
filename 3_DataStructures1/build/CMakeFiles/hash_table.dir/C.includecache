@@ -21,6 +21,8 @@ stdio.h
 -
 stdlib.h
 -
+string.h
+-
 hash_table.h
 /home/user/Documents/jqr-calcprojects/3_DataStructures1/src/hash_table.h
 

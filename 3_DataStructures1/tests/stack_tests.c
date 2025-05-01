@@ -41,6 +41,8 @@ void test_stack_push()
     int       i             = 0;
     stack_t * invalid_stack = NULL;
 
+    //stack = stack_init(capacity, custom_free);
+
     // Should catch if push is called on an invalid stack or with invalid data
     exit_code = stack_push(invalid_stack, &data[i]);
     CU_ASSERT(0 != exit_code);

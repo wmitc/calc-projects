@@ -201,7 +201,7 @@ list_node_t * list_pop_head(list_t * list)
         curr = curr->next;
         curr->position++;
     }
-
+    return popped;
 }
 
 /**
@@ -294,7 +294,6 @@ int list_remove(list_t * list, void ** item_to_remove)
                 prev->next = curr->next;
             }
 
-
             // Free the released node and data
             list->customfree(curr->data);
             free(curr);
@@ -345,16 +344,46 @@ int list_foreach_call(list_t * list, ACT_F action_function)
  */
 list_node_t * list_find_first_occurrence(list_t * list, void ** search_data)
 {
-    list_node_t *t;
-    return t;
+    list_node_t *curr = list->head;
+    while(curr)
+    {
+        if(curr->data == *search_data)
+        {
+            return curr;
+        }
+        curr = curr->next;
+    }
+    return NULL;
 }
 /**
  * @brief Implementation of the list_find_all_occurrences function
  */
 list_t * list_find_all_occurrences(list_t * list, void ** search_data)
 {
-    list_t *t;
-    return t;
+    // Instnatiate list to hold list of matches
+    list_t *receiving_list;
+    list_node_t *curr = list->head;
+    while(curr)
+    {
+        if(curr->data == *search_data)
+        {
+            list_node_t *new_node;
+            new_node->next = NULL;
+            new_node->data = curr->data;
+            if(!receiving_list)
+            {
+                receiving_list->head = new_node;
+                receiving_list->tail = new_node;
+            }
+            else
+            {
+                receiving_list->tail->next = new_node;
+                receiving_list->tail = new_node;
+            }
+        }
+        curr = curr->next;
+    }
+    return receiving_list;
 }
 
 /**
@@ -362,6 +391,26 @@ list_t * list_find_all_occurrences(list_t * list, void ** search_data)
  */
 int list_sort(list_t * list)
 {
+    // Selection sort on the linked list
+    for(list_node_t *i = list->head; i && i->next; i = i->next)
+    {
+        list_node_t *min_node = i;
+        for(list_node_t *j = i->next; j; j = j->next)
+        {
+            if(j->data < min_node->data)
+            {
+                min_node = j;
+            }
+        }
+        // Perform swap of data from node i with data from min_node
+        if(i != min_node)
+        {
+            int tmp = i->data;
+            i->data = min_node->data;
+            min_node->data = tmp;
+        }
+    }
+
     return 0;
 }
 
