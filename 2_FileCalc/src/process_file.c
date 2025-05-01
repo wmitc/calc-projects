@@ -143,7 +143,7 @@ int process_file(const char* file, const char* input_dir,
     // Clean up
     close(fd);
 
-    // Now handlo writing results to file
+    // Now handle writing results to file
 
     char output_path[MAX_PATH_LENGTH];
     memset(output_path, 0, sizeof(output_path));
