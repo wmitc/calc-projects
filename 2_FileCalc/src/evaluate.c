@@ -40,12 +40,16 @@ typedef enum simplecalc_ops_tag {
 int64_t evaluate_signed_equation(int64_t num1, int8_t operation, int64_t num2,
                                  int64_t* result, int8_t* type)
 {
-    // Use switch to determine and perform operation
+    
+    // Create error parameter to track whether solving equation was successful/unsuccesful,
+    // result will be recorded via a set bit when writing to output folder
     int64_t error = 0;
     // Set answer type
     type_t ans_type = INT64_T;
     // Set operation type
     simplecalc_ops op = operation;
+
+    // Use switch to determine and perform operation
     switch (op)
     {
         case ADDITION:
@@ -92,12 +96,14 @@ uint64_t evaluate_unsigned_equation(uint64_t num1, int8_t operation,
                                     uint64_t num2, uint64_t* result,
                                     int8_t* type)
 {
-    // Use switch to determine and perform operation
+    // Create error parameter to track whether solving equation was successful/unsuccesful,
+    // result will be recorded via a set bit when writing to output folder
     int64_t error = 0;
     // Set answer type
     type_t ans_type = UINT64_T;
     // Set operation type
     simplecalc_ops op = operation;
+    // Use switch to determine and perform operation
     switch (op)
     {
         case SHIFTLEFT:
