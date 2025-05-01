@@ -6,28 +6,31 @@ Simple Calculator in C.
 
 This is a  calculator application that will compute simple equations and produce the result.
 
-How to use:
+### How to use
 
-From inside `1_SimpleCalc` directory:
+To compile, do either
+
 ```console
-bash build.sh 
+bash build.sh
+```
+OR
+```console
+make
+```
 
+To execute, from inside `1_SimpleCalc` directory:
+```console
 cd build
 
 ./simplecalc (operand1) (operator) (operand2)
 ```
 
-To manually test with 1_SimpleCalc:
-
-```console
-make
-```
-OR
+For debugging:
 ```console
 make debug
 ```
 
-To validate with test suite from base folder:
+To validate with test suite from base folder (JQR CalcProjects/):
 ```console
 bash build.sh 
 
