@@ -101,16 +101,18 @@ int process_file(const char* file, const char* input_dir,
             return 1;
         }
 
+        // Initiate type variable to differentiate int64_t and uint64_t problems
+        int8_t type;
+        // Initiate "solved" variable to 0 to indicate unsolved
+        int solved = 0;
+        // Attempt to solve equation
         if (unsolved_equ.operation >= 0x1 && unsolved_equ.operation <= 0x5)
         {
-            // Attemt to solve equation
-            int64_t solution;
-            int8_t type;
-            // Initiate "solved" variable to 0 to indicate unsolved
-            int solved = 0;
+            int64_t signed_solution;
+
             solved = evaluate_signed_equation(
                 unsolved_equ.operand1, unsolved_equ.operation,
-                unsolved_equ.operand2, &solution, &type);
+                unsolved_equ.operand2, &signed_solution, &type);
 
             int64_t result;
 
@@ -118,18 +120,15 @@ int process_file(const char* file, const char* input_dir,
             solves[i].equationID = unsolved_equ.equationID;
             solves[i].flag = solved;
             solves[i].type = type;
-            solves[i].solution = solution;
+            solves[i].solution = signed_solution;
         }
         else if (unsolved_equ.operation >= 0x6 && unsolved_equ.operation <= 0xc)
         {
-            // Attempt to solve equation
-            uint64_t solution;
-            int8_t type;
-            // Initiate "solved" variable to 0 to indicate unsolved
-            int solved = 0;
+            uint64_t unsigned_solution;
+            
             solved = evaluate_unsigned_equation(
                 unsolved_equ.operand1, unsolved_equ.operation,
-                unsolved_equ.operand2, &solution, &type);
+                unsolved_equ.operand2, &unsigned_solution, &type);
 
             int64_t result;
 
@@ -137,7 +136,7 @@ int process_file(const char* file, const char* input_dir,
             solves[i].equationID = unsolved_equ.equationID;
             solves[i].flag = solved;
             solves[i].type = type;
-            solves[i].solution = (int64_t) solution;
+            solves[i].solution = (int64_t) unsigned_solution;
         }
     }
     // Clean up
