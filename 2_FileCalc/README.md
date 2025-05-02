@@ -66,6 +66,13 @@ To clean up:
 make clean
 ```
 
+To run test suite from base folder:
+```console
+bash build.sh
+
+bash run_tests.sh
+```
+
 Supported Operators:
 *  (+) addition
 *  (-) subtraction
