@@ -136,7 +136,7 @@ stack_node_t * stack_pop(stack_t * stack)
     if(!stack || stack_emptycheck(stack))
     {
         fprintf(stderr, "[-] stack_pop stack invalid fail.\n");
-        return 1;
+        return NULL;
     }
 
     // Remove node from the top of the stack
@@ -156,7 +156,7 @@ stack_node_t * stack_peek(stack_t * stack)
     if(!stack || stack_emptycheck(stack))
     {
         fprintf(stderr, "[-] stack_peek stack invalid fail.\n");
-        return 1;
+        return NULL;
     }
 
     // Get value at top of stack
@@ -176,15 +176,15 @@ int stack_clear(stack_t * stack)
     }
 
     // Iterate over the array, freeing all data
-    for(int i = 0; i < stack->currentsz; i++)
+    for(int i = 0; i < stack->capacity; i++)
     {
         // Free data if the stack node exists
         if(stack->arr[i])
         {
-            /*if(stack->arr[i]->data)
+            if(stack->arr[i]->data)
             {
                 stack->customfree(stack->arr[i]->data);
-            }*/
+            }
             // Free the stack node
             free(stack->arr[i]);
             // Prevent dangling pointer
@@ -240,40 +240,53 @@ int main()
     printf("initialized!\n");
 
     // Add some elements to the queue
-    stack_push(stack,1);
-    stack_push(stack,2);
-    stack_push(stack,3);;
-    stack_push(stack,4);
+    int *value = NULL;
+    value = malloc(sizeof(int));
+    *value = 15;
+    stack_push(stack,value);
+    value = malloc(sizeof(int));
+    *value = 25;
+    stack_push(stack,value);
+    value = malloc(sizeof(int));
+    *value = 35;
+    stack_push(stack,value);
+    value = malloc(sizeof(int));
+    *value = 45;
+    stack_push(stack,value);
 
     // Now print the conents of the queue
     for(int i = 0; i < stack->currentsz; i++)
     {
-        printf("Node %d has data %d\n",i,stack->arr[i]->data);
+        printf("Node %d has data %d\n",i,*(int *) stack->arr[i]->data);
     }
 
-
-    stack_pop(stack);
+    stack_node_t *popped = NULL;
+    popped = stack_pop(stack);
+    free(popped->data);
+    free(popped);
+    popped = NULL;
     printf("\nTop node popped!\n");
     // Top node popped
     for(int i = 0; i < stack->currentsz; i++)
     {
-        printf("Node %d has data %d\n",i,stack->arr[i]->data);
+        printf("Node %d has data %d\n",i,*(int *) stack->arr[i]->data);
     }
 
 
 
 
-    stack_pop(stack);
+    popped = stack_pop(stack);
+    free(popped->data);
+    free(popped);
+    popped = NULL;
     printf("\nTop node popped!\n");
-
-
-    //queue_p_clear(queue);    
+ 
     
     //printf("cleared!\n");
     // Now print again
     for(int i = 0; i < stack->currentsz; i++)
     {
-        printf("Node %d has data %d\n",i,stack->arr[i]->data);
+        printf("Node %d has data %d\n",i,*(int *) stack->arr[i]->data);
     }
 
     stack_clear(stack);    

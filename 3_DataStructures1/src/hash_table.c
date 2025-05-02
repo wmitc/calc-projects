@@ -44,7 +44,7 @@ hash_table_t * hash_table_init(uint32_t size, FREE_F customfree)
 
     // Set parameters
     hash_table->table = (node_t **) calloc(size, sizeof(node_t *));
-    
+
     if(!hash_table->table)
     {
         fprintf(stderr, "[-] queue_init fail; array allocation failed.\n");
@@ -70,7 +70,7 @@ unsigned long hash(unsigned char *str, uint32_t size)
     unsigned long hash = 5381;
     int c;
 
-    while (c = *str++)
+    while ((c = *str++))
     {
         hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
     }
@@ -143,12 +143,12 @@ void * hash_table_lookup(hash_table_t * table, char * key)
     // Validate table, data, and key exist
     if(!table || !key)
     {
-        fprintf(stderr, "[-] hash_table_add table invalid fail.\n");
-        return 1;        
+        fprintf(stderr, "[-] hash_table_lookup table invalid fail.\n");
+        return NULL;        
     }
 
     // Pull the index based on the key
-    int index = hash(key, table->size);
+    uint32_t index = hash((unsigned char *)key, table->size);
     // Get first node in <index> row
     node_t *curr = table->table[index];
 
@@ -236,18 +236,23 @@ int hash_table_clear(hash_table_t * table)
         {
             // Free all nodes in row
             node_t *curr = table->table[i];
-            node_t *next = table->table[i]->next;
+            while(curr != NULL){
+                node_t *next = curr->next;
 
-            while(next != NULL){
-                // Free current
+                // Use customfree on data
+                if(table->customfree)
+                {
+                    table->customfree(curr->data);
+                }
+                // Free current's key and current itself
+                free(curr->key);
                 free(curr);
-                // Move next forward
-                next = next->next;
                 // Move curr forward
-                curr = curr->next;
+                curr = next;
             }
-            // Free last node
-            free(curr);
+
+            // Set row entry to NULL to avoid dangling pointer
+            table->table[i] = NULL;
         }
     }
 
