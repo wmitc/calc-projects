@@ -44,16 +44,22 @@ hash_table_t * hash_table_init(uint32_t size, FREE_F customfree)
 
     // Set parameters
     hash_table->table = (node_t **) calloc(size, sizeof(node_t *));
-
+    // Validate table creation
     if(!hash_table->table)
     {
         fprintf(stderr, "[-] queue_init fail; array allocation failed.\n");
         free(hash_table);
         return NULL;
     }
-
+    // Set size and customfree
     hash_table->size = size;
-    hash_table->customfree = customfree;
+    if(customfree)
+    {
+        hash_table->customfree = customfree;
+    }
+    else{
+        hash_table->customfree = free;
+    }
 
     return hash_table;
 }
@@ -201,10 +207,10 @@ int hash_table_remove(hash_table_t * table, char * key)
             }
             
             // Free data with customfree
-            if(table->customfree)
+            /*if(table->customfree)
             {
                 table->customfree(curr->data);
-            }
+            }*/
             free(curr->key);
             free(curr);
             return 0;
@@ -240,10 +246,10 @@ int hash_table_clear(hash_table_t * table)
                 node_t *next = curr->next;
 
                 // Use customfree on data
-                if(table->customfree)
+                /*if(table->customfree)
                 {
                     table->customfree(curr->data);
-                }
+                }*/
                 // Free current's key and current itself
                 free(curr->key);
                 free(curr);
@@ -304,6 +310,17 @@ void custom_free(void * mem_addr)
 
 int main()
 {
-    printf("hello world\n");
+    int SIZE = 5;
+    int data[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    hash_table_t *hash_table = hash_table_init(SIZE, NULL);
+    printf("Instantiated table!\n");
+    hash_table_add(hash_table, (void *)&data[5], "Item one");
+    printf("Added item!\n");
+    int found = *(int *)hash_table_lookup(hash_table, "Item one");
+    printf("Looked up and found %d\n", found);
+    hash_table_clear(hash_table);
+    printf("Cleared!\n");
+    hash_table_destroy(&hash_table);
+    printf("Destroyed!\n");
     return 0;
 }

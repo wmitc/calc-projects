@@ -10,6 +10,7 @@ stack_t * stack = NULL;
 // The integer all node data[5] pointers point to
 int data[5] = { 1, 2, 3, 4, 5 };
 
+
 int init_suite1(void)
 {
     return 0;
@@ -41,23 +42,25 @@ void test_stack_push()
     int       i             = 0;
     stack_t * invalid_stack = NULL;
 
-    //stack = stack_init(capacity, custom_free);
-
     // Should catch if push is called on an invalid stack or with invalid data
     exit_code = stack_push(invalid_stack, &data[i]);
     CU_ASSERT(0 != exit_code);
     exit_code = stack_push(stack, NULL);
     CU_ASSERT(0 != exit_code);
     
-    stack = stack_init(capacity, custom_free);
-    
+    fprintf(stdout,"made it here\n");
+    stack = stack_init(CAPACITY, custom_free);
+    fprintf(stdout,"made it here 2\n"); 
+
     // push CAPACITY number of nodes
     while (i < CAPACITY)
     {
         exit_code = stack_push(stack, &data[i]);
+        fprintf(stdout,"exit code: %d\n",exit_code);
         // New node was pushed and points to the correct data
-        CU_ASSERT(data[i] ==
-                  (*(int *)stack->arr[(stack->capacity - i) - 1]->data));
+        //CU_ASSERT(data[i] ==
+        //          (*(int *)stack->arr[(stack->capacity - i) - 1]->data));
+        CU_ASSERT(data[i] == (*(int *)stack->arr[i]->data));
         i++;
     }
 

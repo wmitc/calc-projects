@@ -21,6 +21,8 @@ stdio.h
 -
 stdlib.h
 -
+string.h
+-
 stack.h
 /home/user/Documents/jqr-calcprojects/3_DataStructures1/src/stack.h
 

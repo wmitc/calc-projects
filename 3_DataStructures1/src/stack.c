@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "stack.h"
 
 /**
@@ -119,7 +120,6 @@ int stack_push(stack_t * stack, void * data)
     }
     // Set new_node->data and emplace on stack
     new_node->data = data;
-    //memcpy(new_node->data, data, sizeof(data));
     stack->arr[stack->currentsz] = new_node;
     // Increment currentsz
     stack->currentsz++;
@@ -178,13 +178,13 @@ int stack_clear(stack_t * stack)
     // Iterate over the array, freeing all data
     for(int i = 0; i < stack->capacity; i++)
     {
-        // Free data if the stack node exists
+        // Free node if allocated
         if(stack->arr[i])
         {
-            if(stack->arr[i]->data)
+           /*if(stack->arr[i]->data)
             {
                 stack->customfree(stack->arr[i]->data);
-            }
+            }*/
             // Free the stack node
             free(stack->arr[i]);
             // Prevent dangling pointer
@@ -241,7 +241,7 @@ int main()
 
     // Add some elements to the queue
     int *value = NULL;
-    value = malloc(sizeof(int));
+    /*value = malloc(sizeof(int));
     *value = 15;
     stack_push(stack,value);
     value = malloc(sizeof(int));
@@ -252,7 +252,13 @@ int main()
     stack_push(stack,value);
     value = malloc(sizeof(int));
     *value = 45;
-    stack_push(stack,value);
+    stack_push(stack,value);*/
+
+    int data[5] = {1,2,3,4,5};
+    for(int i = 0; i < 5; i++)
+    {
+        stack_push(stack, &data[i]);
+    }
 
     // Now print the conents of the queue
     for(int i = 0; i < stack->currentsz; i++)
@@ -262,7 +268,7 @@ int main()
 
     stack_node_t *popped = NULL;
     popped = stack_pop(stack);
-    free(popped->data);
+    //free(popped->data);
     free(popped);
     popped = NULL;
     printf("\nTop node popped!\n");
@@ -276,13 +282,20 @@ int main()
 
 
     popped = stack_pop(stack);
-    free(popped->data);
+    //free(popped->data);
     free(popped);
     popped = NULL;
     printf("\nTop node popped!\n");
  
+
+    printf("\nLet's peek!\n"); 
+    stack_node_t *peeked = stack_peek(stack);
+    printf("Peeked and found: %d\n", *(int *)peeked->data); 
+
+    int val = 45;
+    stack_push(stack,&val);
     
-    //printf("cleared!\n");
+    printf("45 added!\n");
     // Now print again
     for(int i = 0; i < stack->currentsz; i++)
     {
@@ -294,7 +307,7 @@ int main()
     printf("cleared!\n");
     for(int i = 0; i < stack->currentsz; i++)
     {
-        printf("Node %d has data %d\n",i,stack->arr[i]->data);
+        printf("Node %d has data %d\n",i,*(int *)stack->arr[i]->data);
     }   
     stack_destroy(&stack);
     printf("destroyed!\n");

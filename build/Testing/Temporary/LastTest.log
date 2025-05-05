@@ -1,10 +1,10 @@
-Start testing: Apr 24 10:36 EDT
+Start testing: May 05 16:05 EDT
 ----------------------------------------------------------
 1/5 Testing: TestSimpleCalc
 1/5 Test: TestSimpleCalc
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "1_SimpleCalc"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestSimpleCalc" start time: Apr 24 10:36 EDT
+"TestSimpleCalc" start time: May 05 16:05 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -33,10 +33,10 @@ Failed: 2147483648 <<< 1 1
 Passed 30 out of 31 
 Removing Build Artifacts
 <end of output>
-Test time =   0.19 sec
+Test time =   0.15 sec
 ----------------------------------------------------------
 Test Failed.
-"TestSimpleCalc" end time: Apr 24 10:36 EDT
+"TestSimpleCalc" end time: May 05 16:05 EDT
 "TestSimpleCalc" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -44,7 +44,7 @@ Test Failed.
 2/5 Test: TestFileCalc
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "2_FileCalc"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestFileCalc" start time: Apr 24 10:36 EDT
+"TestFileCalc" start time: May 05 16:05 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -86,10 +86,10 @@ End clang-tidy Check
 Test Results: Passed 0 out of 16 tests.
 Removing Build Artifacts
 <end of output>
-Test time =   0.34 sec
+Test time =   0.32 sec
 ----------------------------------------------------------
 Test Passed.
-"TestFileCalc" end time: Apr 24 10:36 EDT
+"TestFileCalc" end time: May 05 16:05 EDT
 "TestFileCalc" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -97,7 +97,7 @@ Test Passed.
 3/5 Test: TestDataStructures1
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "3_DataStructures1"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestDataStructures1" start time: Apr 24 10:36 EDT
+"TestDataStructures1" start time: May 05 16:05 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -108,106 +108,159 @@ Suppressed 2 warnings (2 NOLINT).
 Suppressed 8 warnings (8 NOLINT).
 Suppressed 1 warnings (1 NOLINT).
 Suppressed 2 warnings (2 NOLINT).
-3 warnings generated.
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue.c:22:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return t;
+13 warnings generated.
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:197:26: warning: Access to field 'position' results in a dereference of a null pointer (loaded from field 'head') [clang-analyzer-core.NullDereference]
+    list->head->position = HEAD_POSITION;
+                         ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:179:8: note: Assuming 'list' is non-null
+    if(!list)
+       ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:179:5: note: Taking false branch
+    if(!list)
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue.c:21:5: note: 't' declared without an initial value
-    queue_t *t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:186:5: note: Value assigned to field 'head'
+    list->head = popped->next;
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue.c:22:5: note: Undefined or garbage value returned to caller
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:188:8: note: Assuming field 'head' is equal to NULL
+    if(list->head == NULL)
+       ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:188:5: note: Taking true branch
+    if(list->head == NULL)
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue.c:58:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:197:26: note: Access to field 'position' results in a dereference of a null pointer (loaded from field 'head')
+    list->head->position = HEAD_POSITION;
+                         ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:229:16: warning: Access to field 'next' results in a dereference of a null pointer (loaded from variable 'prev') [clang-analyzer-core.NullDereference]
+    prev->next = NULL;
+               ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:213:8: note: Assuming 'list' is non-null
+    if(!list)
+       ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:213:5: note: Taking false branch
+    if(!list)
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue.c:57:5: note: 't' declared without an initial value
-    queue_node_t *t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:221:5: note: 'prev' initialized to a null pointer value
+    list_node_t *prev = NULL;
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue.c:58:5: note: Undefined or garbage value returned to caller
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:223:5: note: Loop condition is false. Execution continues on line 229
+    while(curr->next){
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue.c:67:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:229:16: note: Access to field 'next' results in a dereference of a null pointer (loaded from variable 'prev')
+    prev->next = NULL;
+               ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:303:21: warning: Value stored to 'pos' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
+            int32_t pos = prev->position;
+                    ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:303:21: note: Value stored to 'pos' during its initialization is never read
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:303:27: warning: Access to field 'position' results in a dereference of a null pointer (loaded from variable 'prev') [clang-analyzer-core.NullDereference]
+            int32_t pos = prev->position;
+                          ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:270:8: note: Assuming 'list' is non-null
+    if(!list)
+       ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:270:5: note: Taking false branch
+    if(!list)
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue.c:66:5: note: 't' declared without an initial value
-    queue_node_t *t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:278:5: note: 'prev' initialized to a null pointer value
+    list_node_t *prev = NULL;
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue.c:67:5: note: Undefined or garbage value returned to caller
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:281:5: note: Loop condition is true.  Entering loop body
+    while(curr)
     ^
-14 warnings generated.
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:176:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:284:12: note: Assuming the condition is true
+        if(list->compare_function(*item_to_remove, curr->data))
+           ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:284:9: note: Taking true branch
+        if(list->compare_function(*item_to_remove, curr->data))
+        ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:287:16: note: 'curr' is equal to field 'head'
+            if(curr == list->head)
+               ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:287:13: note: Taking true branch
+            if(curr == list->head)
+            ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:303:27: note: Access to field 'position' results in a dereference of a null pointer (loaded from variable 'prev')
+            int32_t pos = prev->position;
+                          ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:308:17: warning: Use of memory after it is freed [clang-analyzer-unix.Malloc]
+                prev->position++;
+                ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:270:8: note: Assuming 'list' is non-null
+    if(!list)
+       ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:270:5: note: Taking false branch
+    if(!list)
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:175:5: note: 't' declared without an initial value
-    list_node_t *t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:281:5: note: Loop condition is true.  Entering loop body
+    while(curr)
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:176:5: note: Undefined or garbage value returned to caller
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:284:12: note: Assuming the condition is false
+        if(list->compare_function(*item_to_remove, curr->data))
+           ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:284:9: note: Taking false branch
+        if(list->compare_function(*item_to_remove, curr->data))
+        ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:281:5: note: Loop condition is true.  Entering loop body
+    while(curr)
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:255:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:284:12: note: Assuming the condition is true
+        if(list->compare_function(*item_to_remove, curr->data))
+           ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:284:9: note: Taking true branch
+        if(list->compare_function(*item_to_remove, curr->data))
+        ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:287:16: note: Assuming 'curr' is equal to field 'head'
+            if(curr == list->head)
+               ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:287:13: note: Taking true branch
+            if(curr == list->head)
+            ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:299:13: note: Memory is released
+            free(curr);
+            ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:305:13: note: Loop condition is true.  Entering loop body
+            while(prev->next)
+            ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:308:17: note: Use of memory after it is freed
+                prev->position++;
+                ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:371:28: warning: Dereference of undefined pointer value [clang-analyzer-core.NullDereference]
+            new_node->next = NULL;
+                           ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:366:5: note: Loop condition is true.  Entering loop body
+    while(curr)
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:254:5: note: 't' declared without an initial value
-    list_node_t *t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:368:12: note: Assuming the condition is true
+        if(curr->data == *search_data)
+           ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:368:9: note: Taking true branch
+        if(curr->data == *search_data)
+        ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:370:13: note: 'new_node' declared without an initial value
+            list_node_t *new_node;
+            ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:371:28: note: Dereference of undefined pointer value
+            new_node->next = NULL;
+                           ^
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:386:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
+    return receiving_list;
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:255:5: note: Undefined or garbage value returned to caller
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:364:5: note: 'receiving_list' declared without an initial value
+    list_t *receiving_list;
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:263:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:366:5: note: Loop condition is false. Execution continues on line 386
+    while(curr)
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:262:5: note: 't' declared without an initial value
-    list_t *t;
+/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:386:5: note: Undefined or garbage value returned to caller
+    return receiving_list;
     ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/linked_list.c:263:5: note: Undefined or garbage value returned to caller
-    return t;
-    ^
-Suppressed 11 warnings (11 with check filters).
-2 warnings generated.
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/hash_table.c:22:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return t;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/hash_table.c:21:5: note: 't' declared without an initial value
-    hash_table_t *t;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/hash_table.c:22:5: note: Undefined or garbage value returned to caller
-    return t;
-    ^
-Suppressed 1 warnings (1 with check filters).
-3 warnings generated.
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue_p.c:22:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return q;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue_p.c:21:5: note: 'q' declared without an initial value
-    queue_p_t *q;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue_p.c:22:5: note: Undefined or garbage value returned to caller
-    return q;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue_p.c:55:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return p;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue_p.c:54:5: note: 'p' declared without an initial value
-    queue_p_node_t *p;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue_p.c:55:5: note: Undefined or garbage value returned to caller
-    return p;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue_p.c:64:5: warning: Undefined or garbage value returned to caller [clang-analyzer-core.uninitialized.UndefReturn]
-    return p;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue_p.c:63:5: note: 'p' declared without an initial value
-    queue_p_node_t *p;
-    ^
-/home/user/Documents/jqr-calcprojects/3_DataStructures1/src/queue_p.c:64:5: note: Undefined or garbage value returned to caller
-    return p;
-    ^
-6 warnings generated.
 Suppressed 6 warnings (6 with check filters).
+2 warnings generated.
+Suppressed 2 warnings (2 with check filters).
+7 warnings generated.
+Suppressed 7 warnings (7 with check filters).
 End clang-tidy Check
-Clang-Tidy found 23 warnings.
+Clang-Tidy found 18 warnings.
 cat: ../clanglog.txt: No such file or directory
 /home/user/Documents/jqr-calcprojects
 -- Configuring done
@@ -223,28 +276,170 @@ cat: ../clanglog.txt: No such file or directory
 [ 80%] Built target linked_list
 [ 90%] Built target test_list
 [100%] Built target test_queue
-Traceback (most recent call last):
-  File "./Tests/DataStructures1Tests.py", line 66, in <module>
-    main()
-  File "./Tests/DataStructures1Tests.py", line 53, in main
-    res1 = test_binary(f"./{test}")
-  File "./Tests/DataStructures1Tests.py", line 16, in test_binary
-    str_out = output.decode("ascii")
-UnicodeDecodeError: 'ascii' codec can't decode byte 0x87 in position 190: ordinal not in range(128)
+./test_list Failed!
+Failing Output
+
+
+     CUnit - A unit testing framework for C - Version 2.1-3
+     http://cunit.sourceforge.net/
+
+
+Suite: Suite-1:
+  Test: Testing list_new(): ...passed
+  Test: Testing list_push_tail(): ...passed
+  Test: Testing if the resulting list is circular: ...FAILED
+    1. /home/user/Documents/jqr-calcprojects/3_DataStructures1/tests/linked_list_tests.c:131  - list->tail->next == list->head
+  Test: Testing list_pop_head(): ...
+[-] Linked list nonexistent in list_push_tail.
+[-] Linked list nonexistent in list_pop_head.
+
+./test_list Failed!
+Failing Output
+
+
+     CUnit - A unit testing framework for C - Version 2.1-3
+     http://cunit.sourceforge.net/
+
+
+Suite: Suite-1:
+  Test: Testing list_new(): ...passed
+  Test: Testing list_push_tail(): ...passed
+  Test: Testing if the resulting list is circular: ...FAILED
+    1. /home/user/Documents/jqr-calcprojects/3_DataStructures1/tests/linked_list_tests.c:131  - list->tail->next == list->head
+  Test: Testing list_pop_head(): ...
+==189002== Memcheck, a memory error detector
+==189002== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==189002== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==189002== Command: ./test_list
+==189002== 
+[-] Linked list nonexistent in list_push_tail.
+[-] Linked list nonexistent in list_pop_head.
+==189002== Invalid write of size 4
+==189002==    at 0x484B5CE: list_pop_head (linked_list.c:197)
+==189002==    by 0x10AA64: test_list_pop_head (linked_list_tests.c:149)
+==189002==    by 0x4865CC6: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+==189002==    by 0x4865EFC: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+==189002==    by 0x486636D: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+==189002==    by 0x10BE6B: main (linked_list_tests.c:537)
+==189002==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==189002== 
+==189002== 
+==189002== Process terminating with default action of signal 11 (SIGSEGV)
+==189002==  Access not within mapped region at address 0x0
+==189002==    at 0x484B5CE: list_pop_head (linked_list.c:197)
+==189002==    by 0x10AA64: test_list_pop_head (linked_list_tests.c:149)
+==189002==    by 0x4865CC6: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+==189002==    by 0x4865EFC: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+==189002==    by 0x486636D: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+==189002==    by 0x10BE6B: main (linked_list_tests.c:537)
+==189002==  If you believe this happened as a result of a stack
+==189002==  overflow in your program's main thread (unlikely but
+==189002==  possible), you can try to increase the size of the
+==189002==  main thread stack using the --main-stacksize= flag.
+==189002==  The main thread stack size used in this run was 8388608.
+==189002== 
+==189002== HEAP SUMMARY:
+==189002==     in use at exit: 1,584 bytes in 40 blocks
+==189002==   total heap usage: 45 allocs, 5 frees, 1,720 bytes allocated
+==189002== 
+==189002== LEAK SUMMARY:
+==189002==    definitely lost: 0 bytes in 0 blocks
+==189002==    indirectly lost: 0 bytes in 0 blocks
+==189002==      possibly lost: 0 bytes in 0 blocks
+==189002==    still reachable: 1,584 bytes in 40 blocks
+==189002==         suppressed: 0 bytes in 0 blocks
+==189002== Reachable blocks (those to which a pointer was found) are not shown.
+==189002== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==189002== 
+==189002== For lists of detected and suppressed errors, rerun with: -s
+==189002== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
+./test_stack Failed!
+Failing Output
+
+
+     CUnit - A unit testing framework for C - Version 2.1-3
+     http://cunit.sourceforge.net/
+
+
+Suite: Suite-1:
+  Test: Testing stack_init(): ...passed
+  Test: Testing stack_push(): ...made it here
+made it here 2
+exit code: 0
+exit code: 0
+exit code: 0
+exit code: 0
+exit code: 0
+passed
+  Test: Testing stack_pop(): ...passed
+  Test: Testing stack_peek(): ...passed
+  Test: Testing stack_clear(): ...passed
+  Test: Testing stack_destroy(): ...passed
+
+Run Summary:    Type  Total    Ran Passed Failed Inactive
+              suites      1      1    n/a      0        0
+               tests      6      6      6      0        0
+             asserts     37     37     37      0      n/a
+
+Elapsed time =    0.011 seconds
+
+
+==189013== Memcheck, a memory error detector
+==189013== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==189013== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==189013== Command: ./test_stack
+==189013== 
+[-] stack_push stack invalid fail.
+[-] stack_push stack invalid fail.
+[-] stack_push stack invalid fail.
+[-] stack_pop stack invalid fail.
+[-] stack_pop stack invalid fail.
+[-] stack_peek stack invalid fail.
+[-] stack_peek stack invalid fail.
+[-] stack_clear stack invalid fail.
+[-] stack_clear stack invalid fail.
+[-] stack_clear stack invalid fail.
+==189013== 
+==189013== HEAP SUMMARY:
+==189013==     in use at exit: 64 bytes in 2 blocks
+==189013==   total heap usage: 30 allocs, 28 frees, 1,009 bytes allocated
+==189013== 
+==189013== 64 (24 direct, 40 indirect) bytes in 1 blocks are definitely lost in loss record 2 of 2
+==189013==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==189013==    by 0x484B35C: stack_init (stack.c:36)
+==189013==    by 0x10940D: test_stack_init (stack_tests.c:29)
+==189013==    by 0x4865CC6: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+==189013==    by 0x4865EFC: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+==189013==    by 0x486636D: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+==189013==    by 0x109DC2: main (stack_tests.c:201)
+==189013== 
+==189013== LEAK SUMMARY:
+==189013==    definitely lost: 24 bytes in 1 blocks
+==189013==    indirectly lost: 40 bytes in 1 blocks
+==189013==      possibly lost: 0 bytes in 0 blocks
+==189013==    still reachable: 0 bytes in 0 blocks
+==189013==         suppressed: 0 bytes in 0 blocks
+==189013== 
+==189013== For lists of detected and suppressed errors, rerun with: -s
+==189013== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
+
+Passed 3 out of 5 
 Removing Build Artifacts
 <end of output>
-Test time =   1.00 sec
+Test time =   4.10 sec
 ----------------------------------------------------------
 Test Failed.
-"TestDataStructures1" end time: Apr 24 10:36 EDT
-"TestDataStructures1" time elapsed: 00:00:00
+"TestDataStructures1" end time: May 05 16:05 EDT
+"TestDataStructures1" time elapsed: 00:00:04
 ----------------------------------------------------------
 
 4/5 Testing: TestThreadCalc
 4/5 Test: TestThreadCalc
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "4_ThreadCalc"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestThreadCalc" start time: Apr 24 10:36 EDT
+"TestThreadCalc" start time: May 05 16:05 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -281,10 +476,10 @@ Generating 16 files with 64 equations
 Test Results: Passed 0 out of 16 tests.
 Removing Build Artifacts
 <end of output>
-Test time =   0.26 sec
+Test time =   0.31 sec
 ----------------------------------------------------------
 Test Failed.
-"TestThreadCalc" end time: Apr 24 10:36 EDT
+"TestThreadCalc" end time: May 05 16:05 EDT
 "TestThreadCalc" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -292,7 +487,7 @@ Test Failed.
 5/5 Test: TestNetCalc
 Command: "/usr/bin/bash" "/home/user/Documents/jqr-calcprojects/local_tester.sh" "5_NetCalc"
 Directory: /home/user/Documents/jqr-calcprojects
-"TestNetCalc" start time: Apr 24 10:36 EDT
+"TestNetCalc" start time: May 05 16:05 EDT
 Output:
 ----------------------------------------------------------
 Start clang-tidy Check
@@ -307,11 +502,11 @@ Starting server in background
 Failed to connect to server; Aborting further tests
 Removing Build Artifacts
 <end of output>
-Test time =   1.03 sec
+Test time =   1.04 sec
 ----------------------------------------------------------
 Test Failed.
-"TestNetCalc" end time: Apr 24 10:36 EDT
+"TestNetCalc" end time: May 05 16:05 EDT
 "TestNetCalc" time elapsed: 00:00:01
 ----------------------------------------------------------
 
-End testing: Apr 24 10:36 EDT
+End testing: May 05 16:05 EDT
