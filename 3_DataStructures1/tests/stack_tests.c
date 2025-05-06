@@ -49,7 +49,7 @@ void test_stack_push()
     CU_ASSERT(0 != exit_code);
     
     fprintf(stdout,"made it here\n");
-    stack = stack_init(CAPACITY, custom_free);
+    //stack = stack_init(CAPACITY, custom_free);
     fprintf(stdout,"made it here 2\n"); 
 
     // push CAPACITY number of nodes
