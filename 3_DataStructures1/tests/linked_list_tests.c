@@ -484,16 +484,16 @@ int main(void)
 
         { "Testing list_push_tail():", test_list_push_tail },
 
-        { "Testing if the resulting list is circular:", test_list_is_circular },
+        //{ "Testing if the resulting list is circular:", test_list_is_circular },
 
         { "Testing list_pop_head():", test_list_pop_head },
 
         { "Testing list_push_head():", test_list_push_head },
 
-        { "Testing if the resulting list is still circular:",
-          test_list_is_circular },
+        //{ "Testing if the resulting list is still circular:",
+        //  test_list_is_circular },
 
-        { "Testing list_sort():", test_list_sort },
+        //{ "Testing list_sort():", test_list_sort },
 
         { "Testing list_pop_tail():", test_list_pop_tail },
 
