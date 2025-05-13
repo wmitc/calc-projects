@@ -1,58 +1,64 @@
 /**
  * @file queue_p.c
  * @author William Mitchell (william.b.mitchell46.mil@army.mil)
- * @brief 
+ * @brief Implementation of a priority queue
  * @version 0.1
  * @date 2025-04-22
- * 
+ *
  * @copyright Copyright (c) 2025
- * 
+ *
  */
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "queue_p.h"
 
+#ifndef DEBUG
+#define DEBUG 0
+#else
+#define DEBUG 1
+#endif
+
 /**
  * @brief Implementation of the queue_p_init function
  */
-queue_p_t * queue_p_init(uint32_t capacity, FREE_F customfree)
+queue_p_t *queue_p_init(uint32_t capacity, FREE_F customfree)
 {
     // Check capacity
-    if(capacity == 0)
+    if (capacity == 0)
     {
         fprintf(stderr, "[-] queue_init fail; capacity >= 1 required.\n");
         return NULL;
     }
     // Check customfree function
-    if(!customfree)
+    if (!customfree)
     {
         fprintf(stderr, "[-] queue_init fail; customfree does not exist.\n");
         return NULL;
     }
 
     // Allocate the queue via malloc
-    queue_p_t *queue = (queue_p_t *) malloc(sizeof(queue_p_t));
+    queue_p_t *queue = (queue_p_t *)malloc(sizeof(queue_p_t));
 
-    // Check for error 
-    if(!queue)
+    // Check for error
+    if (!queue)
     {
         fprintf(stderr, "[-] queue_p_init fail; malloc failure.\n");
         return NULL;
     }
 
     // Set parameters
-    queue->arr = (queue_p_node_t **) calloc(capacity, sizeof(queue_p_node_t *));
-    
-    if(!queue->arr)
+    queue->arr = (queue_p_node_t **)calloc(capacity, sizeof(queue_p_node_t *));
+
+    if (!queue->arr)
     {
         fprintf(stderr, "[-] queue_init fail; array allocation failed.\n");
         free(queue);
         return NULL;
     }
-
-    queue->capacity = capacity;
-    queue->currentsz = 0;
+    // Set parameters
+    queue->capacity   = capacity;
+    queue->currentsz  = 0;
     queue->customfree = customfree;
 
     return queue;
@@ -61,15 +67,16 @@ queue_p_t * queue_p_init(uint32_t capacity, FREE_F customfree)
 /**
  * @brief Implementation of the queue_p_fullcheck function
  */
-int queue_p_fullcheck(queue_p_t * queue)
+int queue_p_fullcheck(queue_p_t *queue)
 {
     // Validate queue existence
-    if(!queue){
+    if (!queue)
+    {
         fprintf(stderr, "[-] queue_p_fullcheck queue invalid fail.\n");
-        return -1;        
+        return -1;
     }
     // Check whether queue is at capacity
-    if(queue->currentsz == queue->capacity)
+    if (queue->currentsz == queue->capacity)
     {
         return 1;
     }
@@ -80,15 +87,16 @@ int queue_p_fullcheck(queue_p_t * queue)
 /**
  * @brief Implementation of the queue_p_emptycheck function
  */
-int queue_p_emptycheck(queue_p_t * queue)
+int queue_p_emptycheck(queue_p_t *queue)
 {
     // Validate queue existence
-    if(!queue){
+    if (!queue)
+    {
         fprintf(stderr, "[-] queue_emptycheck queue invalid fail.\n");
-        return -1;        
+        return -1;
     }
     // Check whether queue is empty
-    if(queue->currentsz == 0)
+    if (queue->currentsz == 0)
     {
         return 1;
     }
@@ -99,25 +107,25 @@ int queue_p_emptycheck(queue_p_t * queue)
 /**
  * @brief Implementation of the queue_p_enqueue function
  */
-int queue_p_enqueue(queue_p_t * queue, void * data, int priority)
+int queue_p_enqueue(queue_p_t *queue, void *data, int priority)
 {
     // Validate queue, data, and space for data
-    if(!queue || !data || queue_p_fullcheck(queue))
+    if (!queue || !data || queue_p_fullcheck(queue))
     {
         fprintf(stderr, "[-] queue_enqueue queue invalid fail.\n");
-        return 1;        
-    }    
+        return 1;
+    }
     // Instantiate a new node
-    queue_p_node_t *new_node = (queue_p_node_t *) malloc(sizeof(queue_p_node_t));
+    queue_p_node_t *new_node = (queue_p_node_t *)malloc(sizeof(queue_p_node_t));
     // Validate node
-    if(!new_node)
+    if (!new_node)
     {
         fprintf(stderr, "[-] queue_enqueue node instantiation fail.\n");
         free(new_node);
-        return 1;          
+        return 1;
     }
 
-    // Set new_node->data 
+    // Set new_node->data
     new_node->data = data;
     // Set new_node->priority
     new_node->priority = priority;
@@ -125,17 +133,17 @@ int queue_p_enqueue(queue_p_t * queue, void * data, int priority)
     // Find correct location to insert data
     int i = 0;
     // Move index to point to first element of lower priority
-    while(i < queue->currentsz && queue->arr[i]->priority >= priority)
+    while (i < queue->currentsz && queue->arr[i]->priority >= priority)
     {
         i++;
     }
     // Move lower priority elements down one position
-    for(int j = queue->currentsz; j > i; j--)
+    for (int j = queue->currentsz; j > i; j--)
     {
-        queue->arr[j] = queue->arr[j-1];
+        queue->arr[j] = queue->arr[j - 1];
     }
     // Emplace new element at index i
-    queue->arr[i]  = new_node;
+    queue->arr[i] = new_node;
 
     // Increment currentsz
     queue->currentsz++;
@@ -146,31 +154,32 @@ int queue_p_enqueue(queue_p_t * queue, void * data, int priority)
 /**
  * @brief Implementation of the queue_p_dequeue function
  */
-queue_p_node_t * queue_p_dequeue(queue_p_t * queue)
+queue_p_node_t *queue_p_dequeue(queue_p_t *queue)
 {
     // Validate queue exists and not empty
-    if(!queue || queue_p_emptycheck(queue))
+    if (!queue || queue_p_emptycheck(queue))
     {
         fprintf(stderr, "[-] queue_dequeue queue invalid fail.\n");
-        return NULL;        
-    }    
+        return NULL;
+    }
     // Get node from front of queue (has highest priority)
     queue_p_node_t *first_node = queue->arr[0];
 
     // Validate node
-    if(!first_node)
+    if (!first_node)
     {
         fprintf(stderr, "[-] queue_dequeue first node failure.\n");
-        return NULL;              
+        return NULL;
     }
 
     // Shift all nodes
-    for(uint32_t i = 0; i < queue->currentsz - 1; i++)
+    for (uint32_t i = 0; i < queue->currentsz - 1; i++)
     {
-        queue->arr[i] = queue->arr[i + 1]; 
+        queue->arr[i] = queue->arr[i + 1];
     }
+    // NULL out prior last element
     queue->arr[queue->currentsz - 1] = NULL;
-    
+    // Decrement current size
     queue->currentsz--;
 
     return first_node;
@@ -179,22 +188,22 @@ queue_p_node_t * queue_p_dequeue(queue_p_t * queue)
 /**
  * @brief Implementation of the queue_p_peek function
  */
-queue_p_node_t * queue_p_peek(queue_p_t * queue)
+queue_p_node_t *queue_p_peek(queue_p_t *queue)
 {
     // Validate queue exists and is not empty
-    if(!queue || queue_p_emptycheck(queue))
+    if (!queue || queue_p_emptycheck(queue))
     {
         fprintf(stderr, "[-] queue_peek queue invalid fail.\n");
-        return NULL;        
+        return NULL;
     }
 
     // Validate first node is not NULL
-    if(!queue->arr[0])
+    if (!queue->arr[0])
     {
         fprintf(stderr, "[-] queue_peek first node is NULL fail.\n");
-        return NULL;        
-    }    
-    
+        return NULL;
+    }
+
     // Return data from first element of queue
     return queue->arr[0];
 }
@@ -202,19 +211,19 @@ queue_p_node_t * queue_p_peek(queue_p_t * queue)
 /**
  * @brief Implementation of the queue_p_clear function
  */
-int queue_p_clear(queue_p_t * queue)
+int queue_p_clear(queue_p_t *queue)
 {
     // Validate queue exists and is not empty
-    if(!queue)
+    if (!queue)
     {
         fprintf(stderr, "[-] queue_clear queue invalid fail.\n");
-        return 1;        
+        return 1;
     }
-    
-    for(uint32_t i = 0; i < queue->currentsz; i++)
+
+    for (uint32_t i = 0; i < queue->currentsz; i++)
     {
         // Use customfree on node data if it exists
-        if(queue->arr[i])
+        if (queue->arr[i])
         {
             // Free the node with customfree
             queue->customfree(queue->arr[i]);
@@ -232,13 +241,13 @@ int queue_p_clear(queue_p_t * queue)
 /**
  * @brief Implementation of the queue_p_destroy function
  */
-int queue_p_destroy(queue_p_t ** queue)
+int queue_p_destroy(queue_p_t **queue)
 {
     // Validate queue exists and is not empty
-    if(!queue || !(*queue))
+    if (!queue || !(*queue))
     {
         fprintf(stderr, "[-] queue_destroy queue invalid fail.\n");
-        return 1;        
+        return 1;
     }
 
     // Instantiate queue based on pointer to queue
@@ -247,7 +256,7 @@ int queue_p_destroy(queue_p_t ** queue)
     // Clear the queue
     queue_p_clear(queue_p);
 
-    // Free
+    // Free structures
     free(queue_p->arr);
     free(queue_p);
 
@@ -260,9 +269,9 @@ int queue_p_destroy(queue_p_t ** queue)
 /**
  * @brief Implementation of the custom_free function
  */
-void custom_free(void * mem_addr)
+void custom_free(void *mem_addr)
 {
-    if(mem_addr)
+    if (mem_addr)
     {
         free(mem_addr);
     }
@@ -270,41 +279,61 @@ void custom_free(void * mem_addr)
 
 int main()
 {
-    
-    queue_p_t *queue = queue_p_init(5, custom_free);
-    printf("initialized!\n");
-
-    // Add some elements to the queue
-    queue_p_enqueue(queue,1,2);
-    queue_p_enqueue(queue,2,1);
-    queue_p_enqueue(queue,3,4);
-    queue_p_enqueue(queue,4,3);
-
-    // Now print the conents of the queue
-    for(int i = 0; i < queue->currentsz; i++)
+    // Manual validation
+    if (DEBUG)
     {
-        printf("Node %d has data %d and priority %d\n",i,queue->arr[i]->data,queue->arr[i]->priority);
+        // Example usage
+        queue_p_t *queue = queue_p_init(5, custom_free);
+        printf("initialized!\n");
+
+        // Add some elements to the queue
+        queue_p_enqueue(queue, 1, 2);
+        queue_p_enqueue(queue, 2, 1);
+        queue_p_enqueue(queue, 3, 4);
+        queue_p_enqueue(queue, 4, 3);
+
+        // Now print the conents of the queue
+        for (int i = 0; i < queue->currentsz; i++)
+        {
+            printf("Node %d has data %d and priority %d\n",
+                   i,
+                   queue->arr[i]->data,
+                   queue->arr[i]->priority);
+        }
+
+        // Now dequeue
+        queue_p_node_t *node = queue_p_dequeue(queue);
+        if (node)
+        {
+            queue->customfree(node);
+        }
+        printf("dequeued one item!\n");
+        // Now print again
+        for (int i = 0; i < queue->currentsz; i++)
+        {
+            printf("Node %d has data %d and priority %d\n",
+                   i,
+                   queue->arr[i]->data,
+                   queue->arr[i]->priority);
+        }
+
+        // Clear queue
+        queue_p_clear(queue);
+
+        printf("cleared!\n");
+        // Now print again
+        for (int i = 0; i < queue->currentsz; i++)
+        {
+            printf("Node %d has data %d and priority %d\n",
+                   i,
+                   queue->arr[i]->data,
+                   queue->arr[i]->priority);
+        }
+        queue_p_destroy(&queue);
+        printf("destroyed!\n");
+
+        free(queue);
     }
 
-    // Now dequeue
-    queue_p_dequeue(queue);
-    printf("\n");
-    // Now print again
-    for(int i = 0; i < queue->currentsz; i++)
-    {
-        printf("Node %d has data %d and priority %d\n",i,queue->arr[i]->data,queue->arr[i]->priority);
-    }
-
-
-    queue_p_clear(queue);    
-    
-    printf("cleared!\n");
-    // Now print again
-    for(int i = 0; i < queue->currentsz; i++)
-    {
-        printf("Node %d has data %d and priority %d\n",i,queue->arr[i]->data,queue->arr[i]->priority);
-    }
-    queue_p_destroy(&queue);
-    printf("destroyed!\n");
     return 0;
 }

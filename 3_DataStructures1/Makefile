@@ -1,23 +1,39 @@
-# Define the C compiler and flags
+# Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -Iinclude
 
-# Find all .c files in the current directory
-SOURCES = $(wildcard *.c)
+# Directories
+SRC_DIR = src
+INC_DIR = include
+BIN_DIR = bin
 
-# Generate a list of executable names by removing the .c extension
-TARGETS = src/$(SOURCES:.c=)
+# Source and target discovery
+SOURCES = $(wildcard $(SRC_DIR)/*.c)
+BASENAMES = $(notdir $(SOURCES:.c=))
+TARGETS = $(addprefix $(BIN_DIR)/, $(BASENAMES))
+DEBUG_TARGETS = $(addsuffix _debug, $(TARGETS))
 
-# Default target: compile all executables
+# Default target: compile regular executables
 all: $(TARGETS)
 
-# Rule to compile each .c file into an executable
-%: %.c
+# Debug target: compile debug executables
+debug: $(DEBUG_TARGETS)
+
+# Rule to compile regular binaries
+$(BIN_DIR)/%: $(SRC_DIR)/%.c | $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
 
-# Clean rule: remove all executables
-clean:
-	rm -f $(TARGETS)
+# Rule to compile debug binaries with -DDEBUG
+$(BIN_DIR)/%_debug: $(SRC_DIR)/%.c | $(BIN_DIR)
+	$(CC) $(CFLAGS) -g -DDEBUG -o $@ $<
 
-.PHONY: all clean
+# Ensure bin directory exists
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
+# Clean rule: remove all binaries
+clean:
+	rm -rf $(BIN_DIR)
+
+.PHONY: all debug clean
 

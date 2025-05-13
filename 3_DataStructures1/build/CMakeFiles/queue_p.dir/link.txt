@@ -1,1 +1,0 @@
-/usr/bin/cc -fPIC -g  -shared -Wl,-soname,libqueue_p.so -o libqueue_p.so CMakeFiles/queue_p.dir/src/queue_p.c.o 
