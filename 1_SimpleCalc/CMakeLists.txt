@@ -8,7 +8,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED True)
 
 # Include header files
-include_directories(includes)
+include_directories(include)
 
 # Collect all source files from src/
 file(GLOB SOURCES "src/*.c")
