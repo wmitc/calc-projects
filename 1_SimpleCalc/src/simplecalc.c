@@ -8,6 +8,8 @@
 #include <errno.h>
 #include "math_utils.h"
 
+#define BASE10 10
+
 int main(int argc, char* argv[])
 {
     if (argc <= 1)
@@ -27,15 +29,54 @@ int main(int argc, char* argv[])
     // Parse the operation argument
     char* op = argv[2];
 
+    char *endptr;
+    errno = 0; // Set errno to 0 before strtol call
+    long long_num1 = strtol(argv[1], &endptr, BASE10);
+
+    // Check for errors
+    if(errno == ERANGE)
+    {
+        fprintf(stderr, "[-] strtol range error!\n");
+        return 1;
+    }
+    if(*endptr != '\0')
+    {
+        fprintf(stderr, "[-] bad input error!\n");
+        return 1;
+    }
+
+    errno = 0; // Set errno to 0 before strtol call
+    long long_num2 = strtol(argv[3], &endptr, BASE10);  
+
+    // Check for errors
+    if(errno == ERANGE)
+    {
+        fprintf(stderr, "[-] strtol range error!\n");
+        return 1;
+    }
+    if(*endptr != '\0')
+    {
+        fprintf(stderr, "[-] malformed input error!\n");
+        return 1;
+    }
+
     // Consider int32_t operations first
     if (strcmp(op, "+") == 0 || strcmp(op, "-") == 0 || strcmp(op, "*") == 0 ||
         strcmp(op, "/") == 0 || strcmp(op, "%") == 0)
     {
+        // Check for overflow
+        if(long_num1 < INT32_MIN || long_num1 > INT32_MAX)
+        {
+            fprintf(stderr, "[-] integer overflow error!\n");
+            return 1;
+        }
         int32_t result = 0;
         int32_t error = 0;
-        int32_t num1 = atoi(argv[1]);
-        int32_t num2 = atoi(argv[3]);
-        // Perform operation on given numbers
+        // Cast long_num1 and long_num2 as int32_t
+        int32_t num1 = (int32_t) long_num1;
+        int32_t num2 = (int32_t) long_num2;
+
+        // Perform operation on signed numbers
         if (strcmp(op, "+") == 0)
         {
             result = add(num1, num2, &error);
@@ -69,11 +110,19 @@ int main(int argc, char* argv[])
              strcmp(op, "^") == 0 || strcmp(op, "<<<") == 0 ||
              strcmp(op, ">>>") == 0)
     {
+        if(long_num2 < 0 || long_num2 > UINT32_MAX)
+        {
+            fprintf(stderr, "[-] integer overflow error!\n");
+            return 1;
+        } 
         uint32_t result = 0;
         int32_t error = 0;
-        uint32_t num1 = atoi(argv[1]);
-        uint32_t num2 = atoi(argv[3]);
 
+        // Cast long_num1 and long_num2 as int32_t
+        uint32_t num1 = (uint32_t) long_num1;
+        uint32_t num2 = (uint32_t) long_num2;
+
+        // Perform operation on unsigned numbers
         if (strcmp(op, "<<") == 0)
         {
             result = shift_left(num1, num2, &error);
@@ -118,3 +167,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+/*** end of file ***/

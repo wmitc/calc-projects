@@ -59,9 +59,12 @@ int32_t divide(int32_t a, int32_t b, int32_t* error)
     // Check integer overflow
     if (a == INT32_MIN && b == -1)
     {
-        fprintf(stderr, "[-] Integer overflow (INT_MIN / -1)!\n");
-        *error = 1;
-        return 1;
+        if (b == 0)
+        {
+            fprintf(stderr, "[-] Integer overflow (INT_MIN / -1)!\n");
+            *error = 1;
+            return 1;
+        }
     }
     return a / b;
 }
@@ -79,9 +82,12 @@ int32_t modulo(int32_t a, int32_t b, int32_t* error)
     // Check integer overflow
     if (a == INT32_MIN && b == -1)
     {
-        fprintf(stderr, "[-] Modulo overflow (INT_MIN / -1)!\n");
-        *error = 1;
-        return 1;
+        if (b == 0)
+        {
+            fprintf(stderr, "[-] Modulo overflow (INT_MIN / -1)!\n");
+            *error = 1;
+            return 1;
+        }
     }
 
     return a % b;
@@ -156,3 +162,4 @@ uint32_t rotate_right(uint32_t a, uint32_t b, int32_t* error)
 
     return ((a >> b) | (a << (MAX_BITS - b)));
 }
+/*** end of file ***/
