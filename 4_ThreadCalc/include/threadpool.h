@@ -13,7 +13,12 @@
 /**
  * @brief A threadpool type. Internals to be implemented by trainee.
  */
-typedef struct threadpool_t threadpool_t;
+typedef struct threadpool_t 
+{
+    pthread_t       *threads;
+    int             num_threads;
+    int             is_shutting_down;
+} threadpool_t;
 
 /**
  * @brief Create a new threadpool and instantiate as required.
