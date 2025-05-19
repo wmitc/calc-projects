@@ -10,6 +10,7 @@
 #define SIG1 1
 #define SIG2 2
 
+volatile sig_atomic_t signal_flag_g = 0;
 
 /**
  * @brief Implementation of the signal_handler function
@@ -54,7 +55,7 @@ int signal_action_setup(void)
         return EXIT_FAILURE;
     }
     
-    return 0;
+    return SUCCESS;
 }
 
 /*** end of file ***/

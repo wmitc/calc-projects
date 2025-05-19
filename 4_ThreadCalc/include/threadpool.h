@@ -1,6 +1,7 @@
 #ifndef THREADPOOL_H
 #define THREADPOOL_H
 
+#include <pthread.h>
 #include <stdlib.h>
 
 #include "utils.h"
@@ -13,11 +14,29 @@
 /**
  * @brief A threadpool type. Internals to be implemented by trainee.
  */
-typedef struct threadpool_t 
+//typedef struct threadpool_t threadpool_t;
+typedef struct tpool_work_t
 {
-    pthread_t       *threads;
-    int             num_threads;
-    int             is_shutting_down;
+    job_f   job; // Job specification
+    free_f  del_f;
+    void    *arg; // Argument passed to job
+    struct tpool_work *next; //Pointer to next queue node
+} tpool_work_t;
+
+/**
+ * @brief A threapool work type.
+ */
+//typedef struct threadpool_work_t threadpool_work_t;
+typedef struct threadpool_t
+{
+    tpool_work_t    *work_first;
+    tpool_work_t    *work_last;
+    pthread_mutex_t  work_mutex;
+    pthread_cond_t   work_cond;
+    pthread_cond_t   working_cond;
+    size_t           working_cnt;
+    size_t           thread_cnt;
+    bool             stop;
 } threadpool_t;
 
 /**
