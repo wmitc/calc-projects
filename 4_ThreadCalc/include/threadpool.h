@@ -12,32 +12,14 @@
 #include "queue.h"
 
 /**
- * @brief A threadpool type. Internals to be implemented by trainee.
+ * @brief A threapool type.
  */
-//typedef struct threadpool_t threadpool_t;
-typedef struct tpool_work_t
-{
-    job_f   job; // Job specification
-    free_f  del_f;
-    void    *arg; // Argument passed to job
-    struct tpool_work *next; //Pointer to next queue node
-} tpool_work_t;
+typedef struct threadpool_t threadpool_t;
 
 /**
- * @brief A threapool work type.
+ * @brief A threapool job type.
  */
-//typedef struct threadpool_work_t threadpool_work_t;
-typedef struct threadpool_t
-{
-    tpool_work_t    *work_first;
-    tpool_work_t    *work_last;
-    pthread_mutex_t  work_mutex;
-    pthread_cond_t   work_cond;
-    pthread_cond_t   working_cond;
-    size_t           working_cnt;
-    size_t           thread_cnt;
-    bool             stop;
-} threadpool_t;
+typedef struct threadpool_job_t threadpool_job_t;
 
 /**
  * @brief Create a new threadpool and instantiate as required.

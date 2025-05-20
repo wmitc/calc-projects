@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2025
  *
  */
+#include <pthread.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +19,8 @@
 #else
 #define DEBUG 1
 #endif
+
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;;
 
 /**
  * @brief Implementation of the queue_init function
@@ -60,6 +63,9 @@ queue_t *queue_init(uint32_t capacity, FREE_F customfree)
     queue->capacity   = capacity;
     queue->currentsz  = 0;
     queue->customfree = customfree;
+
+    // Initialize the mutex
+    pthread_mutex_init(&lock, NULL);
 
     return queue;
 }
@@ -112,10 +118,14 @@ int queue_emptycheck(queue_t *queue)
  */
 int queue_enqueue(queue_t *queue, void *data)
 {
+    // Set mutex
+    pthread_mutex_lock(&lock);
+
     // Validate queue, data, and space for data
     if (!queue || !data || queue_fullcheck(queue))
     {
         fprintf(stderr, "[-] queue_enqueue queue invalid fail.\n");
+        pthread_mutex_unlock(&lock);
         return 1;
     }
     // Instantiate a new node
@@ -124,6 +134,7 @@ int queue_enqueue(queue_t *queue, void *data)
     if (!new_node)
     {
         fprintf(stderr, "[-] queue_enqueue node instantiation fail.\n");
+        pthread_mutex_unlock(&lock);
         return 1;
     }
     // Set new_node->data and add to queue
@@ -133,6 +144,9 @@ int queue_enqueue(queue_t *queue, void *data)
     // Increment currentsz
     queue->currentsz++;
 
+    // Release mutex
+    pthread_mutex_unlock(&lock);
+
     return 0;
 }
 
@@ -141,10 +155,14 @@ int queue_enqueue(queue_t *queue, void *data)
  */
 queue_node_t *queue_dequeue(queue_t *queue)
 {
+    // Set mutex
+    pthread_mutex_lock(&lock);
+
     // Validate queue exists and not empty
     if (!queue || queue_emptycheck(queue))
     {
         fprintf(stderr, "[-] queue_dequeue queue invalid fail.\n");
+        pthread_mutex_unlock(&lock);
         return NULL;
     }
     // Get node from front of queue
@@ -154,6 +172,7 @@ queue_node_t *queue_dequeue(queue_t *queue)
     if (!first_node)
     {
         fprintf(stderr, "[-] queue_dequeue first node failure.\n");
+        pthread_mutex_unlock(&lock);
         return NULL;
     }
 
@@ -165,6 +184,9 @@ queue_node_t *queue_dequeue(queue_t *queue)
     queue->arr[queue->currentsz - 1] = NULL;
     // Decrement current size
     queue->currentsz--;
+
+    // Release mutex
+    pthread_mutex_unlock(&lock);
 
     return first_node;
 }
