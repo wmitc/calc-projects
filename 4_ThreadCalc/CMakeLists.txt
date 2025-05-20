@@ -14,7 +14,7 @@ include_directories(
 add_library(threadpool STATIC
     ${CMAKE_SOURCE_DIR}/src/threadpool.c
     ${CMAKE_SOURCE_DIR}/src/queue.c
-)
+)c
 
 # Build the test executable from test sources
 add_executable(tests_threads

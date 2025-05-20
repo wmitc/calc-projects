@@ -36,7 +36,7 @@ struct threadpool_t
     pthread_mutex_t mutex;
     pthread_cond_t cond;
 
-    int shutdown;
+    volatile int shutdown;
 };
 
 
@@ -252,7 +252,6 @@ int threadpool_add_job(threadpool_t * pool_p,
                        free_f         del_f,
                        void *         arg_p)
 {
-    
     // Confirm pool and job existence
     if(!pool_p || !job)
     {
@@ -265,7 +264,7 @@ int threadpool_add_job(threadpool_t * pool_p,
     if(pool_p->shutdown)
     {
         pthread_mutex_unlock(&pool_p->mutex);
-        fprintf(stderr, "[-] Pool shutting down.\n");
+        fprintf(stderr, "[-] Can't add job, pool is shutdown.\n");
         return EXIT_FAILURE;
     }
 

@@ -161,7 +161,8 @@ queue_node_t *queue_dequeue(queue_t *queue)
     // Validate queue exists and not empty
     if (!queue || queue_emptycheck(queue))
     {
-        fprintf(stderr, "[-] queue_dequeue queue invalid fail.\n");
+        /* COMMENT OUT BELOW LINE WHEN TESTING */
+        //fprintf(stderr, "[-] queue_dequeue queue empty fail.\n");
         pthread_mutex_unlock(&lock);
         return NULL;
     }
