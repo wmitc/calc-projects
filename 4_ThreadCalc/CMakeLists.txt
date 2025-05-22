@@ -1,37 +1,38 @@
 cmake_minimum_required(VERSION 3.16)
-project(ThreadpoolTests C)
 
-# Where executables will go
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(NAME "threadcalc")
+project(${NAME} LANGUAGES "C")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
-# Add include directories for both your project and test code
-include_directories(
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/tests_include
-)
+# Specify the C standard
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED True)
 
-# Create a static library for your threadpool code
+# Include header files
+include_directories(include)
+
+find_package(Threads REQUIRED)
+
+# Add static library for threadpool
 add_library(threadpool STATIC
     ${CMAKE_SOURCE_DIR}/src/threadpool.c
     ${CMAKE_SOURCE_DIR}/src/queue.c
-)c
-
-# Build the test executable from test sources
-add_executable(tests_threads
-    ${CMAKE_SOURCE_DIR}/tests_src/thread_tests.c
-    ${CMAKE_SOURCE_DIR}/tests_src/thread_tests_main.c
-    ${CMAKE_SOURCE_DIR}/tests_src/signal_tests.c
     ${CMAKE_SOURCE_DIR}/src/signals.c
 )
 
-# Link the threadpool library and other needed libraries
-target_link_libraries(tests_threads
-    threadpool
-    pthread
-    cunit
-)
+target_link_libraries(threadpool PRIVATE Threads::Threads)
 
-# Optional: Add to CTest for test automation
-enable_testing()
-add_test(NAME TestThreadLib COMMAND tests_threads)
+# Collect all source files from src/
+file(GLOB SOURCES "src/*.c")
 
+# Add the executable
+add_executable(threadcalc ${SOURCES})
+
+target_link_libraries(threadcalc PRIVATE threadpool Threads::Threads)
+
+# CREATE A LIBRARY OF YOUR THREADPOOL.
+# CREATE AN EXECUTABLE FOR YOUR THREADPOOL MAIN FUNCTION.
+# BUILD THE EXECUTABLE BINARY IN THE 4_ThreadCalc/bin DIRECTORY.
+
+# THIS INCLUDES THE TESTS FOR ThreadCalc. DO NOT MODIFY!
+include(tests_src/thread_tests.cmake)

@@ -76,6 +76,7 @@ static void * threadpool_worker(void * arg)
         // Run job function
         if(job->job_function)
         {
+            printf("Doing work?\n");
             job->job_function(job->arg);
         }
 
@@ -291,6 +292,7 @@ int threadpool_add_job(threadpool_t * pool_p,
         pthread_mutex_unlock(&pool_p->mutex);
         return EXIT_FAILURE;
     }
+    printf("[*] Job was added queue successfully\n");
 
     // Signal that job has been added to queue
     pthread_cond_signal(&pool_p->cond);

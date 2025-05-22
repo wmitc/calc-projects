@@ -3,7 +3,6 @@
 
 #include <pthread.h>
 #include <stdlib.h>
-
 #include "utils.h"
 
 /**
