@@ -1,23 +1,31 @@
-/* file_job.h --------------------------------------------------- */
-#ifndef FILE_JOB_H
-#define FILE_JOB_H
+#ifndef FILEJOB_H
+#define FILEJOB_H
 
-#include "threadpool.h"   /* job_f / free_f typedefs */
-#include "process_file.h" /* prototype of process_file */
+#include <stdio.h>
+#include <stdlib.h>
 
-/* What each job needs to know */
-typedef struct {
-    char *filename;     /* entry->d_name copy              */
-    char *input_dir;    /* copy or original string literal */
-    char *output_dir;   /* copy or original string literal */
-} file_job_t;
+/**
+ * @brief A filejob type.
+ */
+typedef struct filejob_t 
+{
+    char *filename;
+    char *input_dir;
+    char *output_dir;  
+} filejob_t;
 
-/* --------------------------------- job function ---------- */
-void file_job(void *arg);
+/**
+ * @brief Run a filejob
+ * 
+ * @param arg 
+ */
+void * run_filejob(void *arg);
 
+/**
+ * @brief Free a filejob
+ * 
+ * @param arg 
+ */
+void free_filejob(void *arg);
 
-/* --------------------------------- optional cleanup ------ */
-void file_job_free(void *arg);
-
-#endif /* FILE_JOB_H */
-
+#endif

@@ -89,7 +89,7 @@ int process_dir_threaded(threadpool_t *pool, const char* input_dir, const char* 
         if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
         {
             // Set up file_job
-            file_job_t *job = malloc(sizeof(job));
+            filejob_t *job = malloc(sizeof(filejob_t));
 
             if(!job)
             {
@@ -97,10 +97,7 @@ int process_dir_threaded(threadpool_t *pool, const char* input_dir, const char* 
                 return EXIT_FAILURE;
             }
 
-
-            // Malloc all parameters going to a thread
-
-            // Set job parameters
+            // Malloc all parameters going to a thread via strdup
             job->filename = strdup(entry->d_name);
             job->input_dir = strdup(input_dir);
             job->output_dir = strdup(output_dir);
@@ -110,10 +107,10 @@ int process_dir_threaded(threadpool_t *pool, const char* input_dir, const char* 
             printf("output_dir: %s\n", job->output_dir);
 
             // Add job to threadpool for processing
-            if(threadpool_add_job(pool, file_job, job, file_job_free) != SUCCESS)
+            if(threadpool_add_job(pool, run_filejob, free_filejob, job) != SUCCESS)
             {
                 fprintf(stderr, "[-] Failed to add job to threadpool.\n");
-                file_job_free(job);
+                free_filejob(job);
                 closedir(dir);
                 return EXIT_FAILURE;
             }
@@ -129,10 +126,11 @@ int process_dir_threaded(threadpool_t *pool, const char* input_dir, const char* 
     printf("work finished?\n");
     threadpool_shutdown(pool);
     printf("[+] Shut down the threadpool\n");
-    threadpool_destroy(pool);
+    threadpool_destroy(&pool);
     printf("[+] Destroyed the threadpool\n");
     closedir(dir);
 
     return 0;
 }
+
 /*** end of file ***/

@@ -38,7 +38,9 @@ int main(int argc, char* argv[])
 
     // Instantiate threadpool with user provided or default size
     threadpool_t * pool = threadpool_create(DEFAULT_THREADPOOL_SIZE);
+    
     if (process_dir_threaded(pool, argv[1], argv[2]) != 0)
+    //if (process_dir(argv[1], argv[2]) != 0)
     {
         fprintf(stderr, "Error processing directory.\n");
         exit(EXIT_FAILURE);
@@ -46,4 +48,5 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
 /*** end of file ***/

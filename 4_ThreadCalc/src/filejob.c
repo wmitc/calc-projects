@@ -1,30 +1,35 @@
 #include <stdio.h>
-#include "threadpool.h"   /* job_f / free_f typedefs */
-#include "process_file.h" /* prototype of process_file */
+#include "threadpool.h"   
+#include "process_file.h" 
 #include "filejob.h"
 
-
-void file_job(void *arg)
+void * run_filejob(void *arg)
 {
-    printf("made it here\n");
     if(arg == NULL)
     {
-        printf("arg was null!\n");
+        fprintf(stderr, "[-] NULl argument passed to run_filejob.\n");
     }
     
-    file_job_t *job = (file_job_t *)arg;
+    filejob_t *job = (filejob_t *) arg; 
 
     printf("filename: %s\n", job->filename);
     printf("input_dir: %s\n", job->input_dir);
     printf("output_dir: %s\n", job->output_dir);
-    /* run the real work */
+    
+    // Process the file
     process_file(job->filename, job->input_dir, job->output_dir);
 }
 
-void file_job_free(void *arg)
+void free_filejob(void *arg)
 {
-    file_job_t *job = (file_job_t *)arg;
+
+    filejob_t *job = (filejob_t *) arg;
+
+    if(!job)
+    {
+        fprintf(stderr, "[-] NULl argument passed to free_filejob.\n");
+    }
+    // do we need to free them all?
     free(job->filename);
-    /* If you duplicated input/output dir strings, free them here too */
     free(job);
 }
