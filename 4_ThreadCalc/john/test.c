@@ -8,13 +8,17 @@
 static const size_t num_threads = 4;
 static const size_t num_items   = 10;
 
+pthread_mutex_t print_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 void worker(void *arg)
 {
     int *val = arg;
     int  old = *val;
 
     *val += 1000;
+    pthread_mutex_lock(&print_mutex);
     printf("tid=%p, old=%d, val=%d\n", pthread_self(), old, *val);
+    pthread_mutex_unlock(&print_mutex);
 
     if (*val%2)
         usleep(100000);
@@ -30,6 +34,7 @@ typedef struct {
 void print_strings_worker(void *arg) {
     string_triplet_t *triplet = (string_triplet_t *)arg;
 
+    //pthread_mutex_lock(&print_mutex);
     if (triplet) {
         printf("String 1: %s\n", triplet->str1);
         printf("String 2: %s\n", triplet->str2);
@@ -37,6 +42,7 @@ void print_strings_worker(void *arg) {
     } else {
         printf("Worker received null argument.\n");
     }
+    //pthread_mutex_unlock(&print_mutex);
 
     return NULL;
 }
@@ -67,8 +73,12 @@ int main(int argc, char **argv)
 
     tpool_wait(tm);
 
+    free(data);
+
     for (i=0; i<num_items; i++) {
+        //pthread_mutex_lock(&print_mutex);
         printf("%d\n", vals[i]);
+        //pthread_mutex_unlock(&print_mutex);
     }
 
     free(vals);

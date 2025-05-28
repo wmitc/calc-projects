@@ -1,7 +1,7 @@
 # Makefile for testing tpool.c with test.c
 
 CC = gcc
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -g #-fsanitize=address
 LDFLAGS = -lpthread
 TARGET = test_tpool
 

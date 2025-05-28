@@ -8,6 +8,7 @@
 #include "utils.h"
 
 #define CAPACITY 100
+#define ONE 1
 
 /**
  * @note A queue is recommended, not required.
@@ -110,7 +111,7 @@ threadpool_t * threadpool_create(size_t thread_count)
         return NULL;
     }
 
-    threadpool_t *pool = malloc(sizeof(threadpool_t));
+    threadpool_t *pool = calloc(ONE, sizeof(threadpool_t));
     // Check that pool instandiation was successful
     if(!pool)
     {
@@ -121,7 +122,7 @@ threadpool_t * threadpool_create(size_t thread_count)
     // Set parameters
     pool->thread_count = thread_count;
     pool->shutdown = 0;
-    pool->threads = malloc(thread_count * sizeof(pthread_t));
+    pool->threads = calloc(ONE, thread_count * sizeof(pthread_t));
     // Check that malloc was successful
     if(!pool->threads)
     {
@@ -196,6 +197,13 @@ int threadpool_shutdown(threadpool_t * pool_p)
     }
 
     pthread_mutex_lock(&pool_p->mutex);
+    // Check if shutdown flag is marked
+    if(pool_p->shutdown)
+    {
+        // Unlock mutex if so and return SUCCESS
+        pthread_mutex_unlock(&pool_p->mutex);
+        return SUCCESS;
+    }
     // Mark pool for shutdown
     pool_p->shutdown = 1;
     // Announce to all threads
@@ -205,7 +213,9 @@ int threadpool_shutdown(threadpool_t * pool_p)
     // Wait for all threads to terminate
     for(size_t i = 0; i < pool_p->thread_count; i++)
     {
-        pthread_join(pool_p->threads[i], NULL);
+        if(pool_p->threads[i] != 0){
+            pthread_join(pool_p->threads[i], NULL);
+        }
     }
 
     return SUCCESS;
@@ -270,7 +280,7 @@ int threadpool_add_job(threadpool_t * pool_p,
     }
 
     // Start a new job
-    threadpool_job_t *new_job = malloc(sizeof(threadpool_job_t));
+    threadpool_job_t *new_job = calloc(ONE, sizeof(threadpool_job_t));
     // Validate malloc
     if(!new_job)
     {

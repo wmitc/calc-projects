@@ -22,7 +22,6 @@ void * run_filejob(void *arg)
 
 void free_filejob(void *arg)
 {
-
     filejob_t *job = (filejob_t *) arg;
 
     if(!job)
@@ -31,5 +30,7 @@ void free_filejob(void *arg)
     }
     // do we need to free them all?
     free(job->filename);
+    free(job->input_dir);
+    free(job->output_dir);
     free(job);
 }
