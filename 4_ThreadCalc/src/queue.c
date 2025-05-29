@@ -227,6 +227,7 @@ int queue_clear(queue_t *queue)
         return 1;
     }
 
+    // Clear out the queue
     for (uint32_t i = 0; i < queue->currentsz; i++)
     {
         // Use customfree on node data if it exists

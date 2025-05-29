@@ -7,15 +7,11 @@ void * run_filejob(void *arg)
 {
     if(arg == NULL)
     {
-        fprintf(stderr, "[-] NULl argument passed to run_filejob.\n");
+        fprintf(stderr, "[-] NULL argument passed to run_filejob.\n");
     }
     
     filejob_t *job = (filejob_t *) arg; 
-
-    printf("filename: %s\n", job->filename);
-    printf("input_dir: %s\n", job->input_dir);
-    printf("output_dir: %s\n", job->output_dir);
-    
+  
     // Process the file
     process_file(job->filename, job->input_dir, job->output_dir);
 }
@@ -26,7 +22,7 @@ void free_filejob(void *arg)
 
     if(!job)
     {
-        fprintf(stderr, "[-] NULl argument passed to free_filejob.\n");
+        fprintf(stderr, "[-] NULL argument passed to free_filejob.\n");
     }
     // do we need to free them all?
     free(job->filename);

@@ -272,4 +272,5 @@ uint64_t rotate_right(uint64_t a, uint64_t b, int64_t* error)
 
     return ((a >> b) | (a << (MAX_BITS - b)));
 }
+
 /*** end of file ***/

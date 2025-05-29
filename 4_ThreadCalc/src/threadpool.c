@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "queue.h"
+#include "shared_mutex.h"
 #include "threadpool.h"
 #include "utils.h"
 
@@ -50,7 +51,7 @@ static void * threadpool_worker(void * arg)
         pthread_mutex_lock(&pool->mutex);
 
         // Wait for work or shutdown
-        while(queue_emptycheck(pool->job_queue) == 0 && !pool->shutdown)
+        while(queue_emptycheck(pool->job_queue) != 0 && !pool->shutdown)
         {
             pthread_cond_wait(&pool->cond, &pool->mutex);
         }
@@ -77,7 +78,6 @@ static void * threadpool_worker(void * arg)
         // Run job function
         if(job->job_function)
         {
-            printf("Doing work?\n");
             job->job_function(job->arg);
         }
 
@@ -214,7 +214,11 @@ int threadpool_shutdown(threadpool_t * pool_p)
     for(size_t i = 0; i < pool_p->thread_count; i++)
     {
         if(pool_p->threads[i] != 0){
-            pthread_join(pool_p->threads[i], NULL);
+            int result = pthread_join(pool_p->threads[i], NULL);
+            if(result != 0)
+            {
+                fprintf(stderr, "[-] pthread_join failure.\n");
+            }
         }
     }
 
@@ -302,7 +306,9 @@ int threadpool_add_job(threadpool_t * pool_p,
         pthread_mutex_unlock(&pool_p->mutex);
         return EXIT_FAILURE;
     }
+    pthread_mutex_lock(&printf_mutex);
     printf("[*] Job was added queue successfully\n");
+    pthread_mutex_unlock(&printf_mutex);
 
     // Signal that job has been added to queue
     pthread_cond_signal(&pool_p->cond);

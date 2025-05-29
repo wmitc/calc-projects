@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include "types.h"
 #include "evaluate.h"
+#include "threadpool.h"
+#include "shared_mutex.h"
 
 #define MAX_PATH_LENGTH 256
 #define MAGIC_NUMBER 0xdd77bb55 // Hard-coded file header "magic number" value used for testing
@@ -181,7 +183,9 @@ int process_file(const char* file, const char* input_dir,
     close(fd);
     free(solves);
 
+    pthread_mutex_lock(&printf_mutex);
     printf("[+] Operation complete. See %s for results.\n", output_path);
+    pthread_mutex_unlock(&printf_mutex);
 
     return 0;
 }

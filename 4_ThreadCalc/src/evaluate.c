@@ -143,4 +143,5 @@ uint64_t evaluate_unsigned_equation(uint64_t num1, int8_t operation,
     // Return 1 to indicate equation was solved
     return 1;
 }
+
 /*** end of file ***/

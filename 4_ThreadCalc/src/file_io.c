@@ -8,6 +8,7 @@
 #include "filejob.h"
 #include "process_file.h"
 #include "threadpool.h"
+#include "shared_mutex.h"
 
 /**
  * @brief Validate whether input string is a directory
@@ -70,8 +71,6 @@ int process_dir(const char* input_dir, const char* output_dir)
  */
 int process_dir_threaded(threadpool_t *pool, const char* input_dir, const char* output_dir)
 {
-    printf("input_dir: %s\n", input_dir);
-    printf("output_dir: %s\n", output_dir);
     const char* dir_path = input_dir;
     DIR* dir = opendir(dir_path);
 
@@ -102,10 +101,6 @@ int process_dir_threaded(threadpool_t *pool, const char* input_dir, const char* 
             job->input_dir = strdup(input_dir);
             job->output_dir = strdup(output_dir);
 
-            printf("filename: %s\n", job->filename);
-            printf("input_dir: %s\n", job->input_dir);
-            printf("output_dir: %s\n", job->output_dir);
-
             // Add job to threadpool for processing
             if(threadpool_add_job(pool, run_filejob, free_filejob, job) != SUCCESS)
             {
@@ -116,18 +111,25 @@ int process_dir_threaded(threadpool_t *pool, const char* input_dir, const char* 
             }
             else{
                 cnt++;
-                printf("job %d added to pool\n", cnt);         
+                pthread_mutex_lock(&printf_mutex);
+                printf("job %d added to pool\n", cnt);  
+                pthread_mutex_unlock(&printf_mutex);          
             }
 
             // Call function to process file
             //process_file(entry->d_name, input_dir, output_dir);
         }
     }
-    printf("work finished?\n");
+    // Shut down the thread pool
     threadpool_shutdown(pool);
+    pthread_mutex_lock(&printf_mutex);
     printf("[+] Shut down the threadpool\n");
+    pthread_mutex_unlock(&printf_mutex);
+    // Destroy the threadpool
     threadpool_destroy(&pool);
+    pthread_mutex_lock(&printf_mutex);
     printf("[+] Destroyed the threadpool\n");
+    pthread_mutex_unlock(&printf_mutex);
     closedir(dir);
 
     return 0;
