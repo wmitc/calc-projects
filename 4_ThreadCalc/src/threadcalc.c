@@ -83,7 +83,6 @@ int main(int argc, char* argv[])
         num_threads = MAXIMUM_THREADPOOL_SIZE;
     }
 
-    printf("NUMTHREADS: %d\n", num_threads);
     // Instantiate threadpool with user provided or default size
     size_t pool_size = (n_set ? (size_t) num_threads : DEFAULT_THREADPOOL_SIZE);
     threadpool_t * pool = threadpool_create(pool_size);
