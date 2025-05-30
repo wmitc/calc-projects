@@ -6,8 +6,5 @@
 build/*
 build/
 **/build/*
-<<<<<<< HEAD
 **/build
-=======
-**/build
->>>>>>> 944d6f0acfd2e832d099b9194453cfbd7613aeac
+
