@@ -1,24 +1,26 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <pthread.h>
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "types.h"
 #include "evaluate.h"
-#include "threadpool.h"
 #include "shared_mutex.h"
+#include "threadpool.h"
+#include "types.h"
 
 #define MAX_PATH_LENGTH 256
-#define MAGIC_NUMBER 0xdd77bb55 // Hard-coded file header "magic number" value used for testing
+#define MAGIC_NUMBER                                                           \
+    0xdd77bb55 // Hard-coded file header "magic number" value used in test suite
 #define MEM_PERMISSIONS 0644
 #define FULL_PERMISSIONS 0777
 
-int process_file(const char* file, const char* input_dir,
-                 const char* output_dir)
+int process_file(const char *file,
+                 const char *input_dir,
+                 const char *output_dir)
 {
     // Build input directory path based on input_dir and file name
     char input_path[MAX_PATH_LENGTH];
@@ -39,7 +41,7 @@ int process_file(const char* file, const char* input_dir,
 
     // Extract file type and permission bits
 
-    // KNOWN ISSUE: Test script produce files with with 0664 permissions instead
+    // KNOWN ISSUE: Test script produce files with 0664 permissions instead
     // of 0644
 
     /*struct stat fileStat;
@@ -67,7 +69,7 @@ int process_file(const char* file, const char* input_dir,
     }
 
     // Validate the magic number
-    if ((unsigned) header.magic_number != (unsigned) MAGIC_NUMBER)
+    if ((unsigned)header.magic_number != (unsigned)MAGIC_NUMBER)
     {
         fprintf(stderr, "[-] Unexpected magic number.\n");
         close(fd);
@@ -83,8 +85,8 @@ int process_file(const char* file, const char* input_dir,
     }
 
     // Allocate space for all solved equations in an array
-    solved_equation* solves =
-        malloc(header.num_of_equations * sizeof(solved_equation));
+    solved_equation *solves
+        = malloc(header.num_of_equations * sizeof(solved_equation));
 
     if (!solves)
     {
@@ -96,8 +98,8 @@ int process_file(const char* file, const char* input_dir,
     for (int64_t i = 0; i < header.num_of_equations; i++)
     {
         unsolved_equation unsolved_equ;
-        if (read(fd, &unsolved_equ, sizeof(unsolved_equation)) !=
-            sizeof(unsolved_equation))
+        if (read(fd, &unsolved_equ, sizeof(unsolved_equation))
+            != sizeof(unsolved_equation))
         {
             fprintf(stderr, "[-] Failed to read equation.\n");
             close(fd);
@@ -113,29 +115,33 @@ int process_file(const char* file, const char* input_dir,
         {
             int64_t signed_solution;
 
-            solved = evaluate_signed_equation(
-                unsolved_equ.operand1, unsolved_equ.operation,
-                unsolved_equ.operand2, &signed_solution, &type);
+            solved = evaluate_signed_equation(unsolved_equ.operand1,
+                                              unsolved_equ.operation,
+                                              unsolved_equ.operand2,
+                                              &signed_solution,
+                                              &type);
 
             // Put data into solves array
             solves[i].equationID = unsolved_equ.equationID;
-            solves[i].flag = solved;
-            solves[i].type = type;
-            solves[i].solution = signed_solution;
+            solves[i].flag       = solved;
+            solves[i].type       = type;
+            solves[i].solution   = signed_solution;
         }
         else if (unsolved_equ.operation >= 0x6 && unsolved_equ.operation <= 0xc)
         {
             uint64_t unsigned_solution;
-            
-            solved = evaluate_unsigned_equation(
-                unsolved_equ.operand1, unsolved_equ.operation,
-                unsolved_equ.operand2, &unsigned_solution, &type);
+
+            solved = evaluate_unsigned_equation(unsolved_equ.operand1,
+                                                unsolved_equ.operation,
+                                                unsolved_equ.operand2,
+                                                &unsigned_solution,
+                                                &type);
 
             // Put data into solves array
             solves[i].equationID = unsolved_equ.equationID;
-            solves[i].flag = solved;
-            solves[i].type = type;
-            solves[i].solution = (int64_t) unsigned_solution;
+            solves[i].flag       = solved;
+            solves[i].type       = type;
+            solves[i].solution   = (int64_t)unsigned_solution;
         }
     }
     // Clean up
@@ -170,8 +176,8 @@ int process_file(const char* file, const char* input_dir,
     // Write all saved equations to file
     for (int64_t i = 0; i < header.num_of_equations; i++)
     {
-        if (write(fd, &solves[i], sizeof(solved_equation)) !=
-            sizeof(solved_equation))
+        if (write(fd, &solves[i], sizeof(solved_equation))
+            != sizeof(solved_equation))
         {
             fprintf(stderr, "[-] Failed to write equation.\n");
             close(fd);
@@ -189,4 +195,5 @@ int process_file(const char* file, const char* input_dir,
 
     return 0;
 }
+
 /*** end of file ***/

@@ -1,8 +1,8 @@
 #include <pthread.h>
+#include <stdatomic.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "queue.h"
 #include "shared_mutex.h"
 #include "threadpool.h"
@@ -15,9 +15,9 @@
  * @note A queue is recommended, not required.
  */
 
- /**
-  * @brief Threadpool job struct.
-  */
+/**
+ * @brief Threadpool job struct.
+ */
 struct threadpool_job_t
 {
     job_f job_function;
@@ -38,26 +38,25 @@ struct threadpool_t
     pthread_mutex_t mutex;
     pthread_cond_t cond;
 
-    volatile int shutdown;
+    _Atomic int shutdown;
 };
 
-
-static void * threadpool_worker(void * arg)
+static void *threadpool_worker(void *arg)
 {
-    threadpool_t *pool = (threadpool_t *) arg;
+    threadpool_t *pool = (threadpool_t *)arg;
 
-    while(1)
+    while (1)
     {
         pthread_mutex_lock(&pool->mutex);
 
         // Wait for work or shutdown
-        while(queue_emptycheck(pool->job_queue) != 0 && !pool->shutdown)
+        while (queue_emptycheck(pool->job_queue) != 0 && !pool->shutdown)
         {
             pthread_cond_wait(&pool->cond, &pool->mutex);
         }
 
         // If shutdown and no jobs left, exit thread
-        if(pool->shutdown && queue_emptycheck(pool->job_queue) != 0)
+        if (pool->shutdown && queue_emptycheck(pool->job_queue) != 0)
         {
             pthread_mutex_unlock(&pool->mutex);
             break;
@@ -67,22 +66,22 @@ static void * threadpool_worker(void * arg)
         queue_node_t *node = queue_dequeue(pool->job_queue);
         pthread_mutex_unlock(&pool->mutex);
 
-        if(!node)
+        if (!node)
         {
             // No job found, loop again
             continue;
         }
 
-        threadpool_job_t *job = (threadpool_job_t *) node->data;
+        threadpool_job_t *job = (threadpool_job_t *)node->data;
 
         // Run job function
-        if(job->job_function)
+        if (job->job_function)
         {
             job->job_function(job->arg);
         }
 
         // Call free function on arg if there is one
-        if(job->free_function)
+        if (job->free_function)
         {
             job->free_function(job->arg);
         }
@@ -102,10 +101,10 @@ static void * threadpool_worker(void * arg)
  * @return SUCCESS: A threadpool instance of type threadpool_t.
  *         FAILURE: NULL
  */
-threadpool_t * threadpool_create(size_t thread_count)
+threadpool_t *threadpool_create(size_t thread_count)
 {
     // Fail if thread_count is zero
-    if(thread_count == 0)
+    if (thread_count == 0)
     {
         fprintf(stderr, "[-] Thread count must be greater than 0.\n");
         return NULL;
@@ -113,7 +112,7 @@ threadpool_t * threadpool_create(size_t thread_count)
 
     threadpool_t *pool = calloc(ONE, sizeof(threadpool_t));
     // Check that pool instandiation was successful
-    if(!pool)
+    if (!pool)
     {
         fprintf(stderr, "[-] Threadpool instantiation failure.\n");
         return NULL;
@@ -121,10 +120,10 @@ threadpool_t * threadpool_create(size_t thread_count)
 
     // Set parameters
     pool->thread_count = thread_count;
-    pool->shutdown = 0;
-    pool->threads = calloc(ONE, thread_count * sizeof(pthread_t));
+    pool->shutdown     = 0;
+    pool->threads      = calloc(ONE, thread_count * sizeof(pthread_t));
     // Check that malloc was successful
-    if(!pool->threads)
+    if (!pool->threads)
     {
         fprintf(stderr, "[-] Thread allocation failed.\n");
         free(pool);
@@ -132,14 +131,14 @@ threadpool_t * threadpool_create(size_t thread_count)
     }
 
     // Initialize mutex and cond
-    if(pthread_mutex_init(&pool->mutex, NULL) != 0)
+    if (pthread_mutex_init(&pool->mutex, NULL) != 0)
     {
         free(pool->threads);
         free(pool);
         return NULL;
     }
 
-    if(pthread_cond_init(&pool->cond, NULL) != 0)
+    if (pthread_cond_init(&pool->cond, NULL) != 0)
     {
         pthread_mutex_destroy(&pool->mutex);
         free(pool->threads);
@@ -150,24 +149,25 @@ threadpool_t * threadpool_create(size_t thread_count)
     // Initialize job queue
     pool->job_queue = queue_init(CAPACITY, free);
     // Validate queue instantiation
-    if(!pool->job_queue)
+    if (!pool->job_queue)
     {
         fprintf(stderr, "[-] Failed to instantiate queue.\n");
         // Destroy mutex, cond, and pool
         pthread_cond_destroy(&pool->cond);
         pthread_mutex_destroy(&pool->mutex);
         free(pool->threads);
-        free(pool);        
+        free(pool);
     }
 
     // Create the threads
-    for(size_t i = 0; i < thread_count; i++)
+    for (size_t i = 0; i < thread_count; i++)
     {
-        if(pthread_create(&pool->threads[i], NULL, threadpool_worker, pool) != 0)
+        if (pthread_create(&pool->threads[i], NULL, threadpool_worker, pool)
+            != 0)
         {
             // Shut it all down if thread creation failed
             pool->shutdown = 1;
-            for(size_t j = 0; j < i; j++)
+            for (size_t j = 0; j < i; j++)
             {
                 pthread_cond_broadcast(&pool->cond);
                 pthread_join(pool->threads[j], NULL);
@@ -187,10 +187,10 @@ threadpool_t * threadpool_create(size_t thread_count)
 /**
  * @brief Implementation of the threadpool_shutdown function
  */
-int threadpool_shutdown(threadpool_t * pool_p)
+int threadpool_shutdown(threadpool_t *pool_p)
 {
     // Confirm pool existence
-    if(!pool_p)
+    if (!pool_p)
     {
         fprintf(stderr, "[-] Pool nonexistent.\n");
         return EXIT_FAILURE;
@@ -198,7 +198,7 @@ int threadpool_shutdown(threadpool_t * pool_p)
 
     pthread_mutex_lock(&pool_p->mutex);
     // Check if shutdown flag is marked
-    if(pool_p->shutdown)
+    if (pool_p->shutdown)
     {
         // Unlock mutex if so and return SUCCESS
         pthread_mutex_unlock(&pool_p->mutex);
@@ -211,11 +211,12 @@ int threadpool_shutdown(threadpool_t * pool_p)
     pthread_mutex_unlock(&pool_p->mutex);
 
     // Wait for all threads to terminate
-    for(size_t i = 0; i < pool_p->thread_count; i++)
+    for (size_t i = 0; i < pool_p->thread_count; i++)
     {
-        if(pool_p->threads[i] != 0){
+        if (pool_p->threads[i] != 0)
+        {
             int result = pthread_join(pool_p->threads[i], NULL);
-            if(result != 0)
+            if (result != 0)
             {
                 fprintf(stderr, "[-] pthread_join failure.\n");
             }
@@ -228,10 +229,10 @@ int threadpool_shutdown(threadpool_t * pool_p)
 /**
  * @brief Implementation of the threadpool_destroy function
  */
-int threadpool_destroy(threadpool_t ** pool_pp)
+int threadpool_destroy(threadpool_t **pool_pp)
 {
     // Confirm pool existence
-    if(!pool_pp || !*pool_pp)
+    if (!pool_pp || !*pool_pp)
     {
         fprintf(stderr, "[-] Pool nonexistent.\n");
         return EXIT_FAILURE;
@@ -262,13 +263,13 @@ int threadpool_destroy(threadpool_t ** pool_pp)
 /**
  * @brief Implementation of the threadpool_add_job function
  */
-int threadpool_add_job(threadpool_t * pool_p,
-                       job_f          job,
-                       free_f         del_f,
-                       void *         arg_p)
+int threadpool_add_job(threadpool_t *pool_p,
+                       job_f job,
+                       free_f del_f,
+                       void *arg_p)
 {
     // Confirm pool and job existence
-    if(!pool_p || !job)
+    if (!pool_p || !job)
     {
         fprintf(stderr, "[-] Pool or job do not exist.\n");
         return EXIT_FAILURE;
@@ -276,7 +277,7 @@ int threadpool_add_job(threadpool_t * pool_p,
 
     pthread_mutex_lock(&pool_p->mutex);
     // Check shutdown flag
-    if(pool_p->shutdown)
+    if (pool_p->shutdown)
     {
         pthread_mutex_unlock(&pool_p->mutex);
         fprintf(stderr, "[-] Can't add job, pool is shutdown.\n");
@@ -286,7 +287,7 @@ int threadpool_add_job(threadpool_t * pool_p,
     // Start a new job
     threadpool_job_t *new_job = calloc(ONE, sizeof(threadpool_job_t));
     // Validate malloc
-    if(!new_job)
+    if (!new_job)
     {
         fprintf(stderr, "[-] New job instantiation failure.\n");
         pthread_mutex_unlock(&pool_p->mutex);
@@ -294,12 +295,12 @@ int threadpool_add_job(threadpool_t * pool_p,
     }
 
     // Set job parameters
-    new_job->job_function = job;
+    new_job->job_function  = job;
     new_job->free_function = del_f;
-    new_job->arg = arg_p;
+    new_job->arg           = arg_p;
 
     // Enqueue the job
-    if(queue_enqueue(pool_p->job_queue, new_job) != 0)
+    if (queue_enqueue(pool_p->job_queue, new_job) != 0)
     {
         fprintf(stderr, "[-] Failed to enqueue job.\n");
         free(new_job);

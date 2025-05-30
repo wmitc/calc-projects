@@ -1,13 +1,13 @@
 #include <errno.h>
 #include <getopt.h>
 #include <pthread.h>
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "file_io.h"
-#include "threadpool.h"
 #include "shared_mutex.h"
+#include "threadpool.h"
 
 #define DEFAULT_THREADPOOL_SIZE 4
 #define MAXIMUM_THREADPOOL_SIZE 16
@@ -15,7 +15,7 @@
 #define MAC_ARGC 5
 #define BASE10 10
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     // Validate number of command line arguments
     if (argc < MIN_ARGC || argc > MAC_ARGC)
@@ -41,17 +41,17 @@ int main(int argc, char* argv[])
     // Instantiate strtol parameters
     char *endptr;
     errno = 0; // Set errno to 0 before strtol call
-    long long_n;
+    long long_n = 0;
     // Bool to check if -n was set
     int n_set = 0;
-    while((opt = getopt(argc, argv, "-n:")) != -1)
+    while ((opt = getopt(argc, argv, "-n:")) != -1)
     {
-        switch(opt)
+        switch (opt)
         {
             // Capture mandatory -n parameter
             case 'n':
                 long_n = strtol(optarg, &endptr, BASE10);
-                n_set = 1;
+                n_set  = 1;
                 break;
         }
     }
@@ -61,32 +61,31 @@ int main(int argc, char* argv[])
     {
         fprintf(stderr, "[-] Range error on input!\n");
     }
-    if(*endptr != '\0')
+    if (*endptr != '\0')
     {
         fprintf(stderr, "[-] Non-null string termination.\n");
     }
 
-    // Process files from input_dir to output_dir
-    /*if (process_dir(argv[1], argv[2]) != 0)
-    {
-        fprintf(stderr, "Error processing directory.\n");
-        exit(EXIT_FAILURE);
-    }*/
-
+    // Display text to indicate successful program start
     pthread_mutex_lock(&printf_mutex);
     printf("[+] Program started succssfully\n");
     pthread_mutex_unlock(&printf_mutex);
 
-    size_t num_threads = (size_t) long_n;
-    if(num_threads > DEFAULT_THREADPOOL_SIZE)
+    // Cap the number of threads at MAXIMUM_THREADPOOL_SIZE
+    size_t num_threads;
+    if (long_n)
     {
-        num_threads = MAXIMUM_THREADPOOL_SIZE;
-    }
+        num_threads = (size_t)long_n;
+        if (num_threads > MAXIMUM_THREADPOOL_SIZE)
+        {
+            num_threads = MAXIMUM_THREADPOOL_SIZE;
+        }
+    } 
 
     // Instantiate threadpool with user provided or default size
-    size_t pool_size = (n_set ? (size_t) num_threads : DEFAULT_THREADPOOL_SIZE);
-    threadpool_t * pool = threadpool_create(pool_size);
-    
+    size_t pool_size = (n_set ? (size_t)num_threads : DEFAULT_THREADPOOL_SIZE);
+    threadpool_t *pool = threadpool_create(pool_size);
+
     if (process_dir_threaded(pool, argv[1], argv[2]) != 0)
     {
         fprintf(stderr, "Error processing directory.\n");

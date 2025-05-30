@@ -28,7 +28,7 @@ typedef struct threadpool_job_t threadpool_job_t;
  * @return SUCCESS: A threadpool instance of type threadpool_t.
  *         FAILURE: NULL
  */
-threadpool_t * threadpool_create(size_t thread_count);
+threadpool_t *threadpool_create(size_t thread_count);
 
 /**
  * @brief Nice shutdown of threadpool. Do not take any more work.
@@ -39,7 +39,7 @@ threadpool_t * threadpool_create(size_t thread_count);
  * @return SUCCESS: SUCCESS
  *         FAILURE: ERROR
  */
-int threadpool_shutdown(threadpool_t * pool_p);
+int threadpool_shutdown(threadpool_t *pool_p);
 
 /**
  * @brief Destroy a threadpool. Clean up all resources and memory.
@@ -50,7 +50,7 @@ int threadpool_shutdown(threadpool_t * pool_p);
  * @return SUCCESS: SUCCESS
  *         FAILURE: ERROR
  */
-int threadpool_destroy(threadpool_t ** pool_pp);
+int threadpool_destroy(threadpool_t **pool_pp);
 
 /**
  * @brief Add a job to to the threadpool to work on.
@@ -70,9 +70,9 @@ int threadpool_destroy(threadpool_t ** pool_pp);
  * @return SUCCESS: SUCCESS
  *         FAILURE: ERROR
  */
-int threadpool_add_job(threadpool_t * pool_p,
-                       job_f          job,
-                       free_f         del_f,
-                       void *         arg_p);
+int threadpool_add_job(threadpool_t *pool_p,
+                       job_f job,
+                       free_f del_f,
+                       void *arg_p);
 
 #endif

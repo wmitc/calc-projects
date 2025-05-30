@@ -1,8 +1,8 @@
 // src/math_utils.c
 // This file implements simple math functions
 
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "math_utils.h"
 
 #define MAX_BITS 64
@@ -15,7 +15,7 @@
  * @param error Error flag
  * @return int64_t Solution
  */
-int64_t add(int64_t a, int64_t b, int64_t* error)
+int64_t add(int64_t a, int64_t b, int64_t *error)
 {
     if ((b > 0 && a > INT64_MAX - b) || (b < 0 && a < INT64_MIN - b))
     {
@@ -36,7 +36,7 @@ int64_t add(int64_t a, int64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-int64_t subtract(int64_t a, int64_t b, int64_t* error)
+int64_t subtract(int64_t a, int64_t b, int64_t *error)
 {
     if ((b > 0 && a < INT64_MIN + b) || (b < 0 && a > INT64_MAX + b))
     {
@@ -57,7 +57,7 @@ int64_t subtract(int64_t a, int64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-int64_t multiply(int64_t a, int64_t b, int64_t* error)
+int64_t multiply(int64_t a, int64_t b, int64_t *error)
 {
     // Error checking for multiplication
     if (a > 0)
@@ -110,7 +110,7 @@ int64_t multiply(int64_t a, int64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-int64_t divide(int64_t a, int64_t b, int64_t* error)
+int64_t divide(int64_t a, int64_t b, int64_t *error)
 {
     if (b == 0)
     {
@@ -136,7 +136,7 @@ int64_t divide(int64_t a, int64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-int64_t modulo(int64_t a, int64_t b, int64_t* error)
+int64_t modulo(int64_t a, int64_t b, int64_t *error)
 {
     if (b == 0)
     {
@@ -162,7 +162,7 @@ int64_t modulo(int64_t a, int64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-uint64_t shift_left(uint64_t a, uint64_t b, int64_t* error)
+uint64_t shift_left(uint64_t a, uint64_t b, int64_t *error)
 {
     if (b >= MAX_BITS)
     {
@@ -181,7 +181,7 @@ uint64_t shift_left(uint64_t a, uint64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-uint64_t shift_right(uint64_t a, uint64_t b, int64_t* error)
+uint64_t shift_right(uint64_t a, uint64_t b, int64_t *error)
 {
     if (b >= MAX_BITS)
     {
@@ -200,7 +200,7 @@ uint64_t shift_right(uint64_t a, uint64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-uint64_t bitwise_and(uint64_t a, uint64_t b, int64_t* error)
+uint64_t bitwise_and(uint64_t a, uint64_t b, int64_t *error)
 {
     // No additional error checking required
     *error = 0;
@@ -215,7 +215,7 @@ uint64_t bitwise_and(uint64_t a, uint64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-uint64_t bitwise_or(uint64_t a, uint64_t b, int64_t* error)
+uint64_t bitwise_or(uint64_t a, uint64_t b, int64_t *error)
 {
     // No additional error checking required
     *error = 0;
@@ -230,7 +230,7 @@ uint64_t bitwise_or(uint64_t a, uint64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-uint64_t bitwise_xor(uint64_t a, uint64_t b, int64_t* error)
+uint64_t bitwise_xor(uint64_t a, uint64_t b, int64_t *error)
 {
     // No additional error checking required
     *error = 0;
@@ -245,7 +245,7 @@ uint64_t bitwise_xor(uint64_t a, uint64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-uint64_t rotate_left(uint64_t a, uint64_t b, int64_t* error)
+uint64_t rotate_left(uint64_t a, uint64_t b, int64_t *error)
 {
     // Ensure b is in range
     b %= MAX_BITS;
@@ -263,7 +263,7 @@ uint64_t rotate_left(uint64_t a, uint64_t b, int64_t* error)
  * @param error Error flag
  * @return int64_t Solution
  */
-uint64_t rotate_right(uint64_t a, uint64_t b, int64_t* error)
+uint64_t rotate_right(uint64_t a, uint64_t b, int64_t *error)
 {
     // Ensure b is in range
     b %= MAX_BITS;

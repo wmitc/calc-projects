@@ -12,7 +12,7 @@
  */
 typedef struct queue_node_t
 {
-    void * data;
+    void *data;
 } queue_node_t;
 
 /**
@@ -36,10 +36,10 @@ typedef void (*FREE_F)(void *);
  */
 typedef struct queue_t
 {
-    uint32_t        capacity;
-    uint32_t        currentsz;
-    FREE_F          customfree;
-    queue_node_t ** arr;
+    uint32_t capacity;
+    uint32_t currentsz;
+    FREE_F customfree;
+    queue_node_t **arr;
 } queue_t;
 
 /**
@@ -50,7 +50,7 @@ typedef struct queue_t
  * @note if the user passes in NULL, the queue should default to using free()
  * @returns the 0 on success, non-zero value on failure
  */
-queue_t * queue_init(uint32_t capacity, FREE_F customfree);
+queue_t *queue_init(uint32_t capacity, FREE_F customfree);
 
 /**
  * @brief verifies that queue isn't full
@@ -58,7 +58,7 @@ queue_t * queue_init(uint32_t capacity, FREE_F customfree);
  * @param queue pointer queue object
  * @return 0 on success, non-zero value on failure
  */
-int queue_fullcheck(queue_t * queue);
+int queue_fullcheck(queue_t *queue);
 
 /**
  * @brief verifies that queue isn't empty
@@ -66,7 +66,7 @@ int queue_fullcheck(queue_t * queue);
  * @param queue pointer queue object
  * @return 0 on success, non-zero value on failure
  */
-int queue_emptycheck(queue_t * queue);
+int queue_emptycheck(queue_t *queue);
 
 /**
  * @brief pushes a new node into the queue
@@ -75,7 +75,7 @@ int queue_emptycheck(queue_t * queue);
  * @param data data to be pushed into node
  * @return the 0 on success, non-zero value on failure
  */
-int queue_enqueue(queue_t * queue, void * data);
+int queue_enqueue(queue_t *queue, void *data);
 
 /**
  * @brief pops the front node out of the queue
@@ -83,7 +83,7 @@ int queue_enqueue(queue_t * queue, void * data);
  * @param queue pointer to queue pointer to pop the node off of
  * @return the 0 on success, non-zero value on failure
  */
-queue_node_t * queue_dequeue(queue_t * queue);
+queue_node_t *queue_dequeue(queue_t *queue);
 
 /**
  * @brief get the data from the node at the front of the queue without popping
@@ -91,7 +91,7 @@ queue_node_t * queue_dequeue(queue_t * queue);
  * @param queue pointer to queue pointer to peek
  * @return the pointer to the head on success or NULL for failure
  */
-queue_node_t * queue_peek(queue_t * queue);
+queue_node_t *queue_peek(queue_t *queue);
 
 /**
  * @brief clear all nodes out of a queue
@@ -99,7 +99,7 @@ queue_node_t * queue_peek(queue_t * queue);
  * @param queue pointer to queue pointer to clear out
  * @return the 0 on success, non-zero value on failure
  */
-int queue_clear(queue_t * queue);
+int queue_clear(queue_t *queue);
 
 /**
  * @brief delete a queue
@@ -107,13 +107,13 @@ int queue_clear(queue_t * queue);
  * @param queue_addr pointer to address of queue to be destroyed
  * @return the 0 on success, non-zero value on failure
  */
-int queue_destroy(queue_t ** queue_addr);
+int queue_destroy(queue_t **queue_addr);
 
 /**
  * @brief frees an item and its associated memory
  *
  * @param mem_addr pointer of the item to be free'd
  */
-void custom_free(void * mem_addr);
+void custom_free(void *mem_addr);
 
 #endif

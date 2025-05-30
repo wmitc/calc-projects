@@ -20,7 +20,7 @@
 #define DEBUG 1
 #endif
 
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;;
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 /**
  * @brief Implementation of the queue_init function
@@ -162,7 +162,7 @@ queue_node_t *queue_dequeue(queue_t *queue)
     if (!queue || queue_emptycheck(queue))
     {
         /* COMMENT OUT BELOW LINE WHEN TESTING */
-        //fprintf(stderr, "[-] queue_dequeue queue empty fail.\n");
+        // fprintf(stderr, "[-] queue_dequeue queue empty fail.\n");
         pthread_mutex_unlock(&lock);
         return NULL;
     }
