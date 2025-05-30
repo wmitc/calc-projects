@@ -12,10 +12,6 @@
 #define ONE 1
 
 /**
- * @note A queue is recommended, not required.
- */
-
-/**
  * @brief Threadpool job struct.
  */
 struct threadpool_job_t
@@ -93,6 +89,7 @@ static void *threadpool_worker(void *arg)
 
     return NULL;
 }
+
 /**
  * @brief Create a new threadpool and instantiate as required.
  *
