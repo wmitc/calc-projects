@@ -360,8 +360,8 @@ void test_threadpool_shutdown(void)
     // shutdown to threadpool
     CU_ASSERT_EQUAL_FATAL(threadpool_shutdown(pool_p), SUCCESS);
 
-    fprintf(stdout,"this is what we get: %d\n", threadpool_add_job(
-            pool_p, (job_f)check_thread_working, NULL, thread_check));
+    threadpool_add_job(pool_p, (job_f)check_thread_working, NULL, thread_check);
+    
     // add job should fail after shutdown
     CU_ASSERT_EQUAL_FATAL(
         threadpool_add_job(
