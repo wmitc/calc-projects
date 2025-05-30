@@ -305,7 +305,7 @@ int threadpool_add_job(threadpool_t *pool_p,
         return EXIT_FAILURE;
     }
     pthread_mutex_lock(&printf_mutex);
-    printf("[*] Job was added queue successfully\n");
+    printf("[*] Job added to queue successfully\n");
     pthread_mutex_unlock(&printf_mutex);
 
     // Signal that job has been added to queue
