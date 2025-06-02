@@ -1,9 +1,9 @@
 CC = gcc
-CFLAGS = -Iinclude -Wall -Wextra -g
+CFLAGS = -Iinclude -Wall -Wextra -g -pthread
 
 SRC = $(wildcard src/*c)
 OBJ = $(SRC:src/%.c=build/%.o)
-TARGET = build/threadcalc
+TARGET = bin/threadcalc
 
 all: $(TARGET)
 

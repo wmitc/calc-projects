@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     int opt;
     // Instantiate strtol parameters
     char *endptr;
-    errno = 0; // Set errno to 0 before strtol call
+    errno       = 0; // Set errno to 0 before strtol call
     long long_n = 0;
     // Bool to check if -n was set
     int n_set = 0;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
         {
             num_threads = MAXIMUM_THREADPOOL_SIZE;
         }
-    } 
+    }
 
     // Instantiate threadpool with user provided or default size
     size_t pool_size = (n_set ? (size_t)num_threads : DEFAULT_THREADPOOL_SIZE);

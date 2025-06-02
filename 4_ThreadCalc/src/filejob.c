@@ -9,7 +9,7 @@ void *run_filejob(void *arg)
     if (arg == NULL)
     {
         fprintf(stderr, "[-] NULL argument passed to run_filejob.\n");
-        
+
         return NULL;
     }
 
@@ -18,6 +18,8 @@ void *run_filejob(void *arg)
 
     // Process the file
     process_file(job->filename, job->input_dir, job->output_dir);
+
+    return NULL;
 }
 
 void free_filejob(void *arg)

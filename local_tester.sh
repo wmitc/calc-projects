@@ -17,7 +17,7 @@ echo "End clang-tidy Check"
 if [[ 0 -ne $(( ${warnings} - ${suppressed} )) ]]; then echo "Clang-Tidy found ${warnings} warnings." && cat ../clanglog.txt && exit 1; fi
 export TEST_PROJ=$(echo $PROJ | cut -c 3-)
 echo $PWD
-python3 ./Tests/${TEST_PROJ}Tests.py
+python3 ./Tests/ThreadCalcTests.py
 TEST_CODE=$?
 
 echo "Removing Build Artifacts"
