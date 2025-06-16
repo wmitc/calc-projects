@@ -59,12 +59,6 @@ def client(args):
     host = args.s
     port = args.p
 
-    # Instantiate socket
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    # Connect to server
-    client_socket.connect((host, port))
-
 
     ''' Options:
     
@@ -82,6 +76,11 @@ def client(args):
 
     # Iterate over the files
     for file in files:
+        # Instantiate new socket for each file
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # Connect to server
+        client_socket.connect((host, port))
+
         # Get path of output directory + filename
         in_path = args.i + "/" + file
         out_path = args.o + "/" + file
@@ -118,8 +117,8 @@ def client(args):
                 f.write(data)
                 print(f"[+] Wrote solutions to {out_path}.")
 
-    # Close socket
-    client_socket.close()
+        # Close socket
+        client_socket.close()
 
 def parse():
     '''
