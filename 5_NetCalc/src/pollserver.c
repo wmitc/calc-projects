@@ -13,6 +13,38 @@
 #define STARTING_CLIENTS 5
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 4096
+#define NET_HDR_SZ 48
+#define NET_NAME_FIELD_SZ 32
+
+typedef struct {
+    uint32_t hdr_len;
+    uint32_t fname_len;
+    uint64_t pkt_len;
+    char filename[NET_NAME_FIELD_SZ + 1]; // +1 for null terminator
+} net_header_t;
+
+int parse_net_header(char *buf, net_header_t *hdr_out)
+{
+    if(!buf || !hdr_out)
+    {
+        return -1;
+    }
+
+    memcpy(&hdr_out->hdr_len, buf, 4);
+    hdr_out->hdr_len = ntohl(hdr_out->hdr_len);
+
+    memcpy(&hdr_out->fname_len, buf + 4, 4);
+    hdr_out->fname_len = ntohl(hdr_out->fname_len);
+
+    uint64_t net_pkt_len;
+    memcpy(&net_pkt_len, buf + 8, 8);
+    hdr_out->pkt_len = be64toh(net_pkt_len);
+
+    memcpy(hdr_out->filename, buf + 16, NET_NAME_FIELD_SZ);
+    hdr_out->filename[NET_NAME_FIELD_SZ] = '\0'; // Ensure null termination
+
+    return 0;
+}
 
 // Get sockaddr, IPv4 or IPv6
 void *get_in_addr(struct sockaddr *sa)
@@ -211,14 +243,52 @@ int pollserver(void)
                 {
                     // If not the listener, it is a regular client
                     memset(buf, 0, sizeof(buf));
-                    // Read in data
-                    int nbytes = recv(pfds[i].fd, buf, sizeof(buf), 0);
+                    // Read in data; header first
+
+                    
+                    char hdr_buf[NET_HDR_SZ];
+                    int header_bytes = recv(pfds[i].fd, hdr_buf, NET_HDR_SZ, 0);
+                    if (header_bytes != NET_HDR_SZ) {
+                        fprintf(stderr, "[-] Incomplete header received\n");
+                        close(pfds[i].fd);
+                        del_from_pfds(pfds, i, &fd_count);
+                        continue;
+                    }
+                    
+                    // Try parsing the header
+                    net_header_t net_hdr;
+                    if (parse_net_header(hdr_buf, &net_hdr) < 0) {
+                        fprintf(stderr, "[-] Failed to parse header\n");
+                        close(pfds[i].fd);
+                        del_from_pfds(pfds, i, &fd_count);
+                        continue;
+                    }
+
+                    //int nbytes = recv(pfds[i].fd, buf, sizeof(buf), 0);
                     int sender_fd = pfds[i].fd;
 
-                    if(nbytes <= 0)
+                    uint64_t payload_size = net_hdr.pkt_len - NET_HDR_SZ;
+                    char *data_buf = malloc(payload_size);
+                    if (!data_buf) {
+                        fprintf(stderr, "[-] Memory allocation failed\n");
+                        continue;
+                    }
+
+                    size_t total = 0;
+                    while (total < payload_size) {
+                        int r = recv(pfds[i].fd, data_buf + total, payload_size - total, 0);
+                        if (r <= 0) {
+                            fprintf(stderr, "[-] Error reading payload data\n");
+                            break;
+                        }
+                        total += r;
+                    }
+
+
+                    if(total <= 0)
                     {
                         // Got error or closed connection
-                        if(nbytes == 0)
+                        if(total == 0)
                         {
                             // Connection was closed
                             printf("pollserver: sockedt %d hung up\n", sender_fd);
@@ -239,7 +309,7 @@ int pollserver(void)
                     }
                     else{
                         // Print data received
-                        buf[nbytes] = '\0';  // Null-terminate the received buffer
+                        //buf[nbytes] = '\0';  // Null-terminate the received buffer
 
 
                         // Validate header
@@ -267,6 +337,33 @@ int pollserver(void)
                         // Optional: also print to console
                         printf("[Client %d]: %s\n", sender_fd, buf);*/
                     }
+
+                    // process the data
+
+
+                    // end the reply
+
+                    // Rebuild header
+                    char reply_hdr[NET_HDR_SZ];
+                    uint32_t hdr_len = htonl(NET_HDR_SZ);
+                    uint32_t fname_len = htonl(net_hdr.fname_len);
+                    uint64_t pkt_len = htobe64(NET_HDR_SZ + payload_size);
+
+                    memcpy(reply_hdr, &hdr_len, 4);
+                    memcpy(reply_hdr + 4, &fname_len, 4);
+                    memcpy(reply_hdr + 8, &pkt_len, 8);
+                    memcpy(reply_hdr + 16, net_hdr.filename, NET_NAME_FIELD_SZ);
+
+                    // Send header + data
+                    send(pfds[i].fd, reply_hdr, NET_HDR_SZ, 0);
+                    send(pfds[i].fd, data_buf, payload_size, 0);
+
+
+                    free(data_buf);
+                    close(pfds[i].fd);
+                    del_from_pfds(pfds, i, &fd_count);
+                    i--; // Adjust loop
+
                 } // handle data from client
             } // got ready-to-read from poll()
         } // looping through file descriptors

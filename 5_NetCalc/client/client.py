@@ -120,6 +120,8 @@ def client(args):
         # Close socket
         client_socket.close()
 
+        #break
+
 def parse():
     '''
     Parses command line input.
