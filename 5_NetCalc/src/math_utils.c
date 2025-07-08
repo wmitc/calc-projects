@@ -166,7 +166,7 @@ uint64_t shift_left(uint64_t a, uint64_t b, int64_t *error)
 {
     if (b >= MAX_BITS)
     {
-        fprintf(stderr, "[-] Bad input!");
+        fprintf(stderr, "[-] Bad input!\n");
         *error = 1;
         return 1;
     }
@@ -185,7 +185,7 @@ uint64_t shift_right(uint64_t a, uint64_t b, int64_t *error)
 {
     if (b >= MAX_BITS)
     {
-        fprintf(stderr, "[-] Bad input!");
+        fprintf(stderr, "[-] Bad input!\n");
         *error = 1;
         return 1;
     }

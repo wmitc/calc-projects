@@ -9,6 +9,25 @@ NET_HDR_SZ = 48
 NET_FNAME_MAX = 24
 NET_NAME_FIELD_SZ = 32
 
+def recv_all(sock, num_bytes):
+    '''
+    Recive function to handle partial receives
+
+    Args:
+        sock: socket
+        num_bytes: expected number of bytes to receive
+    
+    Returns:
+        bytes: Data received
+    '''
+    data = b""
+    while len(data) < num_bytes:
+        chunk = sock.recv(num_bytes - len(data))
+        if not chunk:
+            raise ConnectionError("Connection closed prematurely.")
+        data += chunk
+    return data
+
 def gen_net_header(pkt_len, efile_name_len, efile_name):
     '''
     Generates network header based on project specification.
@@ -29,7 +48,7 @@ def gen_net_header(pkt_len, efile_name_len, efile_name):
     hdr = struct.pack("!IIQ", hdr_len, filename_len, pkt_len)
     hdr += filename.encode('utf-8')
 
-    print(hdr)
+    #print(hdr)
 
     return hdr
 
@@ -101,7 +120,7 @@ def client(args):
             print(f"[+] Sent {file} to server.")
 
             # Recv data back; check header first
-            recv_header = client_socket.recv(len(header))
+            recv_header = recv_all(client_socket, len(header))
             if(header != recv_header):
                 print("[-] Unexpected file header received from server.")
                 print("Sent header: ", header)

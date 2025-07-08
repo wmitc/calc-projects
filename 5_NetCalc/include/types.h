@@ -5,6 +5,16 @@
 
 #include <stdint.h>
 
+#define NET_HDR_SZ 48
+#define NET_NAME_FIELD_SZ 32
+
+typedef struct {
+    uint32_t hdr_len; // 4 bytes
+    uint32_t fname_len; // 4 bytes
+    uint64_t pkt_len; // 8 bytes
+    char filename[NET_NAME_FIELD_SZ + 1];  // 32 bytes + 1 for null-terminator
+} __attribute__((packed)) net_header_t;
+
 // File header
 typedef struct
 {

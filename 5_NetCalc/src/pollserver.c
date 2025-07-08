@@ -8,20 +8,13 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include "process_file.h"
+#include "types.h"
 
 #define PORT "31337" // Port the server will listen on
 #define STARTING_CLIENTS 5
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 4096
-#define NET_HDR_SZ 48
-#define NET_NAME_FIELD_SZ 32
-
-typedef struct {
-    uint32_t hdr_len;
-    uint32_t fname_len;
-    uint64_t pkt_len;
-    char filename[NET_NAME_FIELD_SZ + 1]; // +1 for null terminator
-} net_header_t;
 
 int parse_net_header(char *buf, net_header_t *hdr_out)
 {
@@ -89,7 +82,9 @@ int get_listener_socket(void)
         }
 
         // Set option to keep socket open
-        setsockopt(listener, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
+        struct timeval timeout = {5, 0};
+        setsockopt(listener, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+        //setsockopt(listener, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
 
         // 
         if(bind(listener, p->ai_addr, p->ai_addrlen) < 0)
@@ -264,8 +259,29 @@ int pollserver(void)
                         continue;
                     }
 
-                    //int nbytes = recv(pfds[i].fd, buf, sizeof(buf), 0);
                     int sender_fd = pfds[i].fd;
+
+                    // Validate the header received
+                    if (net_hdr.hdr_len != NET_HDR_SZ || 
+                        net_hdr.fname_len > NET_NAME_FIELD_SZ ||
+                        net_hdr.pkt_len < NET_HDR_SZ)
+                    {
+                        fprintf(stderr, "[-] Invalid NET header.\n");
+                        printf("header len: %d\n", net_hdr.hdr_len);
+                        printf("fname len: %d\n", net_hdr.fname_len);
+                        printf("pkt len: %ld\n", net_hdr.pkt_len);
+
+                        net_header_t invalid_hdr_rsp;
+                        memset(&invalid_hdr_rsp, 0, sizeof(invalid_hdr_rsp));
+
+                        invalid_hdr_rsp.hdr_len = htonl(NET_HDR_SZ);
+                        invalid_hdr_rsp.fname_len = htonl(0);
+                        invalid_hdr_rsp.pkt_len = htobe64(NET_HDR_SZ);
+
+                        send(sender_fd, &invalid_hdr_rsp, sizeof(invalid_hdr_rsp), 0);
+                        close(sender_fd);
+                        continue;
+                    }
 
                     uint64_t payload_size = net_hdr.pkt_len - NET_HDR_SZ;
                     char *data_buf = malloc(payload_size);
@@ -282,8 +298,8 @@ int pollserver(void)
                             break;
                         }
                         total += r;
+                        printf("total = %ld\n", total);
                     }
-
 
                     if(total <= 0)
                     {
@@ -291,7 +307,7 @@ int pollserver(void)
                         if(total == 0)
                         {
                             // Connection was closed
-                            printf("pollserver: sockedt %d hung up\n", sender_fd);
+                            printf("pollserver: socket %d hung up\n", sender_fd);
                         }
                         else
                         {
@@ -307,39 +323,17 @@ int pollserver(void)
                         // Reconsider the slot that was just removed
                         i--;
                     }
-                    else{
-                        // Print data received
-                        //buf[nbytes] = '\0';  // Null-terminate the received buffer
-
-
-                        // Validate header
-
-                        // And then process file contents
-
-                        // But we need the processed results back
-                        // so that we can return them to the sender...
-
-                        
-                        
-                        // Write to file
-                        /*FILE *fp = fopen("received_data.txt", "a"); // open for appending
-                        if (fp == NULL)
-                        {
-                            perror("fopen");
-                        }
-                        else
-                        {
-                            //fprintf(fp, "From socket %d: %s\n", sender_fd, buf);  // human-readable
-                            fwrite(buf, 1, nbytes, fp); // use this if the data is binary
-                            fclose(fp);
-                        }
-
-                        // Optional: also print to console
-                        printf("[Client %d]: %s\n", sender_fd, buf);*/
-                    }
 
                     // process the data
-
+                    uint8_t *response_buf = NULL;
+                    size_t response_size = 0;
+                
+                    if (process_buffer((uint8_t*) data_buf, payload_size, &response_buf, &response_size) != 0)
+                    {
+                        fprintf(stderr, "[-] Error processing buffer.\n");
+                        close(pfds[i].fd);
+                        return 1;
+                    }
 
                     // end the reply
 
@@ -356,7 +350,7 @@ int pollserver(void)
 
                     // Send header + data
                     send(pfds[i].fd, reply_hdr, NET_HDR_SZ, 0);
-                    send(pfds[i].fd, data_buf, payload_size, 0);
+                    send(pfds[i].fd, response_buf, response_size, 0);
 
 
                     free(data_buf);

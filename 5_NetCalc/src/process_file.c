@@ -196,4 +196,116 @@ int process_file(const char *file,
     return 0;
 }
 
+int process_buffer(const uint8_t *buffer,
+                 size_t input_size,
+                 uint8_t **output_buf,
+                 size_t *output_size)
+{
+    // Read in file header information
+    file_header header;
+    size_t offset = 0;
+
+    memcpy(&header, buffer + offset, sizeof(header));
+
+    // Validate the magic number
+    if ((unsigned)header.magic_number != (unsigned)MAGIC_NUMBER)
+    {
+        fprintf(stderr, "[-] Unexpected magic number.\n");
+        return 1;
+    }
+
+    // Set file offset to header.offset
+    offset = header.offset;
+
+    // Allocate space for all solved equations in an array
+    solved_equation *solves
+        = malloc(header.num_of_equations * sizeof(solved_equation));
+
+    if (!solves)
+    {
+        fprintf(stderr, "[-] Failed to allocate space for solved equations.\n");
+        return 1;
+    }
+
+    for (int64_t i = 0; i < header.num_of_equations; i++)
+    {
+        unsolved_equation unsolved_equ;
+        memcpy(&unsolved_equ, buffer + offset, sizeof(unsolved_equ));
+        offset += sizeof(unsolved_equ);
+
+        // Initiate type variable to differentiate int64_t and uint64_t problems
+        int8_t type;
+        // Initiate "solved" variable to 0 to indicate unsolved
+        int solved = 0;
+        // Attempt to solve equation
+        if (unsolved_equ.operation >= 0x1 && unsolved_equ.operation <= 0x5)
+        {
+            int64_t signed_solution;
+
+            solved = evaluate_signed_equation(unsolved_equ.operand1,
+                                              unsolved_equ.operation,
+                                              unsolved_equ.operand2,
+                                              &signed_solution,
+                                              &type);
+
+            // Put data into solves array
+            solves[i].equationID = unsolved_equ.equationID;
+            solves[i].flag       = solved;
+            solves[i].type       = type;
+            solves[i].solution   = signed_solution;
+        }
+        else if (unsolved_equ.operation >= 0x6 && unsolved_equ.operation <= 0xc)
+        {
+            uint64_t unsigned_solution;
+
+            solved = evaluate_unsigned_equation(unsolved_equ.operand1,
+                                                unsolved_equ.operation,
+                                                unsolved_equ.operand2,
+                                                &unsigned_solution,
+                                                &type);
+
+            // Put data into solves array
+            solves[i].equationID = unsolved_equ.equationID;
+            solves[i].flag       = solved;
+            solves[i].type       = type;
+            solves[i].solution   = (int64_t)unsigned_solution;
+        }
+    }
+
+    // Set header flag to indicated solved
+    header.flag = 0x1;
+    // Compute output size
+    *output_size = sizeof(file_header) + header.num_of_equations * sizeof(solved_equation);
+    // Allocate buffer
+    *output_buf = malloc(*output_size);
+
+    // Validate allocation
+    if(!output_buf)
+    {
+        free(solves);
+        return 1;
+    }
+
+    // Write header to buffer
+    offset = 0;
+    memcpy(*output_buf + offset, &header, sizeof(header));
+    offset += sizeof(file_header);
+
+    // Write all saved equations to file
+    for (int64_t i = 0; i < header.num_of_equations; i++)
+    {
+        memcpy(*output_buf + offset, &solves[i], sizeof(solved_equation));
+        offset += sizeof(solved_equation);
+    }
+
+    // Clean up
+    free(solves);
+
+    pthread_mutex_lock(&printf_mutex);
+    printf("[+] Operation complete.\n");
+    pthread_mutex_unlock(&printf_mutex);
+
+    return 0;
+}
+
 /*** end of file ***/
