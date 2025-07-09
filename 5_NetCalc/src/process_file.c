@@ -197,9 +197,9 @@ int process_file(const char *file,
 }
 
 int process_buffer(const uint8_t *buffer,
-                 size_t input_size,
-                 uint8_t **output_buf,
-                 size_t *output_size)
+                   size_t input_size,
+                   uint8_t **output_buf,
+                   size_t *output_size)
 {
     // Read in file header information
     file_header header;
@@ -275,12 +275,13 @@ int process_buffer(const uint8_t *buffer,
     // Set header flag to indicated solved
     header.flag = 0x1;
     // Compute output size
-    *output_size = sizeof(file_header) + header.num_of_equations * sizeof(solved_equation);
+    *output_size = sizeof(file_header)
+                   + header.num_of_equations * sizeof(solved_equation);
     // Allocate buffer
     *output_buf = malloc(*output_size);
 
     // Validate allocation
-    if(!output_buf)
+    if (!output_buf)
     {
         free(solves);
         return 1;

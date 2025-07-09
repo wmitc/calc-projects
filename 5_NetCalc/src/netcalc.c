@@ -16,10 +16,10 @@
 int main(int argc, char *argv[])
 {
 
-
     // Instantiate threadpool with user provided or default size
-    //size_t pool_size = (n_set ? (size_t)num_threads : DEFAULT_THREADPOOL_SIZE);
-    //threadpool_t *pool = threadpool_create(pool_size);
+    // size_t pool_size = (n_set ? (size_t)num_threads :
+    // DEFAULT_THREADPOOL_SIZE); threadpool_t *pool =
+    // threadpool_create(pool_size);
 
     // Start the server
     pollserver();

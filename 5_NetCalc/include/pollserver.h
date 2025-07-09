@@ -7,7 +7,7 @@
 
 /**
  * @brief Get the in addr object
- * 
+ *
  * @param sa generic sockaddr structure
  * @return void* Pointer to sockaddr structure
  */
