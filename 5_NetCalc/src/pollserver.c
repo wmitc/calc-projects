@@ -16,6 +16,24 @@
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 4096
 
+void print_net_header(const net_header_t *hdr, const char *label) {
+    printf("[%s]\n", label);
+    printf("  hdr_len:   %d\n", hdr->hdr_len);
+    printf("  fname_len: %d\n", hdr->fname_len);
+    printf("  pkt_len:   %lu\n", hdr->pkt_len);
+    printf("  filename:  '%s'\n", hdr->filename);
+}
+
+ssize_t send_all(int sockfd, const void *buf, size_t len) {
+    size_t total_sent = 0;
+    while (total_sent < len) {
+        ssize_t sent = send(sockfd, (const char*)buf + total_sent, len - total_sent, 0);
+        if (sent <= 0) return -1;
+        total_sent += sent;
+    }
+    return total_sent;
+}
+
 int parse_net_header(char *buf, net_header_t *hdr_out)
 {
     if(!buf || !hdr_out)
@@ -243,6 +261,7 @@ int pollserver(void)
                     
                     char hdr_buf[NET_HDR_SZ];
                     int header_bytes = recv(pfds[i].fd, hdr_buf, NET_HDR_SZ, 0);
+
                     if (header_bytes != NET_HDR_SZ) {
                         fprintf(stderr, "[-] Incomplete header received\n");
                         close(pfds[i].fd);
@@ -267,9 +286,6 @@ int pollserver(void)
                         net_hdr.pkt_len < NET_HDR_SZ)
                     {
                         fprintf(stderr, "[-] Invalid NET header.\n");
-                        printf("header len: %d\n", net_hdr.hdr_len);
-                        printf("fname len: %d\n", net_hdr.fname_len);
-                        printf("pkt len: %ld\n", net_hdr.pkt_len);
 
                         net_header_t invalid_hdr_rsp;
                         memset(&invalid_hdr_rsp, 0, sizeof(invalid_hdr_rsp));
@@ -280,6 +296,9 @@ int pollserver(void)
 
                         send(sender_fd, &invalid_hdr_rsp, sizeof(invalid_hdr_rsp), 0);
                         close(sender_fd);
+                        // Remove from file descriptors
+                        del_from_pfds(pfds, i, &fd_count);
+                        i--; // Critical: adjust loop index
                         continue;
                     }
 
@@ -298,7 +317,7 @@ int pollserver(void)
                             break;
                         }
                         total += r;
-                        printf("total = %ld\n", total);
+                        printf("Total bytes = %ld\n", total);
                     }
 
                     if(total <= 0)
@@ -339,6 +358,8 @@ int pollserver(void)
 
                     // Rebuild header
                     char reply_hdr[NET_HDR_SZ];
+                    // Clear header memory
+                    memset(&reply_hdr, 0, sizeof(reply_hdr + 1));
                     uint32_t hdr_len = htonl(NET_HDR_SZ);
                     uint32_t fname_len = htonl(net_hdr.fname_len);
                     uint64_t pkt_len = htobe64(NET_HDR_SZ + payload_size);
@@ -348,10 +369,8 @@ int pollserver(void)
                     memcpy(reply_hdr + 8, &pkt_len, 8);
                     memcpy(reply_hdr + 16, net_hdr.filename, NET_NAME_FIELD_SZ);
 
-                    // Send header + data
-                    send(pfds[i].fd, reply_hdr, NET_HDR_SZ, 0);
-                    send(pfds[i].fd, response_buf, response_size, 0);
-
+                    send_all(pfds[i].fd, &reply_hdr, NET_HDR_SZ);
+                    send_all(pfds[i].fd, response_buf, response_size);
 
                     free(data_buf);
                     close(pfds[i].fd);

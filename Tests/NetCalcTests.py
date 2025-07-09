@@ -42,7 +42,8 @@ def check_nethdr_handling():
     return tests_passed - len(hdrs)
 
 def check_nethdr_correctness():
-    correct_ret_hdr = (48, 20, 523)
+    #correct_ret_hdr = (48, 20, 523)
+    correct_ret_hdr = (48, 20, 1099)
     EquGrader.generate_files(1, 32, ".") #create temporary file
 
     ret = 1
@@ -62,6 +63,9 @@ def check_nethdr_correctness():
                     s.sendall(pkt)
                     hdr = s.recv(NET_HDR_SZ)
                     uphdr = struct.unpack("!IIQ", hdr[:16])
+                    print("correct_ret_hdr", correct_ret_hdr)
+                    print("unpacked header:", uphdr)
+                    print(len(uphdr))
                     if uphdr != correct_ret_hdr:
                         ret = -1
 

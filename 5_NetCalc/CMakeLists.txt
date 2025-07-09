@@ -11,26 +11,15 @@ set(CMAKE_C_STANDARD_REQUIRED True)
 # Include header files
 include_directories(include)
 
-find_package(Threads REQUIRED)
-
-# Add static library for threadpool
-add_library(threadpool STATIC
-    ${CMAKE_SOURCE_DIR}/src/threadpool.c
-    ${CMAKE_SOURCE_DIR}/src/queue.c
-    ${CMAKE_SOURCE_DIR}/src/signals.c
-    ${CMAKE_SOURCE_DIR}/src/shared_mutex.c
+# Source files explicitly listed
+set(SOURCES
+    src/netcalc.c
+    src/pollserver.c
+    src/process_file.c
+    src/evaluate.c
+    src/shared_mutex.c
+    src/math_utils.c
 )
-
-target_link_libraries(threadpool PRIVATE Threads::Threads)
-
-# Collect all source files from src/
-file(GLOB SOURCES "src/*.c")
 
 # Add the executable
 add_executable(netcalc ${SOURCES})
-
-target_link_libraries(netcalc PRIVATE threadpool Threads::Threads)
-
-# CREATE A LIBRARY OF YOUR THREADPOOL.
-# CREATE AN EXECUTABLE FOR YOUR THREADPOOL MAIN FUNCTION.
-# BUILD THE EXECUTABLE BINARY IN THE 4_ThreadCalc/bin DIRECTORY.
