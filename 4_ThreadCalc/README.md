@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this project, we extend the functionality of FileCalc with a threadpool. This requires only small modifications to the file parser. A queue data structure is used (build during the DataStructures project).
+In this project, we extend the functionality of FileCalc with a threadpool. This requires only small modifications to the file parser. A queue data structure is used (built during the DataStructures project).
 
 ### Basic Requirements
 
@@ -14,8 +14,7 @@ In this project, we extend the functionality of FileCalc with a threadpool. This
 ### Specific Requirements
 
 1. Utilize a data structure to manage work tasks
-It is recommended that you use a data structure from DataStructures1
-2. Utilize a Threadpool to process work from the data structure
+2. Utilize a threadpool to process work from the data structure
 3. Utilize getopt to process the following arguments
 -n NUM (number of threads in the pool; defaults to 4)
 
@@ -25,6 +24,7 @@ It is recommended that you use a data structure from DataStructures1
 These tests are designed to test a general threadpool implementation either as part of the ThreadCalc project, or as a stand-alone threadpool library. As such, these tests do not check for integration with the rest of the Calculator Projects or some of the ThreadCalc tasks. 
 
 ## Building
+
 ### Dependencies
 - C11 or higher, C17 preferred
 - Clang-Tidy
@@ -35,7 +35,7 @@ These tests are designed to test a general threadpool implementation either as p
 ```bash
 sudo apt install clang-tidy valgrind cmake libcunit1 libcunit1-doc libcunit1-dev
 ```
-Build the ThreadCalc executable and tests with the `build.sh` script from the root directory:
+Build the ThreadCalc executable and test binary with the `build.sh` script from the root directory:
 
 ```zsh
 user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc$ bash build.sh 
@@ -59,6 +59,7 @@ Build only the ThreadCalc executable with `make` from the root directory (note: 
 
 ```zsh
 user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc$ mkdir bin
+
 user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc$ make
 
 mkdir -p build
@@ -74,7 +75,7 @@ rm -rf build/*.o
 The ThreadCalc tests check the functionality of critical threadpool functions and tasks, memory management and thread safety, and the memory management and thread safety of the standalone ThreadCalc executable.
 
 ### Signal Handling
-The test suite also provides checks for a signal handler, which is not required to be integrated into the threadpool directly for testing purposes (refer to your project spec on implementation requirements), but can be if desired. If signal handling tests are not desired or implemented, modify the tests appropriately. Be aware, if signal handling is not implemented, a uncaught signal **will stop** the tests from proceeding unless modified.
+The test suite also provides checks for a signal handler, which is not required to be integrated into the threadpool directly for testing purposes (refer to your project spec on implementation requirements), but can be if desired.
 
 ### Running the Tests
 The tests are integrated into the Gitlab CI/CD for your repo, and run automatically when a commit is pushed to the repo. The tests can also be run locally from the bin folder with `./test_threads`. This will run all tests built in the repo, including other projects:
@@ -142,7 +143,7 @@ user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc/bin$ ./tests_threads
 ```
 ### Overall Status
 
-Now the 4 four test suites pass (the 5th is erroneously passing as it is not yet implemented).
+Now four test suites pass (the fifth is erroneously passing -- it is not yet implemented).
 
 ```
 user@optiplex:~/Documents/jqr-calcprojects$ bash run_tests.sh 
@@ -174,10 +175,7 @@ Run Summary:    Type  Total    Ran Passed Failed Inactive
                tests      7      7      6      1        0
              asserts     78     78     76      2      n/a
 ```
-Two assert statements failed within one test suite. After investigation, it was apparent theThese failures did not affect threadpool perfermorance when integrated with the FileCalc project.
-
-## Note on Atomics
-While C11 Atomics are thread safe, due to the instrumentation of the helgrind tool, they may show as a potential race condition in error output. There are a variety of techniques to address and suppress this output, but ultimately the trainee and reviewer should conduct a thorough review to ensure reported potential race conditions are not actually present.
+Two assert statements failed within one test suite. After investigation, it was apparent that these failures did not affect threadpool performance when integrated with the FileCalc project.
 
 ## Additional Testing and Debugging Tools
 These tests are conducted with valgrind, using the memcheck and helgrind tools. The valgrind DRD (Data Race Detector) can also be used for multithreaded program analysis. It tends to report fewer errors on atomics, but can have less clear error output. Additionally, the thread-sanitizer tool (a similar tool to Address Sanitizer) provides good debugging of data races.
