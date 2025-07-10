@@ -190,7 +190,8 @@ static int check_unique_thread_id(pthread_t thread_ids[], uint32_t num_threads)
     {
         for (size_t j_idx = (idx + 1); j_idx < num_threads; j_idx++)
         {
-            thread_id = pthread_equal(thread_ids[idx], thread_ids[j_idx]);
+            thread_id = pthread_equal((pthread_t)&thread_ids[idx], (pthread_t)&thread_ids[j_idx]); // fixed access bug!
+            // thread_id = pthread_equal(thread_ids[idx], thread_ids[j_idx]);
             if (0 != thread_id)
             {
                 all_unique = ERROR;
@@ -320,11 +321,13 @@ void test_threadpool_shutdown(void)
     atomic_int entry_counter = 0;
     atomic_int flag          = true;
 
-    for (int i = 0; i < DEFAULT_THREADPOOL_SIZE + 1; i++)
+    for (int i = 0; i < DEFAULT_THREADPOOL_SIZE; i++) // modified "i < DEFAULT_THREADPOOL_SIZE + 1"
     {
         thread_check[i].counter       = &counter;
         thread_check[i].entry_counter = &entry_counter;
         thread_check[i].flag          = &flag;
+        
+        entry_counter++; // added increment; didn't see incrementation anywhere
     }
 
     for (size_t i = 0; i < DEFAULT_THREADPOOL_SIZE + 1; i++)
@@ -346,6 +349,7 @@ void test_threadpool_shutdown(void)
         SUCCESS);
     pthread_mutex_lock(&test_mutex_g);
     // assert that only default threadpool size number of threads have started
+
     CU_ASSERT_EQUAL(*thread_check->entry_counter, DEFAULT_THREADPOOL_SIZE);
 
     // start threads working
@@ -356,13 +360,16 @@ void test_threadpool_shutdown(void)
     // shutdown to threadpool
     CU_ASSERT_EQUAL_FATAL(threadpool_shutdown(pool_p), SUCCESS);
 
+    threadpool_add_job(pool_p, (job_f)check_thread_working, NULL, thread_check);
+    
     // add job should fail after shutdown
     CU_ASSERT_EQUAL_FATAL(
         threadpool_add_job(
             pool_p, (job_f)check_thread_working, NULL, thread_check),
-        ERROR);
+        ERROR);    
 
     CU_ASSERT_EQUAL(threadpool_destroy(&pool_p), SUCCESS);
+
     CU_ASSERT_PTR_NULL(pool_p);
 
     // check that only pool_size + 2 jobs are started

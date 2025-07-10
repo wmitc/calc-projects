@@ -1,0 +1,56 @@
+---
+# Use C++ mode for formatting C code (clang-format doesn't support 'C')
+Language: Cpp
+BasedOnStyle: LLVM
+
+# Indentation and line width
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 80
+
+# Braces: Allman style
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: None
+
+# Do NOT break return types onto their own line
+AlwaysBreakAfterReturnType: None
+AlwaysBreakAfterDefinitionReturnType: None
+
+# Indentation of case labels
+IndentCaseLabels: true
+IndentGotoLabels: true
+
+# Spacing preferences
+SpaceBeforeParens: ControlStatements
+SpaceBeforeAssignmentOperators: true
+SpaceInEmptyParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+SpacesInCStyleCastParentheses: false
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+
+# Pointer alignment: `int *ptr`, not `int* ptr`
+PointerAlignment: Right
+
+# Alignment and bin packing
+BinPackParameters: false
+BinPackArguments: false
+AlignConsecutiveAssignments: true
+AlignTrailingComments: true
+AlignOperands: true
+
+# Operators and breaking
+BreakBeforeBinaryOperators: All
+BreakBeforeTernaryOperators: true
+
+# Comments and include behavior
+ReflowComments: true
+SortIncludes: false
+Cpp11BracedListStyle: false
+...
+
