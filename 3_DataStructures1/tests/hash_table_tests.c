@@ -23,7 +23,7 @@ int clean_suite1(void)
 void test_hash_table_init()
 {
     int exit_code = 1;
-
+    fprintf(stdout,"attempting the init\n");
     // Verify hash_table was created correctly
     hash_table = hash_table_init(SIZE, NULL);
     CU_ASSERT_FATAL(NULL != hash_table);
@@ -107,7 +107,7 @@ void test_hash_table_remove()
     int            exit_code     = 1;
     void *         ret_ptr       = NULL;
     hash_table_t * invalid_table = NULL;
-
+    fprintf(stdout, "test of changing!!!!\n");
     exit_code = hash_table_remove(invalid_table, "Item three");
     CU_ASSERT(FAILURE == exit_code);
 
