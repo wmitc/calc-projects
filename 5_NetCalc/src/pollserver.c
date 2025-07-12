@@ -109,7 +109,8 @@ int get_listener_socket(void)
         struct timeval timeout = { 5, 0 };
         setsockopt(
             listener, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
-        // setsockopt(listener, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
+        // Set option to resuse socket
+        setsockopt(listener, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
 
         //
         if (bind(listener, p->ai_addr, p->ai_addrlen) < 0)
