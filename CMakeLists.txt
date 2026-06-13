@@ -3,12 +3,12 @@ cmake_minimum_required(VERSION 3.16)
 enable_testing()
 
 project(
-    JQRCalcProjects
+    CalcProjects
     LANGUAGES "C"
-    DESCRIPTION "JQR Example Projects v1.5"
+    DESCRIPTION "Calculator Projects v1.5"
 )
 
-include(jqr_main.cmake)
+include(main.cmake)
 
 
 if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/0_Common/CMakeLists.txt")
@@ -23,13 +23,13 @@ if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/2_FileCalc/CMakeLists.txt")
     add_subdirectory(2_FileCalc)
 endif()
 
-# if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/4_ThreadCalc/CMakeLists.txt")
-#     add_subdirectory(4_ThreadCalc)
-# endif()
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/4_ThreadCalc/CMakeLists.txt")
+    add_subdirectory(4_ThreadCalc)
+endif()
 
-# if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/5_NetCalc/CMakeLists.txt")
-#     add_subdirectory(5_NetCalc)
-# endif()
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/5_NetCalc/CMakeLists.txt")
+    add_subdirectory(5_NetCalc)
+endif()
 
 add_test(
     NAME TestSimpleCalc

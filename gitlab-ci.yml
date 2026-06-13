@@ -49,7 +49,7 @@ stages:
     - make -j$(nproc)
     - make test "ARGS= -R $CUR_TEST --output-on-failure"
 
-JQRCalc-Build:
+Calc-Build:
   needs: []
   <<: *build
 
@@ -89,21 +89,21 @@ NetCalc-Lint:
   <<: *lint
 
 SimpleCalc-Test:
-  needs: [ "JQRCalc-Build" ]
+  needs: [ "Calc-Build" ]
   variables:
     CUR_PROJ: 1_SimpleCalc
     CUR_TEST: TestSimpleCalc
   <<: *test
 
 FileCalc-Test:
-  needs: [ "JQRCalc-Build" ]
+  needs: [ "Calc-Build" ]
   variables:
     CUR_PROJ: 2_FileCalc
     CUR_TEST: TestFileCalc
   <<: *test
 
 DataStructures1-Test:
-  needs: [ "JQRCalc-Build" ]
+  needs: [ "Calc-Build" ]
   variables:
     CUR_PROJ: 3_DataStructures1
     CUR_TEST: TestDataStructures1
@@ -111,7 +111,7 @@ DataStructures1-Test:
 
 # Pthon threadcalc test
 ThreadCalc-Test:
-  needs: [ "JQRCalc-Build" ]
+  needs: [ "Calc-Build" ]
   variables:
     CUR_PROJ: 4_ThreadCalc
     CUR_TEST: TestThreadCalc
@@ -119,7 +119,7 @@ ThreadCalc-Test:
 
 # Test threadpool with valgrind
 ThreadCalcTests-Valgrind:
-  needs: [ "JQRCalc-Build" ]
+  needs: [ "Calc-Build" ]
   variables:
     CUR_PROJ: 4_ThreadCalc
     CUR_TEST: TestThreadLib_valgrind
@@ -127,14 +127,14 @@ ThreadCalcTests-Valgrind:
 
 # Test threadpool with helgrind
 ThreadCalcTests-Helgrind:
-  needs: [ "JQRCalc-Build" ]
+  needs: [ "Calc-Build" ]
   variables:
     CUR_PROJ: 4_ThreadCalc
     CUR_TEST: TestThreadLib_helgrind
   <<: *test
 
 NetCalc-Test:
-  needs: [ "JQRCalc-Build" ]
+  needs: [ "Calc-Build" ]
   variables:
     CUR_PROJ: 5_NetCalc
     CUR_TEST: TestNetCalc

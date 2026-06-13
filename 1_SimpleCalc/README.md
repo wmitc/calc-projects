@@ -30,7 +30,7 @@ For debugging:
 make debug
 ```
 
-To validate with test suite from base folder (JQR CalcProjects/):
+To validate with test suite from base folder (calc-projects/):
 ```console
 bash build.sh 
 

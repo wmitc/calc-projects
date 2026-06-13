@@ -29,7 +29,7 @@ The binaries will again be located in the `bin` directory. Debugging version fil
 
 ## Testing
 
-To run all tests, from inside `jqr_calcprojects` directory:
+To run all tests, from inside `calc-projects` directory:
 ```console
 bash runtests.sh
 ```
@@ -45,10 +45,10 @@ bash local_tester2.sh 3_DataStructures1
 The end of the output stream should appear as below:
 
 ```console
-/home/user/Documents/jqr-calcprojects
+/home/user/Documents/calc-projects
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/user/Documents/jqr-calcprojects/3_DataStructures1/build
+-- Build files have been written to: /home/user/Documents/calc-projects/3_DataStructures1/build
 [ 10%] Built target queue_p
 [ 20%] Built target test_queue_p
 [ 30%] Built target queue
@@ -90,24 +90,4 @@ In `tests/linked_list_tests.c` the following changes were made:
 
 The tests for circular linkage were found to be malformed. The specification makes no mention of making the linked list into a circularly linked list. Moreover, adding circular linkage by pointing the tail pointer to the head causes downstream problems in other functions. Hence, these tests were thrown out.
 
-As for the sort function test, the test script contains a comparison function that checks argument equality, but not one that handles integer comparisons. The `list_sort` implementation found in `linked_list.c` can be validated by running `make debug` and then running `bin/linked_list_debug`. The content of the list before and after sorting is printed to the console. Hence, the JQR task of implementation a sorting algorithm is addressed despite skipping the provided test.
-
-
-
-## Project Instructions:
-- Create implementations for each of the header files in the "include" directory and place them in the "src" directory.
-- You should not have to modify any of the files in the tests directory or the CMakeLists.txt, but if you identify problems with either, make an issue on your repo.
-
-JQRS:
-- 4.1.5
-- 4.1.14
-- 4.1.15
-- 4.1.19
-- 4.1.21
-- 4.1.23
-- 4.3.2
-- 4.3.3
-- 4.3.6
-- 4.3.7
-- 4.3.9
-- 4.6.2
+As for the sort function test, the test script contains a comparison function that checks argument equality, but not one that handles integer comparisons. The `list_sort` implementation found in `linked_list.c` can be validated by running `make debug` and then running `bin/linked_list_debug`. The content of the list before and after sorting is printed to the console. Hence, the required implementation of a sorting algorithm is addressed despite skipping the provided test.

@@ -15,10 +15,10 @@ find_package(Threads REQUIRED)
 
 # Add static library for threadpool
 add_library(threadpool STATIC
-    ${CMAKE_SOURCE_DIR}/src/threadpool.c
-    ${CMAKE_SOURCE_DIR}/src/queue.c
-    ${CMAKE_SOURCE_DIR}/src/signals.c
-    ${CMAKE_SOURCE_DIR}/src/shared_mutex.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/threadpool.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/queue.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/signals.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/shared_mutex.c
 )
 
 target_link_libraries(threadpool PRIVATE Threads::Threads)
