@@ -94,8 +94,8 @@ sudo docker run --rm -u "$(id -u):$(id -g)" -v "$PWD:/work" -w /work \
 All tests passed.
 
 ```console
-ubuntu@ubuntu2004:~/Documents/calc-projects$ bash run_tests.sh 
-Found build dir. Running tests...
+ubuntu@ubuntu2004:~/Documents/calc-projects$ sudo docker/run-tests.sh
+...
 Running tests...
 Test project /home/ubuntu/Documents/calc-projects/build
     Start 1: TestSimpleCalc
