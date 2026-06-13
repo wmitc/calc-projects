@@ -8,3 +8,21 @@ build/
 **/build/*
 **/build
 
+### Object files & compiled binaries ###
+*.o
+**/bin/
+
+### In-source CMake artifacts ###
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+
+### Python bytecode ###
+__pycache__/
+*.pyc
+
+### NetCalc runtime output & in-source binary ###
+5_NetCalc/src/received_data.txt
+5_NetCalc/src/netcalc
+5_NetCalc/test.txt
+
