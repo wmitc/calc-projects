@@ -38,7 +38,7 @@ sudo apt install clang-tidy valgrind cmake libcunit1 libcunit1-doc libcunit1-dev
 Build the ThreadCalc executable and test binary with the `build.sh` script from the root directory:
 
 ```zsh
-user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc$ bash build.sh 
+user@optiplex:~/Documents/calc-projects/4_ThreadCalc$ bash build.sh 
 
 -- The C compiler identification is GNU 9.4.0
 -- Check for working C compiler: /usr/bin/cc
@@ -46,7 +46,7 @@ user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc$ bash build.sh
 ...
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/user/Documents/jqr-calcprojects/4_ThreadCalc/build
+-- Build files have been written to: /home/user/Documents/calc-projects/4_ThreadCalc/build
 Scanning dependencies of target threadpool
 [  5%] Building C object CMakeFiles/threadpool.dir/src/threadpool.c.o
 ...
@@ -58,9 +58,9 @@ Scanning dependencies of target threadpool
 Build only the ThreadCalc executable with `make` from the root directory (note: first create `bin` folder):
 
 ```zsh
-user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc$ mkdir bin
+user@optiplex:~/Documents/calc-projects/4_ThreadCalc$ mkdir bin
 
-user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc$ make
+user@optiplex:~/Documents/calc-projects/4_ThreadCalc$ make
 
 mkdir -p build
 gcc -Iinclude -Wall -Wextra -g -pthread -c src/evaluate.c -o build/evaluate.o
@@ -80,7 +80,7 @@ The test suite also provides checks for a signal handler, which is not required 
 ### Running the Tests
 The tests are integrated into the Gitlab CI/CD for your repo, and run automatically when a commit is pushed to the repo. The tests can also be run locally from the bin folder with `./test_threads`. This will run all tests built in the repo, including other projects:
 ```bash
-user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc/bin$ ./tests_threads 
+user@optiplex:~/Documents/calc-projects/4_ThreadCalc/bin$ ./tests_threads 
 
 
      CUnit - A unit testing framework for C - Version 2.1-3
@@ -103,8 +103,8 @@ passed
 [-] Can't add job, pool is shutdown.
 [-] Can't add job, pool is shutdown.
 FAILED
-    1. /home/user/Documents/jqr-calcprojects/4_ThreadCalc/tests_src/thread_tests.c:353  - CU_ASSERT_EQUAL(*thread_check->entry_counter,DEFAULT_THREADPOOL_SIZE)
-    2. /home/user/Documents/jqr-calcprojects/4_ThreadCalc/tests_src/thread_tests.c:366  - CU_ASSERT_EQUAL_FATAL(threadpool_add_job( pool_p, (job_f)check_thread_working, NULL, thread_check),ERROR)
+    1. /home/user/Documents/calc-projects/4_ThreadCalc/tests_src/thread_tests.c:353  - CU_ASSERT_EQUAL(*thread_check->entry_counter,DEFAULT_THREADPOOL_SIZE)
+    2. /home/user/Documents/calc-projects/4_ThreadCalc/tests_src/thread_tests.c:366  - CU_ASSERT_EQUAL_FATAL(threadpool_add_job( pool_p, (job_f)check_thread_working, NULL, thread_check),ERROR)
 Suite: Signal Handling Suite
   Test: test of signal handler() ...passed
 
@@ -117,7 +117,7 @@ Elapsed time =    0.017 seconds
 ```
 To run only the ThreadCalc tests from the root directory (python for functionality, valgrind and helgrind on the library tests):
 ```
-user@optiplex:~/Documents/jqr-calcprojects$ bash local_tester.sh 4_ThreadCalc/
+user@optiplex:~/Documents/calc-projects$ bash local_tester.sh 4_ThreadCalc/
 
 Start clang-tidy Check
 No output here is good
@@ -130,26 +130,26 @@ Test Results: Passed 16 out of 16 tests.
 Removing Build Artifacts
 ```
 ```
-user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc/bin$ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./threadcalc input_dir output_dir -n 5
+user@optiplex:~/Documents/calc-projects/4_ThreadCalc/bin$ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./threadcalc input_dir output_dir -n 5
 ```
 ```
-user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc/bin$ valgrind --tool=helgrind ./threadcalc input_dir output_dir -n 7
+user@optiplex:~/Documents/calc-projects/4_ThreadCalc/bin$ valgrind --tool=helgrind ./threadcalc input_dir output_dir -n 7
 ```
 
 
 The test executable can also be run without valgrind and helgind:
 ```bash
-user@optiplex:~/Documents/jqr-calcprojects/4_ThreadCalc/bin$ ./tests_threads
+user@optiplex:~/Documents/calc-projects/4_ThreadCalc/bin$ ./tests_threads
 ```
 ### Overall Status
 
 Now four test suites pass (the fifth is erroneously passing -- it is not yet implemented).
 
 ```
-user@optiplex:~/Documents/jqr-calcprojects$ bash run_tests.sh 
+user@optiplex:~/Documents/calc-projects$ bash run_tests.sh 
 Found build dir. Running tests...
 Running tests...
-Test project /home/user/Documents/jqr-calcprojects/build
+Test project /home/user/Documents/calc-projects/build
     Start 1: TestSimpleCalc
 1/5 Test #1: TestSimpleCalc ...................   Passed    0.16 sec
     Start 2: TestFileCalc

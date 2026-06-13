@@ -3,12 +3,12 @@ cmake_minimum_required(VERSION 3.16)
 enable_testing()
 
 project(
-    JQRCalcProjects
+    CalcProjects
     LANGUAGES "C"
-    DESCRIPTION "JQR Example Projects v1.5"
+    DESCRIPTION "Calculator Projects v1.5"
 )
 
-include(jqr_main.cmake)
+include(main.cmake)
 
 
 if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/0_Common/CMakeLists.txt")
