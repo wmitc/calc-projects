@@ -23,13 +23,13 @@ if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/2_FileCalc/CMakeLists.txt")
     add_subdirectory(2_FileCalc)
 endif()
 
-# if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/4_ThreadCalc/CMakeLists.txt")
-#     add_subdirectory(4_ThreadCalc)
-# endif()
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/4_ThreadCalc/CMakeLists.txt")
+    add_subdirectory(4_ThreadCalc)
+endif()
 
-# if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/5_NetCalc/CMakeLists.txt")
-#     add_subdirectory(5_NetCalc)
-# endif()
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/5_NetCalc/CMakeLists.txt")
+    add_subdirectory(5_NetCalc)
+endif()
 
 add_test(
     NAME TestSimpleCalc
