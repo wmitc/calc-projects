@@ -1,31 +1,103 @@
-# Template Repo for JQR Calc Projects.
+# Calc Projects
 
-To create a blank repo for Trainees, create a new repo, use the "Import Project", select "Repo by URL", and set the URL to this repo.
-You may be prompted to enter your DevForce credentials.
+A series of five C projects that build on one another, starting from a one-line
+command calculator and ending with a networked calculator service. Each project
+reuses and extends ideas from the ones before it, gradually introducing file
+handling, custom data structures, concurrency, and networking.
 
-REMEMBER! You must also copy over the .gitlab-ci.yml and .clang-format files!
+The projects are written in C (C11 minimum, C17 preferred) and built with CMake.
+See each project's own README and reference document for full details.
 
-- The recommended order of completion is:
-1. SimpleCalc
-2. FileCalc
-3. DataStructures1
-4. ThreadCalc
-5. NetCalc
-- Each project is intended to be developed in it's own branch a merge request into master should be made when it is ready for review.
-- If you are not getting updates pushed to your repo (indluding tests, revised documentation, and header files), please remind someone at CSD-T to push the latest updates to the master branch of your repo.
-- If you see any errors, with anything inside, please make an issue.
-- Be sure to check the updates branch frequently. This is rapidly changing product, and as we get feedback we integrate it. If docs don't make sense, ensure you dont have an old version.
+## The Projects
 
+### 1. SimpleCalc
 
-# Update
+A command-line calculator that evaluates a single expression and prints the
+result. It takes two operands and an operator as arguments and performs the
+arithmetic, establishing the core math and argument-parsing logic that the later
+projects build on.
+
+### 2. FileCalc
+
+Extends the calculator to work with files. Instead of a single expression on the
+command line, it reads equations from an input directory, evaluates each one, and
+writes the solved results to an output directory. This introduces file parsing,
+batch processing, and an expression evaluator.
+
+### 3. DataStructures1
+
+A set of reusable data structure libraries -- linked list, hash table, stack, and
+queue -- each compiled as its own library and exercised by its own unit tests.
+These structures are the building blocks used to manage work in the concurrency
+project that follows.
+
+### 4. ThreadCalc
+
+Combines FileCalc with a thread pool to process work concurrently. Equation files
+are queued as tasks (using the queue from the data structures project) and worked
+by a configurable number of worker threads, producing the same output as FileCalc
+but in parallel. This introduces threading, synchronization, and signal handling.
+
+### 5. NetCalc
+
+A client/server calculator. The server accepts connections and handles multiple
+clients, receiving equation files over the network, evaluating them, and sending
+results back. This brings the earlier work together over a network interface.
+
+## Building and Testing
+
+From the repository root:
+
+```bash
+bash build.sh          # build
+bash build.sh debug    # build with address sanitizer and stricter checks
+bash build.sh clean    # remove build artifacts
+bash run_tests.sh      # build if needed, then run the full test suite
+```
+
+Each project can also be built on its own from inside its folder.
+
+## Running the Tests
+
+The test suite targets the **Ubuntu 20.04 toolchain** (gcc 9 / clang-tidy 10).
+Newer compilers (gcc 14+ / clang 15+) promote several long-standing C warnings to
+hard errors, so some projects will not build directly on an up-to-date host. To
+get a reliable run regardless of your host, use the provided container, which
+pins the expected toolchain:
+
+```bash
+sudo docker/run-tests.sh
+```
+
+This builds the image on first run (cached afterwards), then performs a clean
+build and runs the full suite. Build artifacts stay owned by your user, not root.
+
+The raw equivalent, if you prefer to run the steps yourself:
+
+```bash
+sudo docker build -t calc-projects-focal docker/
+sudo docker run --rm -u "$(id -u):$(id -g)" -v "$PWD:/work" -w /work \
+    calc-projects-focal bash -c 'bash build.sh clean && bash run_tests.sh'
+```
+
+To validate only the five canonical project tests (excluding the ThreadCalc
+library's valgrind/helgrind memcheck tests):
+
+```bash
+sudo docker run --rm -u "$(id -u):$(id -g)" -v "$PWD:/work" -w /work \
+    calc-projects-focal bash -c \
+    'bash build.sh clean && bash build.sh && cd build && ctest -E "valgrind|helgrind" --output-on-failure'
+```
+
+## Test Status
 
 All tests passed.
 
 ```console
-ubuntu@ubuntu2004:~/Documents/jqr-calcprojects$ bash run_tests.sh 
+ubuntu@ubuntu2004:~/Documents/calc-projects$ bash run_tests.sh 
 Found build dir. Running tests...
 Running tests...
-Test project /home/ubuntu/Documents/jqr-calcprojects/build
+Test project /home/ubuntu/Documents/calc-projects/build
     Start 1: TestSimpleCalc
 1/5 Test #1: TestSimpleCalc ...................   Passed    0.20 sec
     Start 2: TestFileCalc
