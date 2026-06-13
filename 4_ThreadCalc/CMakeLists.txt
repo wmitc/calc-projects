@@ -36,4 +36,9 @@ target_link_libraries(threadcalc PRIVATE threadpool Threads::Threads)
 # BUILD THE EXECUTABLE BINARY IN THE 4_ThreadCalc/bin DIRECTORY.
 
 # THIS INCLUDES THE TESTS FOR ThreadCalc. DO NOT MODIFY!
-include(tests_src/thread_tests.cmake)
+# Register the standalone ThreadCalc unit/valgrind/helgrind tests only when this
+# project is built on its own. Under the top-level build the 5 canonical project
+# tests are defined in the root CMakeLists, so skip these to avoid extra entries.
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    include(tests_src/thread_tests.cmake)
+endif()
