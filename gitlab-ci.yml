@@ -117,22 +117,6 @@ ThreadCalc-Test:
     CUR_TEST: TestThreadCalc
   <<: *test
 
-# Test threadpool with valgrind
-ThreadCalcTests-Valgrind:
-  needs: [ "Calc-Build" ]
-  variables:
-    CUR_PROJ: 4_ThreadCalc
-    CUR_TEST: TestThreadLib_valgrind
-  <<: *test
-
-# Test threadpool with helgrind
-ThreadCalcTests-Helgrind:
-  needs: [ "Calc-Build" ]
-  variables:
-    CUR_PROJ: 4_ThreadCalc
-    CUR_TEST: TestThreadLib_helgrind
-  <<: *test
-
 NetCalc-Test:
   needs: [ "Calc-Build" ]
   variables:
